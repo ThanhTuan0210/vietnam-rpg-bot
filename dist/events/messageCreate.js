@@ -74,6 +74,7 @@ async function onMessageCreate(message) {
     }
     if (!matchedPrefix)
         return;
+    console.log(`📩 [DISCORD COMMAND] ${message.author.tag} (${message.guild.name}): "${content}"`);
     const args = content.slice(matchedPrefix.length).trim().split(/ +/);
     const command = args.shift()?.toLowerCase();
     if (!command)
