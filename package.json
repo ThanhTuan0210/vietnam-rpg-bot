@@ -4,7 +4,7 @@
   "description": "Discord Text-based RPG Bot mang ĐẬM BẢN SẮC DÂN GIAN & THẦN THOẠI VIỆT NAM",
   "main": "dist/index.js",
   "scripts": {
-    "build": "node -e \"console.log('Build OK')\"",
+    "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },

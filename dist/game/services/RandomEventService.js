@@ -1,0 +1,150 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RandomEventService = void 0;
+const discord_js_1 = require("discord.js");
+const UserService_1 = require("./UserService");
+const embedBuilder_1 = require("../../utils/embedBuilder");
+const formatters_1 = require("../../utils/formatters");
+class RandomEventService {
+    /**
+     * Kích hoạt thử nghiệm Sự kiện Ngẫu nhiên (15% Tỷ lệ)
+     */
+    static async tryTriggerEvent(message) {
+        const chance = Math.random();
+        if (chance > 0.15)
+            return; // 15% tỷ lệ xuất hiện
+        const eventTypes = ['RAINING_COINS', 'GOD_BLESSING', 'MONSTER_AMBUSH'];
+        const selectedEvent = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+        if (selectedEvent === 'RAINING_COINS') {
+            await this.triggerRainingCoins(message);
+        }
+        else if (selectedEvent === 'GOD_BLESSING') {
+            await this.triggerGodBlessing(message);
+        }
+        else {
+            await this.triggerMonsterAmbush(message);
+        }
+    }
+    /**
+     * 🪙 1. SỰ KIỆN MƯA TIỀN ĐỒNG (IT'S RAINING COINS) - 100% Giống Ảnh Đối Chiếu
+     */
+    static async triggerRainingCoins(message) {
+        const minReward = 1000;
+        const maxReward = 35000;
+        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
+            .setCustomId('event_catch_coins')
+            .setLabel('🪙 CATCH (NHẶT TIỀN)')
+            .setStyle(discord_js_1.ButtonStyle.Success));
+        const embed = (0, embedBuilder_1.createDongSonEmbed)()
+            .setTitle('🪙 IT\'S RAINING COINS — MƯA TIỀN ĐỒNG THẦN THOẠI!')
+            .setDescription(`Bấm nút **CATCH** bên dưới (1 lần) để nhặt Tiền Đồng rơi từ bầu trời!\n` +
+            `Phần thưởng ngẫu nhiên: **${(0, formatters_1.formatDong)(minReward)} ~ ${(0, formatters_1.formatDong)(maxReward)}**!\n\n` +
+            `⏰ *Sự kiện kéo dài trong **30 giây**!*`);
+        const channel = message.channel;
+        const eventMsg = await channel.send({ embeds: [embed], components: [row] });
+        const claimedUserIds = new Set();
+        const collector = eventMsg.createMessageComponentCollector({
+            componentType: discord_js_1.ComponentType.Button,
+            time: 30000,
+        });
+        collector.on('collect', async (i) => {
+            if (i.customId === 'event_catch_coins') {
+                if (claimedUserIds.has(i.user.id)) {
+                    await i.reply({ content: '⚠️ Bạn đã nhặt tiền trong sự kiện này rồi!', ephemeral: true });
+                    return;
+                }
+                claimedUserIds.add(i.user.id);
+                const reward = Math.floor(Math.random() * (maxReward - minReward + 1)) + minReward;
+                await UserService_1.UserService.addDongAtomic(i.user.id, reward);
+                await i.reply({
+                    content: `🎉 **<@${i.user.id}>** đã nhanh tay bấm **CATCH** và nhặt được **+${(0, formatters_1.formatDong)(reward)}**!`,
+                });
+            }
+        });
+        collector.on('end', async () => {
+            const disabledRow = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('event_done').setLabel('🪙 ĐÃ KẾT THÚC').setStyle(discord_js_1.ButtonStyle.Secondary).setDisabled(true));
+            const endEmbed = (0, embedBuilder_1.createDongSonEmbed)()
+                .setTitle('🪙 SỰ KIỆN MƯA TIỀN ĐỒNG KẾT THÚC')
+                .setDescription(`Tổng cộng đã có **${claimedUserIds.size} người chơi** nhanh tay tham gia nhặt Tiền Đồng!`);
+            await eventMsg.edit({ embeds: [endEmbed], components: [disabledRow] }).catch(() => { });
+        });
+    }
+    /**
+     * 🌳 2. SỰ KIỆN CÂY THẦN BAN PHƯỚC (GOD'S BLESSING)
+     */
+    static async triggerGodBlessing(message) {
+        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
+            .setCustomId('event_pray_tree')
+            .setLabel('🌿 PRAY (NGUYỆN CẦU)')
+            .setStyle(discord_js_1.ButtonStyle.Success));
+        const embed = (0, embedBuilder_1.createDongSonEmbed)()
+            .setTitle('🌳 GOD\'S BLESSING — CÂY THẦN BẢO VỰC XUẤT HIỆN!')
+            .setDescription(`Cây thần Đông Sơn tỏa hào quang ban phước lành!\n` +
+            `Bấm **PRAY** để thành tâm nguyện cầu nhận **+500 EXP & 1 Rương Bạc**!\n\n` +
+            `⏰ *Sự kiện kéo dài trong **30 giây**!*`);
+        const channel = message.channel;
+        const eventMsg = await channel.send({ embeds: [embed], components: [row] });
+        const claimedUserIds = new Set();
+        const collector = eventMsg.createMessageComponentCollector({
+            componentType: discord_js_1.ComponentType.Button,
+            time: 30000,
+        });
+        collector.on('collect', async (i) => {
+            if (i.customId === 'event_pray_tree') {
+                if (claimedUserIds.has(i.user.id)) {
+                    await i.reply({ content: '⚠️ Bạn đã nguyện cầu rồi!', ephemeral: true });
+                    return;
+                }
+                claimedUserIds.add(i.user.id);
+                await UserService_1.UserService.addItemAtomic(i.user.id, 'ruong_bac', 1);
+                await i.reply({
+                    content: `🌿 **<@${i.user.id}>** đã thành tâm **PRAY** và nhận được **+500 EXP** & **1 Rương Bạc**!`,
+                });
+            }
+        });
+        collector.on('end', async () => {
+            const disabledRow = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('event_done').setLabel('🌿 ĐÃ KẾT THÚC').setStyle(discord_js_1.ButtonStyle.Secondary).setDisabled(true));
+            await eventMsg.edit({ components: [disabledRow] }).catch(() => { });
+        });
+    }
+    /**
+     * 👹 3. SỰ KIỆN YÊU MA ĐỘT KÍCH (MONSTER AMBUSH)
+     */
+    static async triggerMonsterAmbush(message) {
+        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
+            .setCustomId('event_fight_ambush')
+            .setLabel('⚔️ FIGHT (TIÊU DIỆT)')
+            .setStyle(discord_js_1.ButtonStyle.Danger));
+        const embed = (0, embedBuilder_1.createDongSonEmbed)()
+            .setTitle('👹 MONSTER AMBUSH — YÊU MA ĐỘT KÍCH LÀNG XÓM!')
+            .setDescription(`Bầy Ma Cương Thi bất ngờ xuất hiện tấn công dân làng!\n` +
+            `Bấm **FIGHT** để xông lên tiêu diệt và đoạt lấy **Ngọc Lửa Lv.1 + 5,000 Đồng**!\n\n` +
+            `⏰ *Sự kiện kéo dài trong **30 giây**!*`);
+        const channel = message.channel;
+        const eventMsg = await channel.send({ embeds: [embed], components: [row] });
+        const claimedUserIds = new Set();
+        const collector = eventMsg.createMessageComponentCollector({
+            componentType: discord_js_1.ComponentType.Button,
+            time: 30000,
+        });
+        collector.on('collect', async (i) => {
+            if (i.customId === 'event_fight_ambush') {
+                if (claimedUserIds.has(i.user.id)) {
+                    await i.reply({ content: '⚠️ Bạn đã tham chiến rồi!', ephemeral: true });
+                    return;
+                }
+                claimedUserIds.add(i.user.id);
+                await UserService_1.UserService.addDongAtomic(i.user.id, 5000);
+                await UserService_1.UserService.addItemAtomic(i.user.id, 'ngoc_lua_1', 1);
+                await i.reply({
+                    content: `💥 **<@${i.user.id}>** dũng cảm **FIGHT** đả bại yêu ma và nhận **🔴 Ngọc Lửa Lv.1** + **+5,000 Đồng**!`,
+                });
+            }
+        });
+        collector.on('end', async () => {
+            const disabledRow = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('event_done').setLabel('⚔️ ĐÃ KẾT THÚC').setStyle(discord_js_1.ButtonStyle.Secondary).setDisabled(true));
+            await eventMsg.edit({ components: [disabledRow] }).catch(() => { });
+        });
+    }
+}
+exports.RandomEventService = RandomEventService;
