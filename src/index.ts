@@ -19,10 +19,7 @@ http
 async function bootstrap() {
   console.log('🏛️  Khởi động Discord RPG Bot Dân Gian & Thần Thoại Việt Nam...');
 
-  // 2. Kết nối CSDL MongoDB
-  await connectDatabase();
-
-  // 3. Khởi tạo Discord Client với các Gateway Intents cần thiết
+  // 2. Khởi tạo Discord Client với các Gateway Intents cần thiết
   const client = new Client({
     intents: [
       GatewayIntentBits.Guilds,
@@ -31,9 +28,14 @@ async function bootstrap() {
     ],
   });
 
-  // 4. Đăng ký Sự Kiện (Events)
+  // 3. Đăng ký Sự Kiện (Events)
   client.once('ready', () => onReady(client));
   client.on('messageCreate', onMessageCreate);
+
+  // 4. Kết nối CSDL MongoDB (không để lỗi DB làm chặn Discord Bot login)
+  connectDatabase().catch((err) => {
+    console.error('⚠️ [CẢNH BÁO CSDL] Chưa kết nối được MongoDB ngay lập tức, đang tự động thử lại...', err?.message || err);
+  });
 
   // 5. Đăng nhập Discord Bot Client
   if (!CONFIG.DISCORD_TOKEN) {
@@ -41,7 +43,13 @@ async function bootstrap() {
       '⚠️  [CẢNH BÁO] Chưa cấu hình DISCORD_TOKEN trong tệp .env! Vui lòng thêm token trước khi chạy bot.'
     );
   } else {
-    await client.login(CONFIG.DISCORD_TOKEN);
+    try {
+      console.log('🔑 Đang tiến hành đăng nhập vào Discord Bot API...');
+      await client.login(CONFIG.DISCORD_TOKEN);
+      console.log('✅ Đăng nhập Discord Bot API hoàn tất!');
+    } catch (loginErr: any) {
+      console.error('❌ Lỗi khi đăng nhập Discord Token:', loginErr?.message || loginErr);
+    }
   }
 }
 
