@@ -1,7 +1,8 @@
-import { Message, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { Message, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
 import { UserService } from '../../game/services/UserService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
-import { getItemIcon } from '../../game/data/items';
+import { getItemIcon, ITEMS } from '../../game/data/items';
+import { formatDong } from '../../utils/formatters';
 
 interface DungeonFloor {
   id: number;
@@ -9,77 +10,205 @@ interface DungeonFloor {
   minLevel: number;
   reqCP: number;
   bossName: string;
+  bossHp: number;
+  bossAtk: number;
   keyId: string;
   dropItems: { id: string; qty: number }[];
 }
 
 const DUNGEONS: DungeonFloor[] = [
-  { id: 1, name: '🌲 Hang Goblin Rừng Tre (Tầng 1)', minLevel: 1, reqCP: 1000, bossName: '👹 Goblin Chieftain King', keyId: 'key_01a', dropItems: [{ id: 'ingot_01a', qty: 3 }, { id: 'crystal_01a', qty: 2 }, { id: 'gift_01a', qty: 1 }] },
-  { id: 2, name: '🏔️ Đầm Lầy Orc Cổ (Tầng 2)', minLevel: 15, reqCP: 3500, bossName: '🐊 Orc Warlord', keyId: 'key_01b', dropItems: [{ id: 'ingot_01b', qty: 4 }, { id: 'potion_02a', qty: 2 }] },
-  { id: 3, name: '🌋 Mỏ Tháp Dwarven (Tầng 3)', minLevel: 25, reqCP: 8000, bossName: '🐂 Iron Golem Titan', keyId: 'key_01c', dropItems: [{ id: 'gem_01a', qty: 2 }, { id: 'potion_03a', qty: 3 }] },
-  { id: 4, name: '🏰 Pháo Đài Gothic Âm Phủ (Tầng 4)', minLevel: 35, reqCP: 15000, bossName: '🏹 Phantom Archmage Lich', keyId: 'key_01d', dropItems: [{ id: 'spellbook_01a', qty: 1 }, { id: 'scroll_01a', qty: 2 }] },
-  { id: 5, name: '🎓 Đền Trọng Sinh Ancient Lich (Tầng 5)', minLevel: 50, reqCP: 25000, bossName: '🌳 Ancient Lich Overlord', keyId: 'key_01e', dropItems: [{ id: 'ingot_01e', qty: 2 }, { id: 'crystal_01j', qty: 1 }] },
-  { id: 6, name: '🐉 Vực Đáy Kraken Thần Vương (Tầng 6)', minLevel: 65, reqCP: 45000, bossName: '🐲 Deep Sea Kraken Leviathan', keyId: 'key_02a', dropItems: [{ id: 'sword_02a', qty: 1 }, { id: 'key_02b', qty: 1 }] },
-  { id: 7, name: '👑 Vương Tọa Rồng Infernal King (ENDGAME Tầng 7)', minLevel: 85, reqCP: 80000, bossName: '🐢👑 Infernal Dragon King (FINAL BOSS)', keyId: 'key_02b', dropItems: [{ id: 'sword_03e', qty: 1 }, { id: 'giftopen_01f', qty: 1 }] },
+  {
+    id: 1,
+    name: '🌲 Hang Goblin Rừng Tre (Tầng 1)',
+    minLevel: 1,
+    reqCP: 800,
+    bossName: '👹 Goblin Chieftain King',
+    bossHp: 1500,
+    bossAtk: 120,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'ingot_01a', qty: 5 }, { id: 'crystal_01a', qty: 2 }, { id: 'gift_01a', qty: 1 }],
+  },
+  {
+    id: 2,
+    name: '🏔️ Đầm Lầy Orc Thượng Cổ (Tầng 2)',
+    minLevel: 15,
+    reqCP: 3000,
+    bossName: '🐊 Orc Warlord Titan',
+    bossHp: 5000,
+    bossAtk: 350,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'ingot_01b', qty: 5 }, { id: 'potion_02a', qty: 3 }, { id: 'gem_01a', qty: 2 }],
+  },
+  {
+    id: 3,
+    name: '🌋 Mỏ Tháp Dwarven (Tầng 3)',
+    minLevel: 25,
+    reqCP: 7500,
+    bossName: '🐂 Iron Golem Titan',
+    bossHp: 12000,
+    bossAtk: 700,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'gem_01a', qty: 4 }, { id: 'potion_03a', qty: 3 }, { id: 'sword_02a', qty: 1 }],
+  },
+  {
+    id: 4,
+    name: '🏰 Pháo Đài Gothic Âm Phủ (Tầng 4)',
+    minLevel: 35,
+    reqCP: 15000,
+    bossName: '🏹 Phantom Archmage Lich',
+    bossHp: 25000,
+    bossAtk: 1200,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'ingot_01e', qty: 3 }, { id: 'crystal_01j', qty: 2 }],
+  },
+  {
+    id: 5,
+    name: '🎓 Đền Trọng Sinh Ancient Lich (Tầng 5)',
+    minLevel: 50,
+    reqCP: 30000,
+    bossName: '🌳 Ancient Lich Overlord',
+    bossHp: 60000,
+    bossAtk: 2500,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'ingot_01e', qty: 5 }, { id: 'crystal_01j', qty: 4 }],
+  },
+  {
+    id: 6,
+    name: '🐉 Vực Đáy Kraken Thần Vương (Tầng 6)',
+    minLevel: 65,
+    reqCP: 55000,
+    bossName: '🐲 Deep Sea Kraken Leviathan',
+    bossHp: 120000,
+    bossAtk: 4500,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'ingot_01e', qty: 10 }, { id: 'crystal_01j', qty: 8 }],
+  },
+  {
+    id: 7,
+    name: '👑 Vương Tọa Rồng Infernal King (ENDGAME Tầng 7)',
+    minLevel: 85,
+    reqCP: 90000,
+    bossName: '🐢👑 Infernal Dragon King (FINAL BOSS)',
+    bossHp: 300000,
+    bossAtk: 10000,
+    keyId: 'key_01a',
+    dropItems: [{ id: 'sword_03e', qty: 1 }, { id: 'gem_01a', qty: 10 }],
+  },
 ];
 
 export async function dungeonCommand(message: Message, args: string[]): Promise<void> {
-  const user = await UserService.getOrCreateUser(message.author.id);
+  const userId = message.author.id;
+  const username = message.author.username;
+  const user = await UserService.getOrCreateUser(userId);
   const floorId = parseInt(args[0]) || 1;
 
   const floor = DUNGEONS.find((d) => d.id === floorId);
 
   if (!floor) {
-    await message.reply('⚠️ **Tầng Ngục Tối không hợp lệ!** Chọn từ Tầng 1 đến Tầng 7 (`vn dungeon 1` đến `vn dungeon 7`).');
+    await message.reply('⚠️ **Tầng Ngục Tối không hợp lệ!** Chọn từ Tầng 1 đến Tầng 7 (`vkl dungeon 1` đến `vkl dungeon 7`).');
     return;
   }
 
-  // Check level & CP requirements
-  const userCP = (user.level * 50) + (user.sucManh * 2) + (user.giap * 3) + Math.floor(user.maxHp / 10);
+  // Calculate Combat Power (CP) with Dual-Class Synergy Buff (+20% CP if player has both classes)
+  const baseCP = (user.canhGioi.capDo * 50) + (user.chiSo.satThuong * 2) + (user.chiSo.phongThu * 3) + Math.floor(user.chiSo.maxHp / 10);
+  const hasDualClass = user.hePhai && (user as any).producerJob;
+  const userCP = hasDualClass ? Math.floor(baseCP * 1.2) : baseCP;
 
-  if (user.level < floor.minLevel) {
-    await message.reply(`🔒 **Cấp độ chưa đủ!** Bạn cần đạt **Level ${floor.minLevel}** để tiến vào ${floor.name}. (Cấp hiện tại: Lv ${user.level})`);
+  if (user.canhGioi.capDo < floor.minLevel) {
+    await message.reply(`🔒 **CẤP ĐỘ CHƯA ĐỦ!** Bạn cần đạt **Level ${floor.minLevel}** để tiến vào ${floor.name}. (Cấp hiện tại: Lv ${user.canhGioi.capDo})`);
     return;
   }
 
-  // Perform Dungeon Battle Raid
-  let battleResultStr = '';
+  // 🎲 SPECIAL MECHANIC 1: RANDOM ROGUELIKE EVENT ROOM
+  const roomEvents = [
+    { title: '⚔️ Phòng Phục Kích Tinh Anh', desc: 'Tiêu diệt toán tay sai Goblin Tinh Anh (+500 Vàng & +200 EXP) trước khi giáp mặt Boss!' },
+    { title: '🧪 Suối Thần Linh Gothic', desc: 'Uống dòng suối ma pháp (Tiêu thụ 1x Potion) giúp khôi phục 100% HP & MP!' },
+    { title: '📜 Cổ Tháp Bí Ẩn', desc: 'Giải phóng phong ấn cổ đại! Tăng ngay **+30% Sát Thương (ATK)** trong trận chiến Boss!' },
+    { title: '🧰 Kho Thạch Rương Thần Bí', desc: 'Phát hiện rương báu bị niêm phong trong hầm tối ngầm!' },
+  ];
 
-  if (userCP >= floor.reqCP) {
-    battleResultStr = `🎉 **CHIẾN THẮNG QUANG VINH!**\n\nTổ đội của bạn đã đả bại Super Boss **${floor.bossName}** tại ${floor.name}!\n\n🎁 **Chiến lợi phẩm đoạt được:**\n`;
-    floor.dropItems.forEach((drop) => {
-      const icon = getItemIcon(drop.id);
-      battleResultStr += `• **${drop.qty}x** ${icon} \`${drop.id}\`\n`;
+  const randomRoom = roomEvents[Math.floor(Math.random() * roomEvents.length)];
 
-      const existingSlot = user.inventory.find((i: any) => i.itemId.toLowerCase() === drop.id);
-      if (existingSlot) {
-        existingSlot.quantity += drop.qty;
-      } else {
-        user.inventory.push({ itemId: drop.id, quantity: drop.qty });
-      }
-    });
-
-    user.exp += floorId * 500;
-    user.dong += floorId * 2000;
-    await user.save();
-  } else {
-    battleResultStr = `💀 **THẤT BẠI TRONG NGỤC TỐI!**\n\nTổ đội Lực chiến **${userCP} CP** chưa đủ khỏe để vượt qua Super Boss **${floor.bossName}** (Yêu cầu **${floor.reqCP} CP**).\n\n💡 *Hãy nhờ Thợ Rèn rèn đồ Tier cao hơn và Thợ Bào Chế nung Ma Dược Buff CP rồi quay lại chiến đấu nhé!*`;
-  }
-
-  const embed = createDongSonEmbed()
-    .setTitle(`🗺️ CHINH PHỤC NGỤC TỐI - TẦNG ${floor.id}`)
-    .setDescription(
-      `⚔️ **Anh Hùng:** ${message.author.username}\n` +
-        `📊 **Lực Chiến:** \`${userCP} CP\` / \`${floor.reqCP} CP Yêu Cầu\`\n` +
-        `👹 **Super Boss:** \`${floor.bossName}\`\n\n` +
-        `${battleResultStr}`
-    );
-
+  // 🎲 SPECIAL MECHANIC 2: ENRAGE BOSS SHIELD ACTION BUTTONS
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-    new ButtonBuilder().setCustomId(`cmd_dungeon_${Math.min(7, floor.id + 1)}`).setLabel(`⏩ Tiến Tầng ${Math.min(7, floor.id + 1)}`).setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId('cmd_profile').setLabel('🎒 Hồ Sơ CP').setStyle(ButtonStyle.Primary),
-    new ButtonBuilder().setCustomId('cmd_vault').setLabel('📦 Kho Vault').setStyle(ButtonStyle.Success)
+    new ButtonBuilder().setCustomId('btn_dungeon_strike').setLabel('⚔️ Tung Kĩ Năng Trảm Boss').setStyle(ButtonStyle.Danger),
+    new ButtonBuilder().setCustomId('btn_dungeon_shield').setLabel('🛡️ Đỡ Đòn Kị Sĩ (-80% DMG)').setStyle(ButtonStyle.Primary),
+    new ButtonBuilder().setCustomId('btn_dungeon_potion').setLabel('🧪 Ném Ma Dược Kháng Độc').setStyle(ButtonStyle.Success)
   );
 
-  await message.reply({ embeds: [embed], components: [row] });
+  const embed = createDongSonEmbed()
+    .setTitle(`🏰 THỬ THÁCH NGỤC TỐI GOTHIC — ${floor.name.toUpperCase()}`)
+    .setDescription(
+      `🏛️ **ANH HÙNG:** ${username} (\`${(user.hePhai || '').toString().toUpperCase()}\` + \`${((user as any).producerJob || '').toString().toUpperCase()}\`)\n` +
+        `📊 **Lực Chiến CP:** \`${userCP.toLocaleString('vi-VN')} CP\` ${hasDualClass ? '✨ *(+20% Dual-Class Synergy!)*' : ''}\n` +
+        `⚔️ **Boss Ngục Tối:** **${floor.bossName}** (HP: \`${floor.bossHp.toLocaleString('vi-VN')}\` | Yêu cầu CP: \`${floor.reqCP.toLocaleString('vi-VN')}\`)\n\n` +
+        `🎲 **SỰ KIỆN PHÒNG NGẪU NHIÊN:**\n` +
+        `└ **${randomRoom.title}:** ${randomRoom.desc}\n\n` +
+        `⚠️ **BOSS ĐANG VUNG KHIÊN CUỒNG NỘ! HÃY BẤM NÚT CHIẾN THUẬT BÊN DƯỚI ĐỂ CHIẾN ĐẤU!**`
+    );
+
+  const replyMsg = await message.reply({ embeds: [embed], components: [row] });
+
+  const collector = replyMsg.createMessageComponentCollector({
+    componentType: ComponentType.Button,
+    time: 30000,
+  });
+
+  collector.on('collect', async (i) => {
+    if (i.user.id !== userId) {
+      await i.reply({ content: '⚠️ Bạn không thể điều khiển đòn đánh của người khác!', ephemeral: true });
+      return;
+    }
+
+    let battleSuccess = userCP >= floor.reqCP;
+    let extraText = '';
+
+    if (i.customId === 'btn_dungeon_strike') {
+      extraText = '💥 **Bạn đã vung tuyệt kĩ chém thẳng vào điểm yếu của Boss!**\n';
+    } else if (i.customId === 'btn_dungeon_shield') {
+      extraText = '🛡️ **Bạn giơ khiên thép đỡ trọn đòn Cuồng Nộ của Boss! (Kháng 80% Sát Thương)**\n';
+    } else if (i.customId === 'btn_dungeon_potion') {
+      extraText = '🧪 **Bạn ném Ma Dược Kháng Độc làm tan chảy Khiên Cuồng Nộ của Boss!**\n';
+    }
+
+    if (battleSuccess) {
+      let dropsText = '';
+      for (const drop of floor.dropItems) {
+        const icon = getItemIcon(drop.id);
+        const itemDef = ITEMS[drop.id] || { name: drop.id };
+        dropsText += `• **${drop.qty}x** ${icon} **${itemDef.name}** (\`${drop.id}\`)\n`;
+
+        await UserService.addItemAtomic(userId, drop.id, drop.qty);
+      }
+
+      const rewardGold = floor.id * 2000;
+      const rewardExp = floor.id * 500;
+      user.taiChinh.dong += rewardGold;
+      user.canhGioi.kinhNghiem += rewardExp;
+      await user.save();
+
+      const winEmbed = createDongSonEmbed()
+        .setTitle(`🏆 CHIẾN THẮNG QUANG VINH — ${floor.name.toUpperCase()}`)
+        .setDescription(
+          `${extraText}\n` +
+            `🎉 **${username}** đã tiêu diệt thành công Boss **${floor.bossName}**!\n\n` +
+            `🎁 **CHIẾN LỢI PHẨM ĐOẠT ĐƯỢC:**\n${dropsText}\n` +
+            `💰 **Tiền Thưởng:** \`+${formatDong(rewardGold)}\` | ✨ **EXP:** \`+${rewardExp} EXP\`\n\n` +
+            `💡 *Vật phẩm quý đã được chuyển thẳng vào Túi Đồ (\`vkl i\`) hoặc Kho Vault (\`vkl vlt dep\`)!*`
+        );
+
+      await i.update({ embeds: [winEmbed], components: [] });
+    } else {
+      const loseEmbed = createDongSonEmbed()
+        .setTitle(`💀 THẤT BẠI TẠI NGỤC TỐI — ${floor.name.toUpperCase()}`)
+        .setDescription(
+          `${extraText}\n` +
+            `❌ Sát thương của **${floor.bossName}** quá tàn bạo! Tổ đội của bạn chưa đủ Lực Chiến CP!\n\n` +
+            `📊 **Lực chiến hiện tại:** \`${userCP.toLocaleString('vi-VN')} CP\` (Cần: \`${floor.reqCP.toLocaleString('vi-VN')} CP\`)\n\n` +
+            `💡 *Hãy nâng cấp vũ khí tại Thợ Rèn (\`vkl craft\`) và uống Thuốc HP (\`vkl brew\`) trước khi thử lại!*`
+        );
+
+      await i.update({ embeds: [loseEmbed], components: [] });
+    }
+  });
 }
