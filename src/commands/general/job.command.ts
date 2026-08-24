@@ -30,15 +30,13 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
       alchemist: 'alchemist',
       blk: 'blacksmith',
       blacksmith: 'blacksmith',
-      hnt: 'hunter',
-      hunter: 'hunter',
     };
 
     const normCombat = combatMap[combatInput];
     const normProducer = producerMap[producerInput];
 
     if (!normCombat || !normProducer) {
-      await message.reply('⚠️ **Cú pháp chưa đúng!** Chọn 3 chữ đầu Class Chiến Đấu (`war`, `mag`, `ran`, `ass`) và Class Sản Xuất (`min`, `alc`, `blk`, `hnt`).\n*VD:* `vn job sel mag min`');
+      await message.reply('⚠️ **Cú pháp chưa đúng!** Chọn Class Chiến Đấu (`war`, `mag`, `ran`, `ass`) và 1 trong 3 Class Sản Xuất (`min`, `alc`, `blk`).\n*VD:* `vkl job sel war min`');
       return;
     }
 
@@ -50,9 +48,9 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
       .setTitle('⚔️ ĐỔI SONG PHÁI DUAL-CLASS THÀNH CÔNG!')
       .setDescription(
         `🎉 **Chúc mừng ${message.author.username}!** Bạn đã đăng ký thành công Song Phái Trung Cổ:\n\n` +
-          `⚔️ **Class Chiến Đấu:** \`${normCombat.toUpperCase()}\` (Sát thương & Lực chiến CP)\n` +
-          `🔨 **Class Sản Xuất (PP):** \`${normProducer.toUpperCase()}\` (Giao thương & Nạp Kho Vault)\n\n` +
-          `💡 *Tổ đội 3-5 bạn bè hãy phân công mỗi người 1 Nghề Sản Xuất khác nhau để làm giàu nhanh nhất!*`
+          `⚔️ **Class Chiến Đấu (Chính):** \`${normCombat.toUpperCase()}\` (Đi săn quái, kiếm Vàng & đánh Boss)\n` +
+          `🔨 **Class Sản Xuất (PP):** \`${normProducer.toUpperCase()}\` (Khai thác tài nguyên & nạp Kho Vault)\n\n` +
+          `💡 *Tổ đội 3-5 bạn bè hãy phân công 3 người làm 3 Nghề Sản Xuất khác nhau (Miner, Alchemist, Blacksmith) để hình thành vòng kinh tế khép kín!*`
       );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -66,19 +64,19 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
   }
 
   // Display Current Jobs
-  const currentCombat = user.hePhai || 'Chưa Chọn';
-  const currentProducer = (user as any).producerJob || 'Chưa Chọn';
+  const currentCombat = (user.hePhai || 'Chưa Chọn').toString();
+  const currentProducer = ((user as any).producerJob || 'Chưa Chọn').toString();
 
   const embed = createDongSonEmbed()
-    .setTitle('🎭 QUẢN LÝ SONG PHÁI DUAL-CLASS (MEDIEVAL RPG)')
+    .setTitle('🎭 QUẢN LÝ SONG PHÁI DUAL-CLASS (1 COMBAT + 1 PRODUCER)')
     .setDescription(
       `👤 **Anh Hùng:** ${message.author.username}\n` +
-        `⚔️ **Class Chiến Đấu Hiện Tại:** \`${currentCombat.toUpperCase()}\`\n` +
-        `🔨 **Class Sản Xuất Hiện Tại (PP):** \`${currentProducer.toUpperCase()}\`\n\n` +
+        `⚔️ **Class Chiến Đấu (Đi Săn & Đánh Boss):** \`${currentCombat.toUpperCase()}\`\n` +
+        `🔨 **Class Sản Xuất (3 Nghề Khép Kín):** \`${currentProducer.toUpperCase()}\`\n\n` +
         `📌 **Cú pháp Tiếng Anh 3 chữ đầu tiện lợi:**\n` +
-        `• Gõ 3 chữ đầu: \`vn job sel <war|mag|ran|ass> <min|alc|blk|hnt>\` (VD: \`vn job sel war min\`)\n` +
-        `• **Combat:** \`war\` (Warrior), \`mag\` (Mage), \`ran\` (Ranger), \`ass\` (Assassin)\n` +
-        `• **Producer:** \`min\` (Miner), \`alc\` (Alchemist), \`blk\` (Blacksmith), \`hnt\` (Hunter)`
+        `• Gõ 3 chữ đầu: \`vkl job sel <war|mag|ran|ass> <min|alc|blk>\` (VD: \`vkl job sel war min\`)\n` +
+        `• **Class Chiến Đấu:** \`war\` (Warrior), \`mag\` (Mage), \`ran\` (Ranger), \`ass\` (Assassin)\n` +
+        `• **3 Class Sản Xuất (PP):** \`min\` (Miner), \`alc\` (Alchemist), \`blk\` (Blacksmith)`
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

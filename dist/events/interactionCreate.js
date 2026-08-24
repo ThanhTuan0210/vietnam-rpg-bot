@@ -30,12 +30,11 @@ async function onInteractionCreate(interaction) {
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
                     .setTitle('🎭 KHỞI TẠO NHÂN VẬT - BƯỚC 2: CHỌN CLASS SẢN XUẤT (PP)')
                     .setDescription(`🎉 **Bạn đã chọn Class Chiến Đấu:** \`${combat.toUpperCase()}\`!\n\n` +
-                    `🔨 **Bây giờ hãy chọn 1 Class Sản Xuất (PP) để đóng góp cho Kho Vault Tổ Đội:**\n` +
-                    `• **Miner:** Đào quặng, tinh thạch & ngọc quý\n` +
-                    `• **Alchemist:** Luyện ma dược hồi HP/MP & thuốc kháng độc\n` +
-                    `• **Blacksmith:** Rèn 45 loại vũ khí, giáp & cuốc\n` +
-                    `• **Hunter:** Săn quái lấy vàng, rương báu & chìa khóa`);
-                const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('job_producer_miner').setLabel('🪨 Miner (Thợ Mỏ)').setStyle(discord_js_1.ButtonStyle.Primary), new discord_js_1.ButtonBuilder().setCustomId('job_producer_alchemist').setLabel('🧪 Alchemist (Bào Chế)').setStyle(discord_js_1.ButtonStyle.Success), new discord_js_1.ButtonBuilder().setCustomId('job_producer_blacksmith').setLabel('🔨 Blacksmith (Thợ Rèn)').setStyle(discord_js_1.ButtonStyle.Danger), new discord_js_1.ButtonBuilder().setCustomId('job_producer_hunter').setLabel('🏹 Hunter (Thợ Săn)').setStyle(discord_js_1.ButtonStyle.Secondary));
+                    `🔨 **Bây giờ hãy chọn 1 trong 3 Class Sản Xuất (PP) để đóng góp cho Kho Vault Tổ Đội:**\n` +
+                    `• **🪨 Miner (Thợ Mỏ):** Đào quặng, tinh thạch & ngọc quý\n` +
+                    `• **🧪 Alchemist (Bào Chế):** Luyện ma dược hồi HP/MP & thuốc kích rèn\n` +
+                    `• **🔨 Blacksmith (Thợ Rèn):** Rèn vũ khí, trang bị & cuốc mỏ`);
+                const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('job_producer_miner').setLabel('🪨 Miner (Thợ Mỏ)').setStyle(discord_js_1.ButtonStyle.Primary), new discord_js_1.ButtonBuilder().setCustomId('job_producer_alchemist').setLabel('🧪 Alchemist (Bào Chế)').setStyle(discord_js_1.ButtonStyle.Success), new discord_js_1.ButtonBuilder().setCustomId('job_producer_blacksmith').setLabel('🔨 Blacksmith (Thợ Rèn)').setStyle(discord_js_1.ButtonStyle.Danger));
                 await interaction.update({ embeds: [embed], components: [row] });
                 return;
             }

@@ -32,18 +32,16 @@ export async function onInteractionCreate(interaction: Interaction): Promise<voi
           .setTitle('🎭 KHỞI TẠO NHÂN VẬT - BƯỚC 2: CHỌN CLASS SẢN XUẤT (PP)')
           .setDescription(
             `🎉 **Bạn đã chọn Class Chiến Đấu:** \`${combat.toUpperCase()}\`!\n\n` +
-              `🔨 **Bây giờ hãy chọn 1 Class Sản Xuất (PP) để đóng góp cho Kho Vault Tổ Đội:**\n` +
-              `• **Miner:** Đào quặng, tinh thạch & ngọc quý\n` +
-              `• **Alchemist:** Luyện ma dược hồi HP/MP & thuốc kháng độc\n` +
-              `• **Blacksmith:** Rèn 45 loại vũ khí, giáp & cuốc\n` +
-              `• **Hunter:** Săn quái lấy vàng, rương báu & chìa khóa`
+              `🔨 **Bây giờ hãy chọn 1 trong 3 Class Sản Xuất (PP) để đóng góp cho Kho Vault Tổ Đội:**\n` +
+              `• **🪨 Miner (Thợ Mỏ):** Đào quặng, tinh thạch & ngọc quý\n` +
+              `• **🧪 Alchemist (Bào Chế):** Luyện ma dược hồi HP/MP & thuốc kích rèn\n` +
+              `• **🔨 Blacksmith (Thợ Rèn):** Rèn vũ khí, trang bị & cuốc mỏ`
           );
 
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
           new ButtonBuilder().setCustomId('job_producer_miner').setLabel('🪨 Miner (Thợ Mỏ)').setStyle(ButtonStyle.Primary),
           new ButtonBuilder().setCustomId('job_producer_alchemist').setLabel('🧪 Alchemist (Bào Chế)').setStyle(ButtonStyle.Success),
-          new ButtonBuilder().setCustomId('job_producer_blacksmith').setLabel('🔨 Blacksmith (Thợ Rèn)').setStyle(ButtonStyle.Danger),
-          new ButtonBuilder().setCustomId('job_producer_hunter').setLabel('🏹 Hunter (Thợ Săn)').setStyle(ButtonStyle.Secondary)
+          new ButtonBuilder().setCustomId('job_producer_blacksmith').setLabel('🔨 Blacksmith (Thợ Rèn)').setStyle(ButtonStyle.Danger)
         );
 
         await interaction.update({ embeds: [embed], components: [row] });
