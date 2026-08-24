@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onMessageCreate = onMessageCreate;
 const master_menu_command_1 = require("../commands/general/master_menu.command");
+const help_command_1 = require("../commands/general/help.command");
+const fuzzySuggest_1 = require("../utils/fuzzySuggest");
 const guide_command_1 = require("../commands/general/guide.command");
 const event_command_1 = require("../commands/general/event.command");
 const GatheringService_1 = require("../game/services/GatheringService");
@@ -74,15 +76,18 @@ async function onMessageCreate(message) {
     const command = (args.shift() || '').toLowerCase();
     try {
         switch (command) {
-            // --- MASTER MENU & GUIDE & EVENT ---
+            // --- MASTER MENU & INTERACTIVE HELP ---
             case '':
-            case 'help':
-            case 'lenh':
-            case 'trogiup':
             case 'start':
             case 'batdau':
             case 'menu':
                 await (0, master_menu_command_1.masterMenuCommand)(message);
+                break;
+            case 'help':
+            case 'lenh':
+            case 'trogiup':
+            case '?':
+                await (0, help_command_1.helpInteractiveCommand)(message);
                 break;
             case 'guide':
             case 'huongdan':
@@ -390,6 +395,7 @@ async function onMessageCreate(message) {
                 await (0, duangua_command_1.duaLinhThuCommand)(message, args);
                 break;
             default:
+                await (0, fuzzySuggest_1.handleUnknownCommandSuggest)(message, command);
                 break;
         }
     }

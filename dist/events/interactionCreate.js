@@ -16,16 +16,16 @@ const slots_command_1 = require("../commands/minigames/slots.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
 const job_command_1 = require("../commands/general/job.command");
 const HourlyEventService_1 = require("../game/services/HourlyEventService");
-/**
- * Tạo Mock Message Object gắn đúng thông tin người bấm nút (interaction.user)
- */
-function createMockMessage(interaction) {
+const help_command_1 = require("../commands/general/help.command");
+const messageCreate_1 = require("./messageCreate");
+function createMockMessage(interaction, customContent) {
     return {
         author: interaction.user,
         channel: interaction.channel,
         guild: interaction.guild,
         member: interaction.member,
         client: interaction.client,
+        content: customContent || 'vkl',
         reply: async (options) => {
             if (interaction.deferred || interaction.replied) {
                 return await interaction.followUp(options);
@@ -45,6 +45,13 @@ async function onInteractionCreate(interaction) {
         // --- BUTTON INTERACTIONS ---
         if (interaction.isButton()) {
             const customId = interaction.customId;
+            // Handle 1-Click Execution Buttons from Fuzzy Suggestion
+            if (customId.startsWith('cmd_run_')) {
+                const targetAlias = customId.replace('cmd_run_', '');
+                const runMsg = createMockMessage(interaction, `vkl ${targetAlias}`);
+                await (0, messageCreate_1.onMessageCreate)(runMsg);
+                return;
+            }
             // Handle Class Selection Step 1 (Combat Class)
             if (customId.startsWith('job_combat_')) {
                 const combat = customId.replace('job_combat_', '');
@@ -116,6 +123,10 @@ async function onInteractionCreate(interaction) {
         }
         // --- SELECT MENU INTERACTIONS ---
         if (interaction.isStringSelectMenu()) {
+            if (interaction.customId === 'help_category_select') {
+                await (0, help_command_1.handleHelpSelectInteraction)(interaction);
+                return;
+            }
             const selectedValue = interaction.values[0];
             if (selectedValue === 'menu_job') {
                 await (0, job_command_1.jobCommand)(mockMsg, []);

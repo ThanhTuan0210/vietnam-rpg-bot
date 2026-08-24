@@ -13,17 +13,17 @@ import { slotsCommand } from '../commands/minigames/slots.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { jobCommand } from '../commands/general/job.command';
 import { HourlyEventService } from '../game/services/HourlyEventService';
+import { handleHelpSelectInteraction } from '../commands/general/help.command';
+import { onMessageCreate } from './messageCreate';
 
-/**
- * Tạo Mock Message Object gắn đúng thông tin người bấm nút (interaction.user)
- */
-function createMockMessage(interaction: any): Message {
+function createMockMessage(interaction: any, customContent?: string): Message {
   return {
     author: interaction.user,
     channel: interaction.channel,
     guild: interaction.guild,
     member: interaction.member,
     client: interaction.client,
+    content: customContent || 'vkl',
     reply: async (options: any) => {
       if (interaction.deferred || interaction.replied) {
         return await interaction.followUp(options);
@@ -44,6 +44,14 @@ export async function onInteractionCreate(interaction: Interaction): Promise<voi
     // --- BUTTON INTERACTIONS ---
     if (interaction.isButton()) {
       const customId = interaction.customId;
+
+      // Handle 1-Click Execution Buttons from Fuzzy Suggestion
+      if (customId.startsWith('cmd_run_')) {
+        const targetAlias = customId.replace('cmd_run_', '');
+        const runMsg = createMockMessage(interaction, `vkl ${targetAlias}`);
+        await onMessageCreate(runMsg);
+        return;
+      }
 
       // Handle Class Selection Step 1 (Combat Class)
       if (customId.startsWith('job_combat_')) {
@@ -143,6 +151,11 @@ export async function onInteractionCreate(interaction: Interaction): Promise<voi
 
     // --- SELECT MENU INTERACTIONS ---
     if (interaction.isStringSelectMenu()) {
+      if (interaction.customId === 'help_category_select') {
+        await handleHelpSelectInteraction(interaction);
+        return;
+      }
+
       const selectedValue = interaction.values[0];
 
       if (selectedValue === 'menu_job') {

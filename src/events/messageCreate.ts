@@ -1,5 +1,7 @@
 import { Message } from 'discord.js';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
+import { helpInteractiveCommand } from '../commands/general/help.command';
+import { handleUnknownCommandSuggest } from '../utils/fuzzySuggest';
 import { guideCommand } from '../commands/general/guide.command';
 import { eventTestCommand } from '../commands/general/event.command';
 import { GatheringService } from '../game/services/GatheringService';
@@ -77,15 +79,19 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
   try {
     switch (command) {
-      // --- MASTER MENU & GUIDE & EVENT ---
+      // --- MASTER MENU & INTERACTIVE HELP ---
       case '':
-      case 'help':
-      case 'lenh':
-      case 'trogiup':
       case 'start':
       case 'batdau':
       case 'menu':
         await masterMenuCommand(message);
+        break;
+
+      case 'help':
+      case 'lenh':
+      case 'trogiup':
+      case '?':
+        await helpInteractiveCommand(message);
         break;
 
       case 'guide':
@@ -451,6 +457,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
 
       default:
+        await handleUnknownCommandSuggest(message, command);
         break;
     }
   } catch (err: any) {
