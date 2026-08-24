@@ -6,7 +6,6 @@ import { CombatEngineAdvanced } from '../../game/engines/CombatEngine';
 import { UserService } from '../../game/services/UserService';
 import { GatheringService } from '../../game/services/GatheringService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
-import { formatDong } from '../../utils/formatters';
 import { masterMenuCommand } from './master_menu.command';
 
 export async function comboAllCommand(message: Message): Promise<void> {
@@ -15,6 +14,12 @@ export async function comboAllCommand(message: Message): Promise<void> {
 
   if (!user || !user.hePhai) {
     await masterMenuCommand(message);
+    return;
+  }
+
+  const producerJob = (user as any).producerJob || null;
+  if (!producerJob) {
+    await message.reply('⚠️ **Bạn chưa chọn Class Sản Xuất (PP)!** Hãy gõ `vkl` để hoàn tất chọn nghề (**Miner / Alchemist / Blacksmith**).');
     return;
   }
 
@@ -30,7 +35,7 @@ export async function comboAllCommand(message: Message): Promise<void> {
   // Cập nhật Cooldown
   await UserService.updateCooldownAtomic(userId, 'combo_all', now);
 
-  // 2. Thực hiện [1] HUNTER (SĂN QUÁI & RƯƠNG BÁU)
+  // 2. [COMBAT HUNTING] CLASS CHÍNH SĂN QUÁI
   const areaMonsters = MONSTERS.filter((m) => m.area === user.canhGioi.khuVuc && !m.isBoss);
   const baseMonster = areaMonsters[Math.floor(Math.random() * areaMonsters.length)] || MONSTERS[0];
   const totalStats = CombatEngineAdvanced.calculateTotalStats(user);
@@ -59,13 +64,25 @@ export async function comboAllCommand(message: Message): Promise<void> {
 
   const battleRes = await UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, huntLoot);
 
-  // 3. Thực hiện [2] MINER (ĐÀO QUẶNG & TINH THẠCH)
-  const mineRes = await GatheringService.mine(userId);
+  // 3. [PRODUCER JOB] CHỈ THỰC HIỆN ĐÚNG 1 NGHỀ CỦA NGƯỜI CHƠI
+  let producerResultText = '';
+  let producerJobName = '';
 
-  // 4. Thực hiện [3] ALCHEMIST (BÀO CHẾ MA DƯỢC)
-  const herbRes = await GatheringService.gatherHerbs(userId);
+  if (producerJob === 'miner' || producerJob === 'min') {
+    producerJobName = '🪨 MINER (Thợ Mỏ)';
+    const mineRes = await GatheringService.mine(userId);
+    producerResultText = mineRes.itemsGained.map((i: any) => `🪨 **${i.name}** x${i.qty}`).join(', ');
+  } else if (producerJob === 'alchemist' || producerJob === 'alc') {
+    producerJobName = '🧪 ALCHEMIST (Thợ Bào Chế)';
+    const herbRes = await GatheringService.gatherHerbs(userId);
+    producerResultText = herbRes.itemsGained.map((i: any) => `🧪 **${i.name}** x${i.qty}`).join(', ');
+  } else {
+    producerJobName = '🔨 BLACKSMITH (Thợ Rèn)';
+    const woodRes = await GatheringService.woodcut(userId);
+    producerResultText = woodRes.itemsGained.map((i: any) => `🪵 **${i.name}** x${i.qty}`).join(', ');
+  }
 
-  // 5. Tổng hợp kết quả
+  // 4. Tổng hợp kết quả
   const critBadge = isCrit ? ' 💥 **CRITICAL!**' : '';
   const huntLootText =
     huntLoot.length > 0
@@ -78,22 +95,19 @@ export async function comboAllCommand(message: Message): Promise<void> {
           .join(', ')
       : 'Không có';
 
-  const mineText = mineRes.itemsGained.map((i: any) => `🪨 **${i.name}** x${i.qty}`).join(', ');
-  const herbText = herbRes.itemsGained.map((i: any) => `🧪 **${i.name}** x${i.qty}`).join(', ');
-
   const levelUpNotify = battleRes.levelUp
-    ? `\n\n🎉 **THĂNG CẤP THÀNH CÔNG!** Bạn đã đạt **Level ${battleRes.newLevel}**!\n📈 **Chỉ số tự động cộng:** **+50 Max HP** | **+20 Max MP** | **+10 Sát Thương** | **+3 Phòng Thủ**!`
+    ? `\n\n🎉 **THĂNG CẤP THÀNH CÔNG!** Bạn đã đạt **Level ${battleRes.newLevel}**!\n📈 **Chỉ số tự động cộng:** **+50 Max HP** | **+20 Max MP** | **+10 Sát Thương** | **+3 Phòng Thu**!`
     : '';
 
   const embed = createDongSonEmbed()
-    .setTitle(`⚡ HOẠT ĐỘNG SẢN XUẤT TỔ ĐỘI (WORK COMBO) — ${message.author.username.toUpperCase()}`)
+    .setTitle(`⚡ HOẠT ĐỘNG SẢN XUẤT NHÂN VẬT — ${message.author.username.toUpperCase()}`)
     .setDescription(
-      `🎯 **Kết quả sản xuất tài nguyên 4 Class PP:**\n\n` +
-        `🏹 **HUNTER (Săn Quái):** Đả bại **${baseMonster.icon} ${baseMonster.name}** (Gây \`${damageDealt}\` DMG${critBadge})\n` +
-        `✨ Thưởng: **+${expEarned} EXP** | **+${formatDong(dongEarned)}** | Loot: ${huntLootText}\n\n` +
-        `🪨 **MINER (Đào Mỏ):** ${mineText}\n` +
-        `🧪 **ALCHEMIST (Bào Chế):** ${herbText}${levelUpNotify}\n\n` +
-        `💡 *Đừng quên thả nguyên liệu vào Kho Vault (\`vkl vlt dep\`) cho đồng đội trong nhóm 3-5 người dùng!*`
+      `🎯 **KẾT QUẢ ĐƠN PHÁI CHUYÊN MÔN (1 COMBAT + 1 PRODUCER):**\n\n` +
+        `⚔️ **HUNTING (Săn Quái):** Đả bại ${baseMonster.icon} **${baseMonster.name}** (Gây \`${damageDealt}\` DMG${critBadge})\n` +
+        `✨ **Thưởng:** \`+${expEarned} EXP\` | \`+${dongEarned} Vàng\` | **Loot:** ${huntLootText}\n\n` +
+        `${producerJobName}: ${producerResultText}` +
+        `${levelUpNotify}\n\n` +
+        `💡 *Đừng quên thả tài nguyên vào Kho Vault (\`vkl vlt dep\`) cho đồng đội trong nhóm 3-5 người dùng!*`
     );
 
   await message.reply({ embeds: [embed] });
