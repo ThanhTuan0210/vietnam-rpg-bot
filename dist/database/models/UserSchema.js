@@ -27,8 +27,8 @@ const UserSchema = new mongoose_1.Schema({
         kimBao: { type: Number, default: 0, min: 0 },
     },
     trangBi: {
-        vuKhi: { type: String, default: 'gay_tam_vong' },
-        aoGiap: { type: String, default: 'ao_vai_tho' },
+        vuKhi: { type: String, default: 'sword_01a' },
+        aoGiap: { type: String, default: 'shield_01a' },
         phuPhepTier: { type: Number, default: 0 },
     },
     tuiDo: [

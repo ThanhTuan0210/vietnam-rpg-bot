@@ -78,14 +78,14 @@ async function cheDuocCommand(message, args) {
 }
 async function nauAnCommand(message, args) {
     const userId = message.author.id;
-    const consumed = await UserService_1.UserService.consumeItemAtomic(userId, 'ca_chep_song', 2);
+    const consumed = await UserService_1.UserService.consumeItemAtomic(userId, 'fish_01a', 2);
     if (!consumed) {
-        await message.reply('❌ Bạn không đủ **2 Cá Chép Sông** (`ca_chep_song`) để nấu Cơm Lam!');
+        await message.reply('❌ Bạn không đủ **2 Cá Đầm Lầy Gothic** (`fish_01a`) để chế biến Dược Nướng!');
         return;
     }
-    await UserService_1.UserService.addItemAtomic(userId, 'com_lam', 1);
+    await UserService_1.UserService.addItemAtomic(userId, 'potion_01a', 1);
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
-        .setTitle('🍳 NẤU ĂN THÀNH CÔNG!')
-        .setDescription('Bạn đã nấu thành công **1 Cơm Lam** (`com_lam`) thơm dẻo linh khí!');
+        .setTitle('🍳 CHẾ BIẾN THÀNH CÔNG!')
+        .setDescription('Bạn đã nướng thành công **1 Bình Dược HP** (`potion_01a`)!');
     await message.reply({ embeds: [embed] });
 }

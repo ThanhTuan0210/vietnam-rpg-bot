@@ -54,8 +54,8 @@ class UserService {
                 chiSo: { hp: 100, maxHp: 100, mp: 50, maxMp: 50, satThuong: 10, magicAtk: 10, phongThu: 2, magicRes: 2, chiMang: 0.05, critDmg: 1.5, neTranh: 0.05, armorPen: 0, lifeSteal: 0 },
                 hePhai: null,
                 trangBi: {
-                    vuKhi: { itemId: 'gay_tam_vong', capCuongHoa: 0, bonusStat: 0 },
-                    aoGiap: { itemId: 'ao_vai_tho', capCuongHoa: 0, bonusStat: 0 },
+                    vuKhi: { itemId: 'sword_01a', capCuongHoa: 0, bonusStat: 0 },
+                    aoGiap: { itemId: 'shield_01a', capCuongHoa: 0, bonusStat: 0 },
                 },
                 tuiDo: [],
                 cooldowns: new Map(),

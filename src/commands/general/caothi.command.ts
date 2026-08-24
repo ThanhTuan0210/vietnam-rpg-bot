@@ -233,13 +233,13 @@ export async function moRuongCommand(message: Message, args: string[]): Promise<
 
     // 100% rớt Món #1 (Gỗ Tre / Lá Thuốc / Cơm Lam)
     const r1 = Math.random();
-    let m1 = 'go_tre_gai';
+    let m1 = 'wood_01a';
     let q1 = Math.floor(Math.random() * 3) + 1;
     if (r1 > 0.6 && r1 <= 0.85) {
-      m1 = 'la_thuoc_nam';
+      m1 = 'ingot_01a';
       q1 = Math.floor(Math.random() * 3) + 1;
     } else if (r1 > 0.85) {
-      m1 = 'com_lam';
+      m1 = 'potion_01a';
       q1 = 1;
     }
     const def1 = ITEMS[m1] || { name: m1, icon: '📦' };

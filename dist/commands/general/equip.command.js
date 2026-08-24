@@ -25,20 +25,13 @@ async function equipCommand(message, args) {
     }
     // Ánh xạ Alias Tên Tiếng Anh sang ID Vật Phẩm CSDL
     const aliases = {
-        wooden_sword: 'dao_tre_gai',
-        'wooden sword': 'dao_tre_gai',
-        basic_sword: 'gay_tam_vong',
-        'basic sword': 'gay_tam_vong',
-        basic_armor: 'ao_vai_tho',
-        'basic armor': 'ao_vai_tho',
-        fish_armor: 'ao_la_chuoi',
-        'fish armor': 'ao_la_chuoi',
-        zombie_sword: 'dao_mac_dong',
-        'zombie sword': 'dao_mac_dong',
-        ruby_sword: 'kiem_sat_ba_vi',
-        'ruby sword': 'kiem_sat_ba_vi',
-        epic_armor: 'giap_sat_trao_phong',
-        'epic armor': 'giap_sat_trao_phong',
+        sword: 'sword_01a',
+        'starter sword': 'sword_01a',
+        shield: 'shield_01a',
+        'starter shield': 'shield_01a',
+        staff: 'staff_01a',
+        bow: 'bow_01a',
+        excalibur: 'sword_03e',
     };
     const itemId = aliases[rawInput] || rawInput.replace(/ +/g, '_');
     const result = await UserService_1.UserService.equipItemAtomic(userId, itemId);

@@ -37,8 +37,8 @@ export class RebirthEngine {
           'canhGioi.khuVuc': 1,
           'chiSo.hp': 100,
           'chiSo.mp': 50,
-          'trangBi.vuKhi': { itemId: 'gay_tam_vong', capCuongHoa: 0, bonusStat: 0 },
-          'trangBi.aoGiap': { itemId: 'ao_vai_tho', capCuongHoa: 0, bonusStat: 0 },
+          'trangBi.vuKhi': { itemId: 'sword_01a', capCuongHoa: 0, bonusStat: 0 },
+          'trangBi.aoGiap': { itemId: 'shield_01a', capCuongHoa: 0, bonusStat: 0 },
         },
         $inc: {
           soLanTrungSinh: 1,

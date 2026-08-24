@@ -13,71 +13,65 @@ export async function phaCheCommand(message: Message, args: string[]): Promise<v
     string,
     { resultName: string; resultQty: number; dongCost: number; materials: { itemId: string; qty: number }[] }
   > = {
-    com_lam: {
-      resultName: 'Cơm Lam Bổ Dưỡng',
+    potion_01a: {
+      resultName: 'Bình Dược Hồi HP Sơ Cấp',
       resultQty: 2,
       dongCost: 100,
-      materials: [
-        { itemId: 'bo_nep', qty: 1 },
-        { itemId: 'go_tre_gai', qty: 2 },
-      ],
+      materials: [{ itemId: 'wood_01a', qty: 2 }],
     },
-    binh_kim_dan: {
-      resultName: 'Bình Kim Đan Hộ Thể',
+    potion_03a: {
+      resultName: 'Ma Dược Kích Rèn Thượng Cổ',
       resultQty: 1,
       dongCost: 500,
-      materials: [
-        { itemId: 'la_thuoc_nam', qty: 10 },
-        { itemId: 'cu_nhiem_sam', qty: 2 },
-      ],
+      materials: [{ itemId: 'crystal_01a', qty: 2 }],
     },
   };
 
-  if (!targetId) {
+  if (!targetId || !recipes[targetId]) {
     const embed = createDongSonEmbed()
-      .setTitle('🧪 DƯỢC LÒ PHA CHẾ — DÂN GIAN Y THUẬT')
+      .setTitle('🧪 LÒ BÀO CHẾ MA DƯỢC GOTHIC — ALCHEMIST FORGE')
       .setDescription(
-        `Luyện dược liệu thuốc nam và nướng Cơm Lam dẻo thơm linh khí!\n\n` +
-          `• Cú pháp: \`vkl phache [mã_vật_phẩm]\` (Ví dụ: \`vkl phache com_lam\` hoặc \`vkl phache binh_kim_dan\`)\n\n` +
-          `🍙 **Cơm Lam x2** (\`com_lam\`) — Cần 1 Bó Nếp + 2 Gỗ Tre (\`go_tre_gai\`) + 100đ *(Hồi 100% HP & MP)*\n` +
-          `🔮 **Bình Kim Đan** (\`binh_kim_dan\`) — Cần 10 Lá Thuốc Nam (\`la_thuoc_nam\`) + 2 Củ Nhân Sâm (\`cu_nhiem_sam\`) + 500đ *(+100% DEF trong 30p)*`
+        `Bào chế dược liệu thần kỳ hồi sinh lực và ma dược kích rèn!\n\n` +
+          `• Cú pháp: \`vkl brew [mã_vật_phẩm]\` (VD: \`vkl brew potion_01a\` hoặc \`vkl brew potion_03a\`)\n\n` +
+          `🧪 **Thuốc Hồi Máu HP x2** (\`potion_01a\`) — Cần 2 Gỗ Sồi Cổ (\`wood_01a\`) + 100 Vàng *(Hồi 100% HP & MP)*\n` +
+          `🔮 **Ma Dược Kích Rèn** (\`potion_03a\`) — Cần 2 Tinh Thạch Thượng Cổ (\`crystal_01a\`) + 500 Vàng`
       );
     await message.reply({ embeds: [embed] });
     return;
   }
 
   const recipe = recipes[targetId];
-  if (!recipe) {
-    await message.reply('❌ Công thức pha chế không tồn tại! Gõ `vkl phache` để xem danh sách.');
-    return;
-  }
 
   const user = await UserModelAdvanced.findOne({ userId });
   if (!user) return;
 
   if (user.taiChinh.dong < recipe.dongCost) {
-    await message.reply(`❌ Bạn không đủ ${formatDong(recipe.dongCost)} phí pha chế!`);
+    await message.reply(`❌ Bạn không đủ Tiền Vàng! Cần **${formatDong(recipe.dongCost)}**.`);
     return;
   }
 
+  const inventory = user.inventory || [];
   for (const mat of recipe.materials) {
-    const uItem = user.tuiDo.find((i) => i.itemId === mat.itemId);
-    const mDef = ITEMS[mat.itemId] || { name: mat.itemId };
-    if (!uItem || uItem.soLuong < mat.qty) {
-      await message.reply(`❌ Bạn thiếu **${mDef.name}** (\`${mat.itemId}\`) (Cần ${mat.qty}, đang có ${uItem?.soLuong || 0})!`);
+    const userItem = inventory.find((i) => i.itemId === mat.itemId);
+    const hasQty = userItem?.quantity || userItem?.soLuong || 0;
+    if (hasQty < mat.qty) {
+      const matDef = ITEMS[mat.itemId] || { name: mat.itemId };
+      await message.reply(`❌ Bạn thiếu nguyên liệu **${matDef.name}** (\`${mat.itemId}\`)! Cần ${mat.qty}, có ${hasQty}.`);
       return;
     }
   }
 
-  await UserService.deductDongAtomic(userId, recipe.dongCost);
+  user.taiChinh.dong -= recipe.dongCost;
   for (const mat of recipe.materials) {
     await UserService.consumeItemAtomic(userId, mat.itemId, mat.qty);
   }
+
   await UserService.addItemAtomic(userId, targetId, recipe.resultQty);
+  await user.save();
 
   const embed = createDongSonEmbed()
-    .setTitle('🧪 PHA CHẾ DƯỢC LIỆU THÀNH CÔNG!')
-    .setDescription(`Bạn đã luyện thành công **${recipe.resultName}** (\`${targetId}\`) **x${recipe.resultQty}** với phí ${formatDong(recipe.dongCost)}!`);
+    .setTitle('🧪 BÀO CHẾ THÀNH CÔNG!')
+    .setDescription(`Bạn đã bào chế thành công **${recipe.resultQty}x ${recipe.resultName}** (\`${targetId}\`)!`);
 
   await message.reply({ embeds: [embed] });
 }
