@@ -108,37 +108,41 @@ class UserService {
         return true;
     }
     /**
-     * Thêm vật phẩm vào túi đồ người dùng
+     * Thêm vật phẩm vào túi đồ người dùng (Đồng bộ cả inventory và tuiDo)
      */
     static async addItemAtomic(userId, itemId, quantity = 1) {
         const user = await User_model_1.UserModelAdvanced.findOne({ userId });
         if (!user)
             return false;
-        const existingIndex = user.tuiDo.findIndex((i) => i.itemId === itemId);
-        if (existingIndex > -1) {
-            const newQty = user.tuiDo[existingIndex].soLuong + quantity;
-            if (newQty <= 0) {
-                await User_model_1.UserModelAdvanced.updateOne({ userId }, { $pull: { tuiDo: { itemId } } });
-            }
-            else {
-                await User_model_1.UserModelAdvanced.updateOne({ userId, 'tuiDo.itemId': itemId }, { $set: { 'tuiDo.$.soLuong': newQty } });
-            }
+        let inventory = user.inventory || [];
+        let tuiDo = user.tuiDo || [];
+        let invItem = inventory.find((i) => i.itemId.toLowerCase() === itemId.toLowerCase());
+        let tuiDoItem = tuiDo.find((i) => i.itemId.toLowerCase() === itemId.toLowerCase());
+        if (invItem) {
+            invItem.quantity = (invItem.quantity || invItem.soLuong || 0) + quantity;
+            invItem.soLuong = invItem.quantity;
         }
         else if (quantity > 0) {
-            await User_model_1.UserModelAdvanced.updateOne({ userId }, { $push: { tuiDo: { itemId, soLuong: quantity, doHiem: 'THUONG' } } });
+            inventory.push({ itemId, quantity, soLuong: quantity, doHiem: 'THUONG' });
         }
+        if (tuiDoItem) {
+            tuiDoItem.soLuong = (tuiDoItem.soLuong || tuiDoItem.quantity || 0) + quantity;
+            tuiDoItem.quantity = tuiDoItem.soLuong;
+        }
+        else if (quantity > 0) {
+            tuiDo.push({ itemId, quantity, soLuong: quantity, doHiem: 'THUONG' });
+        }
+        user.inventory = inventory.filter((i) => (i.quantity || i.soLuong || 0) > 0);
+        user.tuiDo = tuiDo.filter((i) => (i.soLuong || i.quantity || 0) > 0);
+        user.markModified('inventory');
+        user.markModified('tuiDo');
+        await user.save();
         return true;
     }
     /**
      * Trừ vật phẩm trong túi đồ người dùng
      */
     static async removeItemAtomic(userId, itemId, quantity = 1) {
-        const user = await User_model_1.UserModelAdvanced.findOne({ userId });
-        if (!user)
-            return false;
-        const existingSlot = user.tuiDo.find((i) => i.itemId === itemId);
-        if (!existingSlot || existingSlot.soLuong < quantity)
-            return false;
         return await this.addItemAtomic(userId, itemId, -quantity);
     }
     /**
@@ -148,8 +152,10 @@ class UserService {
         const user = await User_model_1.UserModelAdvanced.findOne({ userId });
         if (!user)
             return false;
-        const item = user.tuiDo.find((i) => i.itemId === itemId);
-        if (!item || item.soLuong < quantity) {
+        const inventory = user.inventory && user.inventory.length > 0 ? user.inventory : user.tuiDo || [];
+        const item = inventory.find((i) => i.itemId.toLowerCase() === itemId.toLowerCase());
+        const currentQty = item?.quantity || item?.soLuong || 0;
+        if (!item || currentQty < quantity) {
             return false;
         }
         return await this.addItemAtomic(userId, itemId, -quantity);

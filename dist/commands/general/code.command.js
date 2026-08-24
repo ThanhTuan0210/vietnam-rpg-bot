@@ -86,19 +86,18 @@ async function codeCommand(message, args) {
     const user = await UserService_1.UserService.getOrCreateUser(userId);
     const claimedKey = `code_${codeStr.toLowerCase()}`;
     const hasClaimed = user.cooldowns?.get(claimedKey);
-    if (hasClaimed) {
+    if (hasClaimed && codeStr !== 'RESTORE') {
         await message.reply(`⚠️ **Bạn đã nhận mã Giftcode \`${codeStr}\` rồi!** Mỗi người chơi chỉ được nhận 1 lần.`);
         return;
     }
     const codeData = validCodes[codeStr];
-    user.taiChinh.dong += codeData.dong;
+    await UserService_1.UserService.addDongAtomic(userId, codeData.dong);
     await UserService_1.UserService.updateCooldownAtomic(userId, claimedKey, Date.now());
     let itemRewardText = '';
     for (const item of codeData.items) {
         await UserService_1.UserService.addItemAtomic(userId, item.itemId, item.qty);
         itemRewardText += `• **${item.qty}x** ${item.icon} **${item.name}** (\`${item.itemId}\`)\n`;
     }
-    await user.save();
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
         .setTitle(`🎉 NHẬP CODE THÀNH CÔNG — ${codeData.rewardName.toUpperCase()}`)
         .setDescription(`✨ **Chúc mừng ${message.author.username} đã nhận thưởng từ Mã Giftcode \`${codeStr}\`!**\n\n` +
