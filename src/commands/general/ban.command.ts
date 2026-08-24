@@ -4,6 +4,7 @@ import { UserService } from '../../game/services/UserService';
 import { ITEMS } from '../../game/data/items';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
 import { formatDong } from '../../utils/formatters';
+import { GLOBAL_MARKET_MULTIPLIERS } from './shop.command';
 
 export async function banCommand(message: Message, args: string[]): Promise<void> {
   const userId = message.author.id;
@@ -30,6 +31,12 @@ export async function banCommand(message: Message, args: string[]): Promise<void
         const itemRevenue = itemSlot.soLuong * itemDef.sellPrice;
         totalRevenue += itemRevenue;
         soldList.push({ itemId: itemSlot.itemId, name: itemDef.name, qty: itemSlot.soLuong, revenue: itemRevenue });
+
+        // Decrease demand multiplier due to supply overflow
+        if (GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] !== undefined) {
+          const oldMult = GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] || 1.0;
+          GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] = Math.max(0.5, oldMult - 0.05 * itemSlot.soLuong);
+        }
       } else {
         remainingInventory.push(itemSlot);
       }
@@ -53,7 +60,8 @@ export async function banCommand(message: Message, args: string[]): Promise<void
       .setDescription(
         `Bán tự động tất cả nông sản & phôi quặng trong túi đồ:\n\n` +
           `${soldSummaryStr}\n\n` +
-          `💵 **TỔNG TIỀN ĐỒNG THU VỀ:** **+${formatDong(totalRevenue)}**!`
+          `💵 **TỔNG TIỀN VÀNG THU VỀ:** **+${formatDong(totalRevenue)}**!\n` +
+          `📉 **Thị Trường Albion:** Nguồn cung tràn ngập! Giá các mặt hàng rác trong Tiệm Dự Trữ giảm nhẹ!`
       );
 
     await message.reply({ embeds: [embed] });
@@ -68,7 +76,7 @@ export async function banCommand(message: Message, args: string[]): Promise<void
     await message.reply(
       '⚠️ **Cú pháp bán chuẩn Epic RPG:**\n' +
         '• Bán tất cả tài nguyên rác: `vkl sell all` hoặc `vkl ban tatca`\n' +
-        '• Bán từng món: `vkl sell [mã_vật_phẩm] [số_lượng]` (Ví dụ: `vkl sell go_tre_gai 10`)'
+        '• Bán từng món: `vkl sell [mã_vật_phẩm] [số_lượng]` (Ví dụ: `vkl sell ingot_01a 5`)'
     );
     return;
   }
@@ -88,9 +96,18 @@ export async function banCommand(message: Message, args: string[]): Promise<void
   const totalEarned = itemDef.sellPrice * qty;
   await UserService.addDongAtomic(userId, totalEarned);
 
+  // ALBION DYNAMIC MARKET CURVE: Decrease demand multiplier (-5% per item sold)
+  if (GLOBAL_MARKET_MULTIPLIERS[itemId] !== undefined) {
+    const oldMult = GLOBAL_MARKET_MULTIPLIERS[itemId] || 1.0;
+    GLOBAL_MARKET_MULTIPLIERS[itemId] = Math.max(0.5, oldMult - 0.05 * qty);
+  }
+
   const embed = createDongSonEmbed()
-    .setTitle('💰 BÁN HÀNG THÀNH CÔNG!')
-    .setDescription(`Bạn đã bán **${qty}x ${itemDef.name}** (\`${itemId}\`) và thu về **+${formatDong(totalEarned)}**!`);
+    .setTitle('💰 BÁN HÀNG THÀNH CÔNG — THỊ TRƯỜNG ALBION')
+    .setDescription(
+      `Bạn đã bán **${qty}x ${itemDef.name}** (\`${itemId}\`) và thu về **+${formatDong(totalEarned)}**!\n` +
+        `📉 **Thị Trường Albion:** Nguồn Cung tăng làm giá vật phẩm này giảm -${5 * qty}% trong Tiệm Dự Trữ!`
+    );
 
   await message.reply({ embeds: [embed] });
 }
