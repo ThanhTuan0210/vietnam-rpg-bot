@@ -24,13 +24,14 @@ async function banCommand(message, args) {
         for (const itemSlot of user.tuiDo) {
             const itemDef = items_1.ITEMS[itemSlot.itemId];
             if (itemDef && lootTypes.includes(itemDef.type) && itemSlot.soLuong > 0) {
-                const itemRevenue = itemSlot.soLuong * itemDef.sellPrice;
+                // Tăng +8% tiền thưởng bán hàng giúp người chơi dễ thở hơn
+                const itemRevenue = Math.floor(itemSlot.soLuong * (itemDef.sellPrice || 500) * 1.08);
                 totalRevenue += itemRevenue;
                 soldList.push({ itemId: itemSlot.itemId, name: itemDef.name, qty: itemSlot.soLuong, revenue: itemRevenue });
-                // Decrease demand multiplier due to supply overflow
+                // Giảm -8% giá thị trường Albion do nguồn cung tràn ngập
                 if (shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] !== undefined) {
                     const oldMult = shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] || 1.0;
-                    shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] = Math.max(0.5, oldMult - 0.05 * itemSlot.soLuong);
+                    shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemSlot.itemId] = Math.max(0.5, oldMult - 0.08 * itemSlot.soLuong);
                 }
             }
             else {
@@ -49,10 +50,10 @@ async function banCommand(message, args) {
             .join('\n');
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('💰 THU HOẠCH — BÁN TẤT CẢ TÀI NGUYÊN RÁC')
-            .setDescription(`Bán tự động tất cả nông sản & phôi quặng trong túi đồ:\n\n` +
+            .setDescription(`Bán tự động tất cả tài nguyên trong túi đồ (🎁 **Đã cộng +8% Tiền Thưởng Thương Lái**):\n\n` +
             `${soldSummaryStr}\n\n` +
             `💵 **TỔNG TIỀN VÀNG THU VỀ:** **+${(0, formatters_1.formatDong)(totalRevenue)}**!\n` +
-            `📉 **Thị Trường Albion:** Nguồn cung tràn ngập! Giá các mặt hàng rác trong Tiệm Dự Trữ giảm nhẹ!`);
+            `📉 **Thị Trường Albion:** Nguồn cung tràn ngập! Giá mua lại giảm -8% mỗi đơn vị trong Tiệm Dự Trữ!`);
         await message.reply({ embeds: [embed] });
         return;
     }
@@ -75,16 +76,18 @@ async function banCommand(message, args) {
         await message.reply(`❌ Bạn không sở hữu đủ **${qty}x ${itemDef.name}** (\`${itemId}\`) để bán!`);
         return;
     }
-    const totalEarned = itemDef.sellPrice * qty;
+    // Tăng +8% giá tiền thu về khi bán lẻ giúp người chơi dễ thở hơn
+    const basePrice = itemDef.sellPrice || 500;
+    const totalEarned = Math.floor(basePrice * qty * 1.08);
     await UserService_1.UserService.addDongAtomic(userId, totalEarned);
-    // ALBION DYNAMIC MARKET CURVE: Decrease demand multiplier (-5% per item sold)
+    // ALBION DYNAMIC MARKET CURVE: Giảm -8% giá thị trường do Nguồn Cung tăng
     if (shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemId] !== undefined) {
         const oldMult = shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemId] || 1.0;
-        shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemId] = Math.max(0.5, oldMult - 0.05 * qty);
+        shop_command_1.GLOBAL_MARKET_MULTIPLIERS[itemId] = Math.max(0.5, oldMult - 0.08 * qty);
     }
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
         .setTitle('💰 BÁN HÀNG THÀNH CÔNG — THỊ TRƯỜNG ALBION')
-        .setDescription(`Bạn đã bán **${qty}x ${itemDef.name}** (\`${itemId}\`) và thu về **+${(0, formatters_1.formatDong)(totalEarned)}**!\n` +
-        `📉 **Thị Trường Albion:** Nguồn Cung tăng làm giá vật phẩm này giảm -${5 * qty}% trong Tiệm Dự Trữ!`);
+        .setDescription(`Bạn đã bán **${qty}x ${itemDef.name}** (\`${itemId}\`) và thu về **+${(0, formatters_1.formatDong)(totalEarned)}** (🎁 **Đã trợ giá +8% Thưởng Bán Hàng**)!\n` +
+        `📉 **Thị Trường Albion:** Nguồn Cung tăng làm giá vật phẩm này giảm -${8 * qty}% trong Tiệm Dự Trữ!`);
     await message.reply({ embeds: [embed] });
 }
