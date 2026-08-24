@@ -323,17 +323,6 @@ async function onMessageCreate(message) {
                 await (0, ren_1.renCommand)(message, args);
                 break;
             }
-            case 'fish':
-            case 'cauca':
-            case 'cau_ca': {
-                const fishRes = await GatheringService_1.GatheringService.fish(message.author.id);
-                const fishText = fishRes.itemsGained.map((i) => `🐟 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
-                const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle(`🐟 CÂU CÁ BIỂN SÂU — KYRISE RPG`)
-                    .setDescription(`🎣 **Bạn buông cần câu xuống vùng biển sâu Gothic và thu hoạch được:**\n\n${fishText}`);
-                await message.reply({ embeds: [embed] });
-                break;
-            }
             // --- COMBAT & OTHER ACTIVITIES ---
             case 'adventure':
             case 'adv':

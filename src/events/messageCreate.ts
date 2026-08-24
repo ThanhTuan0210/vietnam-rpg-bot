@@ -364,18 +364,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      case 'fish':
-      case 'cauca':
-      case 'cau_ca': {
-        const fishRes = await GatheringService.fish(message.author.id);
-        const fishText = fishRes.itemsGained.map((i: any) => `🐟 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
-        const embed = createDongSonEmbed()
-          .setTitle(`🐟 CÂU CÁ BIỂN SÂU — KYRISE RPG`)
-          .setDescription(`🎣 **Bạn buông cần câu xuống vùng biển sâu Gothic và thu hoạch được:**\n\n${fishText}`);
-        await message.reply({ embeds: [embed] });
-        break;
-      }
-
       // --- COMBAT & OTHER ACTIVITIES ---
       case 'adventure':
       case 'adv':

@@ -48,13 +48,12 @@ class CooldownDashboardService {
             { key: 'leothap', name: 'Leo Tháp Rồng Roguelike', command: 'vkl thap', durationMs: 300000 },
             { key: 'boss', name: 'Trùm Khu Vực Thế Giới', command: 'vkl boss', durationMs: 7200000 },
         ];
-        // 3. ⚒️ SẢN XUẤT & CHUYÊN MÔN (5 Tính năng)
+        // 3. ⚒️ SẢN XUẤT & CHUYÊN MÔN (4 Tính năng)
         const producerKeys = [
             { key: 'producer_job_change', name: 'Đổi Class Sản Xuất (PP)', command: 'vkl job', durationMs: 86400000 },
             { key: 'dao_khoang', name: 'Đào Khoáng Mỏ (Miner)', command: 'vkl m', durationMs: 30000 },
             { key: 'hai_thuoc', name: 'Bào Chế Thuốc (Alchemist)', command: 'vkl brew', durationMs: 30000 },
-            { key: 'don_cui', name: 'Đốn Gỗ Sồi (Blacksmith)', command: 'vkl craft', durationMs: 30000 },
-            { key: 'cau_ca', name: 'Câu Cá Biển Sâu', command: 'vkl fish', durationMs: 30000 },
+            { key: 'don_cui', name: 'Đốn Gỗ Sồi & Rèn Đồ (Blacksmith)', command: 'vkl craft', durationMs: 30000 },
         ];
         // 4. 🏰 BANG HỘI & TỔ ĐỘI (2 Tính năng)
         const socialKeys = [
