@@ -35,8 +35,25 @@ async function jobCommand(message, args) {
             await message.reply('⚠️ **Cú pháp chưa đúng!** Chọn Class Chiến Đấu (`war`, `mag`, `ran`, `ass`) và 1 trong 3 Class Sản Xuất (`min`, `alc`, `blk`).\n*VD:* `vkl job sel war min`');
             return;
         }
+        const currentProducer = (user.producerJob || '').toString().toLowerCase();
+        // Check 24-hour real-time cooldown if player is CHANGING an existing producer class
+        if (currentProducer && currentProducer !== 'chưa chọn' && currentProducer !== normProducer) {
+            const lastChange = user.cooldowns?.get('producer_job_change') || 0;
+            const now = Date.now();
+            const COOLDOWN_24H = 24 * 60 * 60 * 1000;
+            if (now - lastChange < COOLDOWN_24H) {
+                const remainingMs = COOLDOWN_24H - (now - lastChange);
+                const remHours = Math.floor(remainingMs / (1000 * 60 * 60));
+                const remMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+                await message.reply(`⏰ **COOLDOWN CHUYỂN NGHỀ SẢN XUẤT (24h REAL-TIME)!**\n\n` +
+                    `Bạn đã chuyển Class Sản Xuất gần đây. Bạn phải chờ thêm **${remHours} giờ ${remMins} phút** nữa mới có thể đổi Class Sản Xuất lần nữa!\n\n` +
+                    `💡 *Nếu muốn chuyển nghề NGAY LẬP TỨC mà không cần chờ, hãy mua **📜 Sách Xóa Nghề Trung Cổ (\`scroll_reset_job\`)** trong Tiệm Thương Nhân (\`vkl shop\`) với giá **50.000 Vàng** rồi sử dụng (\`vkl use scroll_reset_job\`)!*`);
+                return;
+            }
+        }
         user.hePhai = normCombat;
         user.producerJob = normProducer;
+        await UserService_1.UserService.updateCooldownAtomic(message.author.id, 'producer_job_change', Date.now());
         await user.save();
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('⚔️ ĐỔI SONG PHÁI DUAL-CLASS THÀNH CÔNG!')

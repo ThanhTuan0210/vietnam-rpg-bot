@@ -36,10 +36,10 @@ exports.ITEMS = {
     crystal_01a: { id: 'crystal_01a', name: 'Tinh Thạch Lam Tier 1', type: 'nguyenlieu', description: 'Tinh thạch ma thuật dùng chế tác.', sellPrice: 150, icon: '🔮' },
     crystal_01j: { id: 'crystal_01j', name: 'Tinh Thạch Hoàng Kim', type: 'nguyenlieu', description: 'Tinh thạch tối thượng ngục tối.', sellPrice: 1500, icon: '💎' },
     gem_01a: { id: 'gem_01a', name: 'Hồng Ngọc Trung Cổ', type: 'ngoc', description: 'Viên ngọc đỏ khảm vũ khí +80 ATK.', sellPrice: 300, icon: '💎' },
-    // 🗝️ KEYS & CHESTS
-    key_01a: { id: 'key_01a', name: 'Chìa Khóa Rừng Goblin', type: 'tinh_nang', description: 'Chìa khóa mở rương ngục tối tầng 1.', sellPrice: 150, icon: '🗝️' },
-    key_02b: { id: 'key_02b', name: 'Chìa Khóa Vương Tọa Rồng', type: 'tinh_nang', description: 'Chìa khóa mở Rương Thần Thoại tầng 7.', sellPrice: 3000, icon: '🗝️' },
-    gift_01a: { id: 'gift_01a', name: 'Rương Gỗ Gothic', type: 'ruong', description: 'Rương báu tầng 1 chứa ngọc & vàng.', sellPrice: 300, icon: '📦' },
+    // 📜 SPECIAL SCROLLS & KEYS
+    scroll_reset_job: { id: 'scroll_reset_job', name: '📜 Sách Xóa Nghề Trung Cổ', type: 'tinh_nang', description: 'Xóa bỏ ngay lập tức thời gian chờ 24h thực chuyển Class Sản Xuất (PP).', sellPrice: 25000, icon: '📜' },
+    key_01a: { id: 'key_01a', name: 'Chìa Khóa Ngục Tối Tầng 1', type: 'nguyenlieu', description: 'Chìa khóa sắt mở rương kho thạch.', sellPrice: 500, icon: '🗝️' },
+    gift_01a: { id: 'gift_01a', name: 'Rương Báu Thượng Cổ', type: 'ruong', description: 'Rương chứa vũ khí & vàng.', sellPrice: 1000, icon: '🧰' },
     giftopen_01f: { id: 'giftopen_01f', name: 'Rương Vô Địch Rồng ENDGAME', type: 'ruong', description: 'Rương báu tối thượng chứa Thần Kiếm Excalibur.', sellPrice: 20000, icon: '🎁' },
     // 📜 SPELLBOOKS & SCROLLS
     spellbook_01a: { id: 'spellbook_01a', name: 'Bí Kíp Bão Lửa Gothic', type: 'tinh_nang', description: 'Sách phép thi triển chiêu thức bão lửa.', sellPrice: 500, icon: '📜' },

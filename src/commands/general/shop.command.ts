@@ -34,7 +34,8 @@ export async function shopCommand(message: Message, args: string[]): Promise<voi
     ingot_01a: { name: ITEMS['ingot_01a']?.name || 'Thỏi Đồng Cổ', price: 300, type: 'Quặng', desc: 'Nguyên liệu rèn vũ khí Tier 1' },
     crystal_01a: { name: ITEMS['crystal_01a']?.name || 'Tinh Thạch Thượng Cổ', price: 800, type: 'Tinh Thạch', desc: 'Nguyên liệu kích rèn & khảm ngọc' },
 
-    // Chìa Khóa & Rương Gothic
+    // Chìa Khóa & Sách Đặc Biệt
+    scroll_reset_job: { name: '📜 Sách Xóa Nghề Trung Cổ', price: 50000, type: 'Sách Phép', desc: 'Xóa ngay lập tức thời gian chờ 24h thực đổi Class Sản Xuất (PP)' },
     key_01a: { name: ITEMS['key_01a']?.name || 'Chìa Khóa Ngục Tối Tầng 1', price: 2000, type: 'Chìa Khóa', desc: 'Mở rương báu Goblin Rừng' },
     gift_01a: { name: ITEMS['gift_01a']?.name || 'Rương Báu Thần Bí', price: 5000, type: 'Rương Báu', desc: 'Mở ngẫu nhiên vũ khí & vàng' },
   };

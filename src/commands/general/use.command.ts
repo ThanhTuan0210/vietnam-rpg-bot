@@ -82,6 +82,25 @@ export async function useCommand(message: Message, args: string[]): Promise<void
     return;
   }
 
+  // 📜 SÁCH XÓA NGHỀ TRUNG CỔ (RESET 24H COOLDOWN CHUYỂN CLASS PP)
+  if (itemId === 'scroll_reset_job') {
+    const consumed = await UserService.consumeItemAtomic(userId, 'scroll_reset_job', 1);
+    if (!consumed) {
+      await message.reply('❌ Bạn không có **📜 Sách Xóa Nghề Trung Cổ** (`scroll_reset_job`)! Hãy mua trong Tiệm Thương Nhân (`vkl shop`) với giá **50.000 Vàng**!');
+      return;
+    }
+    await UserService.updateCooldownAtomic(userId, 'producer_job_change', 0);
+    const embed = createDongSonEmbed()
+      .setTitle('📜 XÓA NGHỀ THÀNH CÔNG — KYRISE RPG')
+      .setDescription(
+        `🎉 **Bạn đã sử dụng thành công 📜 Sách Xóa Nghề Trung Cổ!**\n\n` +
+          `✨ Thời gian chờ 24h thực đổi Class Sản Xuất (PP) đã được reset **100%**!\n\n` +
+          `👉 **Hãy gõ \`vkl job sel <war|mag|ran|ass> <min|alc|blk>\` để đổi sang Class Sản Xuất mới ngay lập tức!**`
+      );
+    await message.reply({ embeds: [embed] });
+    return;
+  }
+
   // 1. ĐAN DƯỢC ĐỘT PHÁ CẢNH GIỚI (TĂNG +1 LEVEL NGAY LẬP TỨC)
   if (itemId === 'dan_dot_pha') {
     const consumed = await UserService.consumeItemAtomic(userId, 'dan_dot_pha', 1);
