@@ -95,6 +95,7 @@ export interface ITowerProgress {
 export interface IUserAdvanced extends Document {
   userId: string;
   hePhai: HePhaiType | null;
+  producerJob?: string;
   nguHanh: NguHanhType;
   danhHieu: string;
   canhGioi: ICanhGioi;
@@ -130,6 +131,10 @@ const UserAdvancedSchema = new Schema<IUserAdvanced>(
       index: true,
     },
     hePhai: {
+      type: String,
+      default: null,
+    },
+    producerJob: {
       type: String,
       default: null,
     },

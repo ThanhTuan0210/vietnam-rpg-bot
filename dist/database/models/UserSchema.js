@@ -9,6 +9,14 @@ const UserSchema = new mongoose_1.Schema({
         unique: true,
         index: true,
     },
+    hePhai: {
+        type: String,
+        default: null,
+    },
+    producerJob: {
+        type: String,
+        default: null,
+    },
     danhHieu: {
         type: String,
         default: 'Dân Làng',

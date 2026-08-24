@@ -28,6 +28,8 @@ export interface ITrangBi {
 
 export interface IUser extends Document {
   userId: string;
+  hePhai?: string;
+  producerJob?: string;
   danhHieu: string;
   chiSo: IChiSo;
   taiChinh: ITaiChinh;
@@ -45,6 +47,14 @@ const UserSchema = new Schema<IUser>(
       required: true,
       unique: true,
       index: true,
+    },
+    hePhai: {
+      type: String,
+      default: null,
+    },
+    producerJob: {
+      type: String,
+      default: null,
     },
     danhHieu: {
       type: String,

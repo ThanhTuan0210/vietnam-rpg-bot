@@ -13,6 +13,10 @@ const UserAdvancedSchema = new mongoose_1.Schema({
         type: String,
         default: null,
     },
+    producerJob: {
+        type: String,
+        default: null,
+    },
     nguHanh: {
         type: String,
         default: 'HOA',
