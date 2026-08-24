@@ -17,7 +17,8 @@ export async function vaultCommand(message: Message, args: string[]): Promise<vo
   const itemId = args[1]?.toLowerCase();
   const amount = parseInt(args[2]) || 1;
 
-  if (action === 'deposit' && itemId) {
+  // Support: d, dep, deposit
+  if ((action === 'd' || action === 'dep' || action === 'deposit') && itemId) {
     const itemSlot = user.inventory.find((i: any) => i.itemId.toLowerCase() === itemId);
     if (!itemSlot || itemSlot.quantity < amount) {
       await message.reply(`⚠️ **Không đủ vật phẩm!** Bạn không có đủ \`${amount}\` x \`${itemId}\` trong túi đồ.`);
@@ -44,7 +45,8 @@ export async function vaultCommand(message: Message, args: string[]): Promise<vo
     return;
   }
 
-  if (action === 'withdraw' && itemId) {
+  // Support: w, wd, withdraw
+  if ((action === 'w' || action === 'wd' || action === 'withdraw') && itemId) {
     const vaultQty = SQUAD_VAULT[itemId] || 0;
     if (vaultQty < amount) {
       await message.reply(`⚠️ **Kho Vault không đủ hàng!** Hiện chỉ có \`${vaultQty}\` x \`${itemId}\` trong Kho.`);
@@ -96,9 +98,9 @@ export async function vaultCommand(message: Message, args: string[]): Promise<vo
     .setDescription(
       `🏛️ **Kho Hợp Tác Xã Dành Cho Nhóm 3-5 Bạn Bè**\n\n` +
         `📊 **Danh mục tài nguyên trong Kho:**\n${vaultListStr}\n\n` +
-        `📌 **Cú pháp sử dụng:**\n` +
-        `• Gửi đồ vào Kho: \`vn vault deposit <mã_đồ> <số_lượng>\`\n` +
-        `• Rút đồ từ Kho: \`vn vault withdraw <mã_đồ> <số_lượng>\``
+        `📌 **Cú pháp Tiếng Anh viết tắt tối đa:**\n` +
+        `• Gửi đồ vào Kho: \`vn v d <mã_đồ> <số_lượng>\` (Hoặc \`vn v dep ingot_01a 5\`)\n` +
+        `• Rút đồ từ Kho: \`vn v w <mã_đồ> <số_lượng>\` (Hoặc \`vn v wd ingot_01a 5\`)`
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

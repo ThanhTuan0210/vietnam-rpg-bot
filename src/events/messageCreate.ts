@@ -122,32 +122,40 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
 
       case 'job':
+      case 'j':
       case 'nghe':
       case 'songphai':
         await jobCommand(message, args);
         break;
 
       case 'detu':
+      case 'dt':
+      case 'ap':
       case 'apprentice':
         await detuCommand(message, args);
         break;
 
       case 'vault':
+      case 'v':
       case 'khochung':
         await vaultCommand(message, args);
         break;
 
       case 'dungeon':
+      case 'd':
+      case 'dun':
       case 'nguctoi':
         await dungeonCommand(message, args);
         break;
 
       case 'trade':
+      case 't':
       case 'giaodich':
         await tradeCommand(message, args);
         break;
 
       case 'pet':
+      case 'pt':
       case 'linhthu':
         await petCommand(message, args);
         break;
