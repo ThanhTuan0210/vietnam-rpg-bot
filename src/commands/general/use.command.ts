@@ -192,7 +192,7 @@ export async function useCommand(message: Message, args: string[]): Promise<void
   }
 
   // 4. THUỐC HỒI MÁU HP: HỒI 100% HP & MP
-  if (itemId === 'potion_01a' || itemId === 'life_potion' || itemId === 'com_lam') {
+  if (itemId === 'potion_01a' || itemId === 'life_potion') {
     const consumed = await UserService.consumeItemAtomic(userId, 'potion_01a', 1);
     if (!consumed) {
       await message.reply('❌ Bạn không có **Thuốc Hồi Máu HP** (`potion_01a`) trong túi đồ!');
