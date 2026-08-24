@@ -17,6 +17,7 @@ const master_menu_command_1 = require("../commands/general/master_menu.command")
 const job_command_1 = require("../commands/general/job.command");
 const HourlyEventService_1 = require("../game/services/HourlyEventService");
 const help_command_1 = require("../commands/general/help.command");
+const ren_1 = require("../commands/general/ren");
 const messageCreate_1 = require("./messageCreate");
 function createMockMessage(interaction, customContent) {
     return {
@@ -156,6 +157,10 @@ async function onInteractionCreate(interaction) {
         if (interaction.isStringSelectMenu()) {
             if (interaction.customId === 'help_category_select') {
                 await (0, help_command_1.handleHelpSelectInteraction)(interaction);
+                return;
+            }
+            if (interaction.customId === 'craft_category_select') {
+                await (0, ren_1.handleCraftSelectInteraction)(interaction);
                 return;
             }
             const selectedValue = interaction.values[0];

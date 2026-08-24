@@ -14,6 +14,7 @@ import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { jobCommand } from '../commands/general/job.command';
 import { HourlyEventService } from '../game/services/HourlyEventService';
 import { handleHelpSelectInteraction } from '../commands/general/help.command';
+import { handleCraftSelectInteraction } from '../commands/general/ren';
 import { onMessageCreate } from './messageCreate';
 
 function createMockMessage(interaction: any, customContent?: string): Message {
@@ -191,6 +192,11 @@ export async function onInteractionCreate(interaction: Interaction): Promise<voi
     if (interaction.isStringSelectMenu()) {
       if (interaction.customId === 'help_category_select') {
         await handleHelpSelectInteraction(interaction);
+        return;
+      }
+
+      if (interaction.customId === 'craft_category_select') {
+        await handleCraftSelectInteraction(interaction);
         return;
       }
 
