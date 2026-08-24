@@ -6,6 +6,7 @@ import { CombatEngineAdvanced } from '../../game/engines/CombatEngine';
 import { UserService } from '../../game/services/UserService';
 import { GatheringService } from '../../game/services/GatheringService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
+import { formatDong } from '../../utils/formatters';
 import { masterMenuCommand } from './master_menu.command';
 
 export async function comboAllCommand(message: Message): Promise<void> {
@@ -71,6 +72,26 @@ export async function comboAllCommand(message: Message): Promise<void> {
         huntLoot.push({ itemId: drop.itemId, quantity: qty });
       }
     }
+  }
+
+  // Xử lý nếu nhân vật bị đả bại (0 HP) -> Áp dụng Hình Phạt Tử Trận (Phạt Vàng + Giảm -1 Level)
+  if (newPlayerHp === 0) {
+    const penalty = await UserService.applyDeathPenalty(userId);
+
+    const embed = createDongSonEmbed()
+      .setTitle(`💀 NHÂN VẬT TỬ TRẬN TRONG TRẬN ĐẤU — ${message.author.username.toUpperCase()}`)
+      .setDescription(
+        `👺 **TỬ TRẬN:** Bạn đã bị ${baseMonster.icon} **${baseMonster.name}** đả bại dã man!\n\n` +
+          `📉 **HÌNH PHẠT TỬ TRẬN HARDCORE:**\n` +
+          `• 🔻 **Giảm -1 Level:** \`Lv ${penalty.oldLevel}\` ➔ \`Lv ${penalty.newLevel}\` *(Kinh nghiệm reset về 0)*\n` +
+          `• 💸 **Phạt Tiền Vàng:** \`-${formatDong(penalty.goldLost)}\` Vàng *(Phạt 10% Vàng)*\n` +
+          `• 💀 **Sinh Lực:** \`0 / ${totalStats.totalMaxHp} HP\` *(TRỌNG THƯƠNG)*\n\n` +
+          `🧪 **HỒI SINH BÌNH PHỤC:**\n` +
+          `👉 Hãy dùng **Thuốc Hồi Máu HP (\`vkl use potion_01a\`)** hoặc mua tại **Tiệm Dự Trữ (\`vkl shop\`)** với giá 200 Vàng để bình phục 100% HP và tiếp tục chiến đấu!`
+      );
+
+    await message.reply({ embeds: [embed] });
+    return;
   }
 
   const battleRes = await UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, huntLoot);

@@ -396,4 +396,43 @@ export class UserService {
 
     return { levelUp, newLevel: level };
   }
+
+  /**
+   * 💀 Áp dụng Hình Phạt Tử Trận (Giảm -1 Level & Khấu trừ 10% Vàng)
+   */
+  public static async applyDeathPenalty(
+    userId: string
+  ): Promise<{ oldLevel: number; newLevel: number; goldLost: number }> {
+    const user = await UserModelAdvanced.findOne({ userId });
+    if (!user) return { oldLevel: 1, newLevel: 1, goldLost: 0 };
+
+    const oldLevel = user.canhGioi.capDo || 1;
+    const newLevel = Math.max(1, oldLevel - 1);
+
+    const currentGold = user.taiChinh.dong || 0;
+    const goldLost = Math.min(currentGold, Math.max(500, Math.floor(currentGold * 0.1)));
+    const newGold = Math.max(0, currentGold - goldLost);
+
+    const updateQuery: any = {
+      $set: {
+        'chiSo.hp': 0,
+        'canhGioi.capDo': newLevel,
+        'canhGioi.kinhNghiem': 0,
+        'taiChinh.dong': newGold,
+      },
+    };
+
+    if (oldLevel > 1) {
+      updateQuery.$inc = {
+        'chiSo.maxHp': -50,
+        'chiSo.maxMp': -20,
+        'chiSo.satThuong': -10,
+        'chiSo.phongThu': -3,
+      };
+    }
+
+    await UserModelAdvanced.updateOne({ userId }, updateQuery);
+
+    return { oldLevel, newLevel, goldLost };
+  }
 }

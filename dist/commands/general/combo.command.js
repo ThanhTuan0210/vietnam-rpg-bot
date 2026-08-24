@@ -8,6 +8,7 @@ const CombatEngine_1 = require("../../game/engines/CombatEngine");
 const UserService_1 = require("../../game/services/UserService");
 const GatheringService_1 = require("../../game/services/GatheringService");
 const embedBuilder_1 = require("../../utils/embedBuilder");
+const formatters_1 = require("../../utils/formatters");
 const master_menu_command_1 = require("./master_menu.command");
 async function comboAllCommand(message) {
     const userId = message.author.id;
@@ -61,6 +62,21 @@ async function comboAllCommand(message) {
                 huntLoot.push({ itemId: drop.itemId, quantity: qty });
             }
         }
+    }
+    // Xử lý nếu nhân vật bị đả bại (0 HP) -> Áp dụng Hình Phạt Tử Trận (Phạt Vàng + Giảm -1 Level)
+    if (newPlayerHp === 0) {
+        const penalty = await UserService_1.UserService.applyDeathPenalty(userId);
+        const embed = (0, embedBuilder_1.createDongSonEmbed)()
+            .setTitle(`💀 NHÂN VẬT TỬ TRẬN TRONG TRẬN ĐẤU — ${message.author.username.toUpperCase()}`)
+            .setDescription(`👺 **TỬ TRẬN:** Bạn đã bị ${baseMonster.icon} **${baseMonster.name}** đả bại dã man!\n\n` +
+            `📉 **HÌNH PHẠT TỬ TRẬN HARDCORE:**\n` +
+            `• 🔻 **Giảm -1 Level:** \`Lv ${penalty.oldLevel}\` ➔ \`Lv ${penalty.newLevel}\` *(Kinh nghiệm reset về 0)*\n` +
+            `• 💸 **Phạt Tiền Vàng:** \`-${(0, formatters_1.formatDong)(penalty.goldLost)}\` Vàng *(Phạt 10% Vàng)*\n` +
+            `• 💀 **Sinh Lực:** \`0 / ${totalStats.totalMaxHp} HP\` *(TRỌNG THƯƠNG)*\n\n` +
+            `🧪 **HỒI SINH BÌNH PHỤC:**\n` +
+            `👉 Hãy dùng **Thuốc Hồi Máu HP (\`vkl use potion_01a\`)** hoặc mua tại **Tiệm Dự Trữ (\`vkl shop\`)** với giá 200 Vàng để bình phục 100% HP và tiếp tục chiến đấu!`);
+        await message.reply({ embeds: [embed] });
+        return;
     }
     const battleRes = await UserService_1.UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, huntLoot);
     // 3. [PRODUCER JOB] CHỈ THỰC HIỆN ĐÚNG 1 NGHỀ CỦA NGƯỜI CHƠI
