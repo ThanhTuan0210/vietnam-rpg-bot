@@ -3,6 +3,7 @@ import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { helpInteractiveCommand } from '../commands/general/help.command';
 import { handleUnknownCommandSuggest } from '../utils/fuzzySuggest';
 import { guideCommand } from '../commands/general/guide.command';
+import { ruleCommand } from '../commands/general/rule.command';
 import { eventTestCommand } from '../commands/general/event.command';
 import { GatheringService } from '../game/services/GatheringService';
 import { UserService } from '../game/services/UserService';
@@ -99,6 +100,14 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'lore':
       case 'g':
         await guideCommand(message);
+        break;
+
+      case 'rule':
+      case 'rules':
+      case 'luat':
+      case 'luatchoi':
+      case 'luat_choi':
+        await ruleCommand(message);
         break;
 
       case 'event':

@@ -5,6 +5,7 @@ const master_menu_command_1 = require("../commands/general/master_menu.command")
 const help_command_1 = require("../commands/general/help.command");
 const fuzzySuggest_1 = require("../utils/fuzzySuggest");
 const guide_command_1 = require("../commands/general/guide.command");
+const rule_command_1 = require("../commands/general/rule.command");
 const event_command_1 = require("../commands/general/event.command");
 const GatheringService_1 = require("../game/services/GatheringService");
 const UserService_1 = require("../game/services/UserService");
@@ -94,6 +95,13 @@ async function onMessageCreate(message) {
             case 'lore':
             case 'g':
                 await (0, guide_command_1.guideCommand)(message);
+                break;
+            case 'rule':
+            case 'rules':
+            case 'luat':
+            case 'luatchoi':
+            case 'luat_choi':
+                await (0, rule_command_1.ruleCommand)(message);
                 break;
             case 'event':
             case 'sukien':
