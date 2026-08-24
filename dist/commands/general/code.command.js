@@ -44,24 +44,6 @@ async function codeCommand(message, args) {
                 { itemId: 'potion_01a', name: 'Thuốc Hồi Máu HP', icon: '🧪', qty: 10 },
             ],
         },
-        RESTORE: {
-            rewardName: '🎁 ĐẠI QUÀ HOÀN TÁC TRANG BỊ & NGUYÊN LIỆU',
-            dong: 200000,
-            items: [
-                { itemId: 'wood_01a', name: 'Gỗ Sồi Cổ Tier 1.1', icon: '🪵', qty: 10 },
-                { itemId: 'wood_01b', name: 'Gỗ Thông Gothic Tier 1.2', icon: '🪵', qty: 10 },
-                { itemId: 'ingot_01a', name: 'Thỏi Kim Loại Tier 1.1', icon: '🧱', qty: 10 },
-                { itemId: 'crystal_01a', name: 'Tinh Thạch Ma Thuật Tier 1.1', icon: '🔮', qty: 10 },
-                { itemId: 'key_01a', name: 'Chìa Khóa Ngục Tối Tier 1.1', icon: '🗝️', qty: 10 },
-                { itemId: 'potion_01a', name: 'Thuốc Hồi Máu HP Tier 1.1', icon: '🧪', qty: 10 },
-                { itemId: 'potion_03a', name: 'Ma Dược Kích Rèn Tier 3.1', icon: '🧪', qty: 5 },
-                { itemId: 'sword_01a', name: 'Thép Kiếm Gothic Tier 1', icon: '⚔️', qty: 1 },
-                { itemId: 'shield_01a', name: 'Khiên Thép Gothic Tier 1', icon: '🛡️', qty: 1 },
-                { itemId: 'gift_01a', name: 'Rương Báu Thượng Cổ Tier 1.1', icon: '🧰', qty: 5 },
-                { itemId: 'scroll_reset_job', name: 'Sách Xóa Nghề Trung Cổ', icon: '📜', qty: 5 },
-                { itemId: 'gem_01a', name: 'Hồng Ngọc Khảm Giáp Tier 1.1', icon: '💎', qty: 5 },
-            ],
-        },
         DOINGHE: {
             rewardName: '📜 Quà Tự Do Đổi Nghề Trung Cổ',
             dong: 50000,
@@ -86,7 +68,7 @@ async function codeCommand(message, args) {
     const user = await UserService_1.UserService.getOrCreateUser(userId);
     const claimedKey = `code_${codeStr.toLowerCase()}`;
     const hasClaimed = user.cooldowns?.get(claimedKey);
-    if (hasClaimed && codeStr !== 'RESTORE') {
+    if (hasClaimed) {
         await message.reply(`⚠️ **Bạn đã nhận mã Giftcode \`${codeStr}\` rồi!** Mỗi người chơi chỉ được nhận 1 lần.`);
         return;
     }
