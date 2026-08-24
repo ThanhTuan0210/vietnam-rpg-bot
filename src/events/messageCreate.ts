@@ -41,7 +41,6 @@ import { pvpCommand } from '../commands/combat/pvp.command';
 import { leoThapCommandClean } from '../commands/general/LeoThapCommand';
 import { bossCommand } from '../commands/general/boss.command';
 import { luyenVoCommand } from '../commands/combat/luyenvo';
-import { farmCommand } from '../commands/general/farm.command';
 import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { trungHoiCommand, canCotCommand } from '../commands/general/trunghoi';
@@ -50,7 +49,6 @@ import { bangHoiCommand } from '../commands/general/banghoi.command';
 import { trynaCommand } from '../commands/general/tryna.command';
 import { thuongLaiCommand } from '../commands/general/thuonglai.command';
 import { bauCuaCommand } from '../commands/minigames/baucua.command';
-import { duaLinhThuCommand } from '../commands/minigames/duangua.command';
 import { taiXiuCommand } from '../commands/minigames/taixiu.command';
 import { xiDachCommand } from '../commands/minigames/xidach.command';
 import { oanTuTiCommand } from '../commands/minigames/oantuti.command';
@@ -420,14 +418,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await luyenVoCommand(message);
         break;
 
-      case 'farm':
-      case 'nongsang':
-      case 'nongtrai':
-      case 'nong_sang':
-      case 'nong_trai':
-        await farmCommand(message, args);
-        break;
-
       case 'sync_emojis':
       case 'emojis':
         await syncEmojisCommand(message);
@@ -497,13 +487,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'choido':
         await choiDoCommand(message);
-        break;
-
-      case 'duangua':
-      case 'dua_linhthu':
-      case 'dualinhthu':
-      case 'race':
-        await duaLinhThuCommand(message, args);
         break;
 
       default:

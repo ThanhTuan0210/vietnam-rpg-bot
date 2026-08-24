@@ -42,7 +42,6 @@ const pvp_command_1 = require("../commands/combat/pvp.command");
 const LeoThapCommand_1 = require("../commands/general/LeoThapCommand");
 const boss_command_1 = require("../commands/general/boss.command");
 const luyenvo_1 = require("../commands/combat/luyenvo");
-const farm_command_1 = require("../commands/general/farm.command");
 const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
 const trunghoi_1 = require("../commands/general/trunghoi");
@@ -51,7 +50,6 @@ const banghoi_command_1 = require("../commands/general/banghoi.command");
 const tryna_command_1 = require("../commands/general/tryna.command");
 const thuonglai_command_1 = require("../commands/general/thuonglai.command");
 const baucua_command_1 = require("../commands/minigames/baucua.command");
-const duangua_command_1 = require("../commands/minigames/duangua.command");
 const taixiu_command_1 = require("../commands/minigames/taixiu.command");
 const xidach_command_1 = require("../commands/minigames/xidach.command");
 const oantuti_command_1 = require("../commands/minigames/oantuti.command");
@@ -372,13 +370,6 @@ async function onMessageCreate(message) {
             case 'train':
                 await (0, luyenvo_1.luyenVoCommand)(message);
                 break;
-            case 'farm':
-            case 'nongsang':
-            case 'nongtrai':
-            case 'nong_sang':
-            case 'nong_trai':
-                await (0, farm_command_1.farmCommand)(message, args);
-                break;
             case 'sync_emojis':
             case 'emojis':
                 await (0, sync_emojis_command_1.syncEmojisCommand)(message);
@@ -435,12 +426,6 @@ async function onMessageCreate(message) {
                 break;
             case 'choido':
                 await (0, choido_command_1.choiDoCommand)(message);
-                break;
-            case 'duangua':
-            case 'dua_linhthu':
-            case 'dualinhthu':
-            case 'race':
-                await (0, duangua_command_1.duaLinhThuCommand)(message, args);
                 break;
             default:
                 await (0, fuzzySuggest_1.handleUnknownCommandSuggest)(message, command);
