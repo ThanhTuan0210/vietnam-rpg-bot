@@ -25,8 +25,6 @@ const pet_command_1 = require("../commands/general/pet.command");
 const ghep_command_1 = require("../commands/general/ghep.command");
 const phache_command_1 = require("../commands/general/phache.command");
 const kham_command_1 = require("../commands/general/kham.command");
-// Parity & Help Commands
-const help_command_1 = require("../commands/general/help.command");
 const give_command_1 = require("../commands/general/give.command");
 const shop_command_1 = require("../commands/general/shop.command");
 const use_command_1 = require("../commands/general/use.command");
@@ -89,17 +87,16 @@ async function onMessageCreate(message) {
         return;
     console.log(`📩 [DISCORD COMMAND] ${message.author.tag} (${message.guild.name}): "${content}"`);
     const args = content.slice(matchedPrefix.length).trim().split(/ +/);
-    const command = args.shift()?.toLowerCase();
-    if (!command)
-        return;
+    const command = (args.shift() || '').toLowerCase();
     try {
         switch (command) {
             // --- ENGLISH & VIETNAMESE HELP & START ---
+            case '':
             case 'help':
             case 'lenh':
             case 'trogiup':
             case 'h':
-                await (0, help_command_1.helpCommand)(message);
+                await (0, master_menu_command_1.masterMenuCommand)(message);
                 break;
             case 'start':
             case 'batdau':

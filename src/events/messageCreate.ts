@@ -107,18 +107,17 @@ export async function onMessageCreate(message: Message): Promise<void> {
   console.log(`📩 [DISCORD COMMAND] ${message.author.tag} (${message.guild.name}): "${content}"`);
 
   const args = content.slice(matchedPrefix.length).trim().split(/ +/);
-  const command = args.shift()?.toLowerCase();
-
-  if (!command) return;
+  const command = (args.shift() || '').toLowerCase();
 
   try {
     switch (command) {
       // --- ENGLISH & VIETNAMESE HELP & START ---
+      case '':
       case 'help':
       case 'lenh':
       case 'trogiup':
       case 'h':
-        await helpCommand(message);
+        await masterMenuCommand(message);
         break;
 
       case 'start':
