@@ -101,35 +101,30 @@ async function onMessageCreate(message) {
                 await (0, batdau_1.batDauCommand)(message);
                 break;
             case 'job':
-            case 'j':
-            case 'nghe':
             case 'songphai':
                 await (0, job_command_1.jobCommand)(message, args);
                 break;
             case 'detu':
-            case 'dt':
-            case 'ap':
+            case 'dtu':
             case 'apprentice':
                 await (0, detu_command_1.detuCommand)(message, args);
                 break;
             case 'vault':
-            case 'v':
+            case 'vlt':
             case 'khochung':
                 await (0, vault_command_1.vaultCommand)(message, args);
                 break;
             case 'dungeon':
-            case 'd':
             case 'dun':
             case 'nguctoi':
                 await (0, dungeon_command_1.dungeonCommand)(message, args);
                 break;
             case 'trade':
-            case 't':
+            case 'trd':
             case 'giaodich':
                 await (0, trade_command_1.tradeCommand)(message, args);
                 break;
             case 'pet':
-            case 'pt':
             case 'linhthu':
                 await (0, pet_command_1.petCommand)(message, args);
                 break;

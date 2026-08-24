@@ -7,19 +7,40 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
 
   const subCommand = args[0]?.toLowerCase();
 
-  // Support: s, sel, select
-  if ((subCommand === 's' || subCommand === 'sel' || subCommand === 'select') && args.length >= 3) {
+  // Support 3-letter prefix: sel, select
+  if ((subCommand === 'sel' || subCommand === 'select') && args.length >= 3) {
     const combatInput = args[1].toLowerCase();
     const producerInput = args[2].toLowerCase();
 
-    const validCombat = ['warrior', 'w', 'mage', 'm', 'ranger', 'r', 'assassin', 'a'];
-    const validProducer = ['miner', 'm', 'alchemist', 'alc', 'blacksmith', 'bs', 'hunter', 'h'];
+    const combatMap: Record<string, string> = {
+      war: 'warrior',
+      warrior: 'warrior',
+      mag: 'mage',
+      mage: 'mage',
+      ran: 'ranger',
+      ranger: 'ranger',
+      ass: 'assassin',
+      assassin: 'assassin',
+    };
 
-    const combatMap: Record<string, string> = { w: 'warrior', m: 'mage', r: 'ranger', a: 'assassin' };
-    const producerMap: Record<string, string> = { m: 'miner', alc: 'alchemist', bs: 'blacksmith', h: 'hunter' };
+    const producerMap: Record<string, string> = {
+      min: 'miner',
+      miner: 'miner',
+      alc: 'alchemist',
+      alchemist: 'alchemist',
+      blk: 'blacksmith',
+      blacksmith: 'blacksmith',
+      hnt: 'hunter',
+      hunter: 'hunter',
+    };
 
-    const normCombat = combatMap[combatInput] || combatInput;
-    const normProducer = producerMap[producerInput] || producerInput;
+    const normCombat = combatMap[combatInput];
+    const normProducer = producerMap[producerInput];
+
+    if (!normCombat || !normProducer) {
+      await message.reply('⚠️ **Cú pháp chưa đúng!** Chọn 3 chữ đầu Class Chiến Đấu (`war`, `mag`, `ran`, `ass`) và Class Sản Xuất (`min`, `alc`, `blk`, `hnt`).\n*VD:* `vn job sel mag min`');
+      return;
+    }
 
     user.hePhai = normCombat as any;
     (user as any).producerJob = normProducer;
@@ -35,8 +56,8 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
       );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder().setCustomId('cmd_profile').setLabel('🎒 Hồ Sơ Person').setStyle(ButtonStyle.Primary),
-      new ButtonBuilder().setCustomId('cmd_vault').setLabel('📦 Kho Vault Chung').setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId('cmd_profile').setLabel('🎒 Hồ Sơ').setStyle(ButtonStyle.Primary),
+      new ButtonBuilder().setCustomId('cmd_vault').setLabel('📦 Kho Vault').setStyle(ButtonStyle.Success),
       new ButtonBuilder().setCustomId('cmd_dungeon').setLabel('🗺️ Ngục Tối').setStyle(ButtonStyle.Danger)
     );
 
@@ -54,10 +75,10 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
       `👤 **Anh Hùng:** ${message.author.username}\n` +
         `⚔️ **Class Chiến Đấu Hiện Tại:** \`${currentCombat.toUpperCase()}\`\n` +
         `🔨 **Class Sản Xuất Hiện Tại (PP):** \`${currentProducer.toUpperCase()}\`\n\n` +
-        `📌 **Hướng dẫn chọn Song Phái (Cú pháp Tiếng Anh viết tắt tối đa):**\n` +
-        `• Gõ ngắn nhất: \`vn j s <w|m|r|a> <m|alc|bs|h>\` (Hoặc \`vn j sel warrior miner\`)\n` +
-        `• **Combat:** \`w\` (Warrior), \`m\` (Mage), \`r\` (Ranger), \`a\` (Assassin)\n` +
-        `• **Producer:** \`m\` (Miner), \`alc\` (Alchemist), \`bs\` (Blacksmith), \`h\` (Hunter)`
+        `📌 **Cú pháp Tiếng Anh 3 chữ đầu tiện lợi:**\n` +
+        `• Gõ 3 chữ đầu: \`vn job sel <war|mag|ran|ass> <min|alc|blk|hnt>\` (VD: \`vn job sel war min\`)\n` +
+        `• **Combat:** \`war\` (Warrior), \`mag\` (Mage), \`ran\` (Ranger), \`ass\` (Assassin)\n` +
+        `• **Producer:** \`min\` (Miner), \`alc\` (Alchemist), \`blk\` (Blacksmith), \`hnt\` (Hunter)`
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
