@@ -61,5 +61,8 @@ async function tuiDoCommand(message) {
             inline: true,
         });
     }
+    embed.setFooter({
+        text: '💡 Lưu ý: Trang bị đang MẶC TRÊN NGƯỜI xem ở lệnh vkl p • Tài nguyên cất TRONG KHO VAULT xem ở lệnh vkl vlt',
+    });
     await message.reply({ embeds: [embed] });
 }
