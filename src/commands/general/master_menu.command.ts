@@ -9,7 +9,7 @@ export async function masterMenuCommand(message: Message): Promise<void> {
   const currentProducer = ((user as any).producerJob || 'Chưa Chọn').toUpperCase();
 
   const embed = createDongSonEmbed()
-    .setTitle('🎮 TRUYỀN KỲ THỦY TỔ TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER')
+    .setTitle('🎮 TRUYỀN KỲ THỦY TỔ TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
     .setDescription(
       `👤 **Anh Hùng:** ${message.author.username}\n` +
         `⚔️ **Class Chiến Đấu:** \`${currentCombat}\` | 🔨 **Class Sản Xuất:** \`${currentProducer}\`\n\n` +
@@ -18,10 +18,10 @@ export async function masterMenuCommand(message: Message): Promise<void> {
 
   // Row 1: Direct Action Buttons
   const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-    new ButtonBuilder().setCustomId('cmd_combo').setLabel('⚡ Lao Động Combo (vn w)').setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId('cmd_dungeon_1').setLabel('🗺️ Ngục Tối (vn d)').setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId('cmd_tuido').setLabel('🎒 Túi Đồ (vn i)').setStyle(ButtonStyle.Primary),
-    new ButtonBuilder().setCustomId('cmd_profile').setLabel('👤 Hồ Sơ (vn p)').setStyle(ButtonStyle.Secondary)
+    new ButtonBuilder().setCustomId('cmd_combo').setLabel('⚡ Lao Động Combo (vkl w)').setStyle(ButtonStyle.Success),
+    new ButtonBuilder().setCustomId('cmd_dungeon_1').setLabel('🗺️ Ngục Tối (vkl d)').setStyle(ButtonStyle.Danger),
+    new ButtonBuilder().setCustomId('cmd_tuido').setLabel('🎒 Túi Đồ (vkl i)').setStyle(ButtonStyle.Primary),
+    new ButtonBuilder().setCustomId('cmd_profile').setLabel('👤 Hồ Sơ (vkl p)').setStyle(ButtonStyle.Secondary)
   );
 
   // Row 2: Master Select Menu for Quick Options
