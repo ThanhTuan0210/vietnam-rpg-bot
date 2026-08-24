@@ -1,10 +1,11 @@
 import { IUserAdvanced } from '../../database/models/User.model';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
 
-export interface CooldownItemStatus {
+export interface CooldownDefinition {
   key: string;
   name: string;
-  cooldownMs: number;
+  command: string;
+  durationMs: number;
 }
 
 export class CooldownDashboardService {
@@ -14,14 +15,14 @@ export class CooldownDashboardService {
   public static renderCooldownEmbed(user: IUserAdvanced, username: string) {
     const now = Date.now();
 
-    const getStatusStr = (keys: { key: string; name: string; durationMs: number }[]): string => {
-      return keys
+    const getStatusListText = (definitions: CooldownDefinition[]): string => {
+      return definitions
         .map((k) => {
-          const lastUsed = user.cooldowns.get(k.key) || 0;
+          const lastUsed = user.cooldowns?.get(k.key) || 0;
           const elapsed = now - lastUsed;
 
-          if (elapsed >= k.durationMs) {
-            return `✅ ~~~ **${k.name}**`;
+          if (k.durationMs === 0 || elapsed >= k.durationMs) {
+            return `🟢 **${k.name}** (\`${k.command}\`) ➔ **✅ SẴN SÀNG!**`;
           } else {
             const remSec = Math.ceil((k.durationMs - elapsed) / 1000);
             const hours = Math.floor(remSec / 3600);
@@ -33,71 +34,71 @@ export class CooldownDashboardService {
             if (minutes > 0) timeStr += `${minutes}m `;
             timeStr += `${seconds}s`;
 
-            return `🕒 ~~~ **${k.name}** (${timeStr.trim()})`;
+            return `⏳ **${k.name}** (\`${k.command}\`) ➔ **🕒 Còn ${timeStr.trim()}**`;
           }
         })
         .join('\n');
     };
 
-    // 1. Rewards
-    const rewardKeys = [
-      { key: 'daily_reward', name: 'diemdanh | daily', durationMs: 86400000 },
-      { key: 'weekly_reward', name: 'hangtuan | weekly', durationMs: 604800000 },
-      { key: 'mo_ruong', name: 'mo_ruong | lootbox', durationMs: 0 },
-      { key: 'thu_duhi', name: 'thu_duhi | pet adventure', durationMs: 3600000 },
-      { key: 'xinxam', name: 'xinxam | daily fortune', durationMs: 86400000 },
+    // 1. 🎁 ĐIỂM DANH & THƯỞNG HÀNG NGÀY
+    const rewardKeys: CooldownDefinition[] = [
+      { key: 'daily_reward', name: 'Điểm Danh Hàng Ngày', command: 'vkl daily', durationMs: 86400000 },
+      { key: 'weekly_reward', name: 'Nhận Thưởng Hàng Tuần', command: 'vkl weekly', durationMs: 604800000 },
+      { key: 'caothi', name: 'Nhiệm Vụ Cáo Thị', command: 'vkl caothi', durationMs: 10800000 },
+      { key: 'xinxam', name: 'Xin Xăm May Mắn', command: 'vkl xinxam', durationMs: 86400000 },
     ];
 
-    // 2. Experience
-    const expKeys = [
-      { key: 'san', name: 'san | hunt', durationMs: 60000 },
-      { key: 'thamhiem', name: 'thamhiem | adventure', durationMs: 300000 },
-      { key: 'luyenvo', name: 'luyenvo | training', durationMs: 60000 },
-      { key: 'pvp', name: 'pvp | duel', durationMs: 120000 },
-      { key: 'caothi', name: 'caothi | quest', durationMs: 3600000 },
+    // 2. ⚔️ CHIẾN ĐẤU & NGỤC TỐI
+    const combatKeys: CooldownDefinition[] = [
+      { key: 'combo_all', name: 'Lao Động Combo (Combat + Job)', command: 'vkl w', durationMs: 60000 },
+      { key: 'san', name: 'Săn Quái Đơn Phái', command: 'vkl h', durationMs: 30000 },
+      { key: 'phuban', name: 'Chinh Phục Ngục Tối (Tầng 1-7)', command: 'vkl d 1', durationMs: 3600000 },
+      { key: 'pvp', name: 'Lôi Đài Thách Đấu PVP', command: 'vkl pvp', durationMs: 120000 },
+      { key: 'leothap', name: 'Leo Tháp Rồng Roguelike', command: 'vkl thap', durationMs: 300000 },
+      { key: 'boss', name: 'Trùm Khu Vực Thế Giới', command: 'vkl boss', durationMs: 7200000 },
     ];
 
-    // 3. Progress & Gathering (ĐÃ GIẢM XUỐNG 3 PHÚT = 180,000 ms)
-    const progressKeys = [
-      { key: 'don_cui', name: 'don_cui | chop', durationMs: 180000 },
-      { key: 'cau_ca', name: 'cau_ca | fish', durationMs: 180000 },
-      { key: 'hai_thuoc', name: 'hai_thuoc | pickup', durationMs: 180000 },
-      { key: 'dao_khoang', name: 'dao_khoang | mine', durationMs: 180000 },
-      { key: 'dua_linhthu', name: 'dua_linhthu | race', durationMs: 600000 },
-      { key: 'leothap', name: 'leothap | arena tower', durationMs: 0 },
-      { key: 'phuban', name: 'phuban | dungeon', durationMs: 3600000 },
+    // 3. ⚒️ SẢN XUẤT & NGHỀ NGHỆP
+    const producerKeys: CooldownDefinition[] = [
+      { key: 'producer_job_change', name: 'Đổi Class Sản Xuất (PP)', command: 'vkl job', durationMs: 86400000 },
+      { key: 'dao_khoang', name: 'Đào Khoáng Mỏ (Miner)', command: 'vkl m', durationMs: 30000 },
+      { key: 'hai_thuoc', name: 'Bào Chế Thuốc (Alchemist)', command: 'vkl brew', durationMs: 30000 },
+      { key: 'don_cui', name: 'Đốn Gỗ Sồi (Blacksmith)', command: 'vkl wcut', durationMs: 30000 },
+      { key: 'cau_ca', name: 'Câu Cá Biển Sâu', command: 'vkl fish', durationMs: 30000 },
     ];
 
-    // 4. Farming & Guild
-    const farmKeys = [
-      { key: 'nongsang', name: 'nongsang | farm', durationMs: 0 },
-      { key: 'bang', name: 'bang | guild', durationMs: 0 },
+    // 4. 🏰 TỔ ĐỘI & NÔNG TRẠI
+    const socialKeys: CooldownDefinition[] = [
+      { key: 'farm', name: 'Chăm Sóc Nông Trại', command: 'vkl farm', durationMs: 1800000 },
+      { key: 'bang', name: 'Hoạt Động Bang Hội', command: 'vkl guild', durationMs: 3600000 },
+      { key: 'dua_linhthu', name: 'Đua Linh Thú', command: 'vkl dualinhthu', durationMs: 600000 },
     ];
 
     return createDongSonEmbed()
-      .setTitle(`⏱️ ${username} — THỜI GIAN HỒI CHIÊU (COOLDOWNS)`)
+      .setTitle(`⏱️ BẢNG THỜI GIAN HỒI CHIÊU (COOLDOWNS) — ${username.toUpperCase()}`)
+      .setDescription('🏛️ **Quản lý thời gian chờ toàn bộ tính năng Medieval Kyrise RPG:**\n\n')
       .addFields(
         {
-          name: '🎁 Phần Thưởng (Rewards)',
-          value: getStatusStr(rewardKeys),
+          name: '🎁 Điểm Danh & Nhận Thưởng (Daily & Rewards)',
+          value: getStatusListText(rewardKeys),
           inline: false,
         },
         {
-          name: '⚔️ Chiến Đấu & EXP (Experience)',
-          value: getStatusStr(expKeys),
+          name: '⚔️ Chiến Đấu & Ngục Tối (Combat & Dungeons)',
+          value: getStatusListText(combatKeys),
           inline: false,
         },
         {
-          name: '✨ Tiến Trình Lao Động (Progress)',
-          value: getStatusStr(progressKeys),
+          name: '⚒️ Sản Xuất & Chuyển Nghề (Producer Jobs)',
+          value: getStatusListText(producerKeys),
           inline: false,
         },
         {
-          name: '🌾 Điền Trang & Bang Hội (Farm & Guild)',
-          value: getStatusStr(farmKeys),
+          name: '🏰 Nông Trại, Bang Hội & Linh Thú (Social & Farm)',
+          value: getStatusListText(socialKeys),
           inline: false,
         }
       )
-      .setFooter({ text: 'Kiểm tra nhanh bằng lệnh "vkl cd" hoặc "vkl cooldown"' });
+      .setFooter({ text: 'Kiểm tra nhanh bảng thời gian hồi chiêu bằng lệnh "vkl cd" hoặc "vkl cooldown"' });
   }
 }
