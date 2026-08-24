@@ -16,6 +16,7 @@ import { equipCommand, unequipCommand } from '../commands/general/equip.command'
 import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
+import { guideCommand } from '../commands/general/guide.command';
 import { GatheringService } from '../game/services/GatheringService';
 import { UserService } from '../game/services/UserService';
 import { createDongSonEmbed } from '../utils/embedBuilder';
@@ -112,6 +113,13 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'lenh':
       case 'trogiup':
         await masterMenuCommand(message);
+        break;
+
+      case 'guide':
+      case 'huongdan':
+      case 'lore':
+      case 'g':
+        await guideCommand(message);
         break;
 
       case 'start':
