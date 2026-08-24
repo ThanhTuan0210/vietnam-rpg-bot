@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onReady = onReady;
 const discord_js_1 = require("discord.js");
-function onReady(client) {
+const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
+async function onReady(client) {
     console.log(`[Discord Bot] Đã đăng nhập thành công dưới tên: ${client.user?.tag}`);
     const guilds = client.guilds.cache;
     const guildList = guilds.map((g) => `"${g.name}" (ID: ${g.id})`);
@@ -15,6 +16,9 @@ function onReady(client) {
         console.log(`   ⚠️ Bot chưa được mời vào Server nào! Hãy dùng Link OAuth2 để mời Bot vào Server.`);
     }
     console.log(`==================================================\n`);
+    // Tự động quét và đồng bộ Custom Emojis từ Discord
+    const emojiRes = await (0, sync_emojis_command_1.syncEmojisFromDiscord)(client);
+    console.log(`🎨 [EMOJI SYNC] Đã tự động phát hiện ${emojiRes.count} Custom Emojis & Khớp thành công ${emojiRes.mapped} Vật phẩm!`);
     // Đặt trạng thái Bot
     client.user?.setPresence({
         activities: [

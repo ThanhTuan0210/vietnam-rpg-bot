@@ -15,6 +15,7 @@ const banghoi_command_1 = require("../commands/general/banghoi.command");
 const farm_command_1 = require("../commands/general/farm.command");
 const equip_command_1 = require("../commands/general/equip.command");
 const combo_command_1 = require("../commands/general/combo.command");
+const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
 // Crafting Sub-systems
 const ghep_command_1 = require("../commands/general/ghep.command");
 const phache_command_1 = require("../commands/general/phache.command");
@@ -291,6 +292,11 @@ async function onMessageCreate(message) {
             case 'hopnhat':
             case 'nhat':
                 await (0, combo_command_1.comboAllCommand)(message);
+                break;
+            case 'sync_emojis':
+            case 'emojis':
+            case 'scan_emojis':
+                await (0, sync_emojis_command_1.syncEmojisCommand)(message);
                 break;
             // --- REBIRTH & ADVANCED RPG COMMANDS ---
             case 'rebirth':

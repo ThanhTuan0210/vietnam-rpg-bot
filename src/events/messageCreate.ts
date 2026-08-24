@@ -14,6 +14,7 @@ import { bangHoiCommand } from '../commands/general/banghoi.command';
 import { farmCommand } from '../commands/general/farm.command';
 import { equipCommand, unequipCommand } from '../commands/general/equip.command';
 import { comboAllCommand } from '../commands/general/combo.command';
+import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 
 // Crafting Sub-systems
 import { ghepCommand } from '../commands/general/ghep.command';
@@ -352,6 +353,12 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'hopnhat':
       case 'nhat':
         await comboAllCommand(message);
+        break;
+
+      case 'sync_emojis':
+      case 'emojis':
+      case 'scan_emojis':
+        await syncEmojisCommand(message);
         break;
 
       // --- REBIRTH & ADVANCED RPG COMMANDS ---
