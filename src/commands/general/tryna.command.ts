@@ -13,7 +13,7 @@ export async function trynaCommand(message: Message, args: string[]): Promise<vo
     const dungeonName = args.slice(2).join(' ') || 'Phụ Bản Trùm Vùng 2';
 
     if (isNaN(reward) || reward <= 0) {
-      await message.reply('⚠️ **Cú pháp:** `vn truy_na dang [số_tiền_thưởng] [tên_phụ_bản]`');
+      await message.reply('⚠️ **Cú pháp:** `vkl truy_na dang [số_tiền_thưởng] [tên_phụ_bản]`');
       return;
     }
 
@@ -46,7 +46,7 @@ export async function trynaCommand(message: Message, args: string[]): Promise<vo
   if (subCmd === 'nhan') {
     const bountyId = args[1];
     if (!bountyId) {
-      await message.reply('⚠️ **Cú pháp:** `vn truy_na nhan [mã_khế_ước]`');
+      await message.reply('⚠️ **Cú pháp:** `vkl truy_na nhan [mã_khế_ước]`');
       return;
     }
 
@@ -79,7 +79,7 @@ export async function trynaCommand(message: Message, args: string[]): Promise<vo
   if (pendingBounties.length === 0) {
     const embed = createDongSonEmbed()
       .setTitle('📜 BẢNG VÀNG KHẾ ƯỚC ĐÁNH THUÊ')
-      .setDescription('Hiện tại không có Khế Ước Đánh Thuê nào đang treo.\n\n• `vn truy_na dang [tiền_thưởng] [tên_phụ_bản]` để treo khế ước!');
+      .setDescription('Hiện tại không có Khế Ước Đánh Thuê nào đang treo.\n\n• `vkl truy_na dang [tiền_thưởng] [tên_phụ_bản]` để treo khế ước!');
     await message.reply({ embeds: [embed] });
     return;
   }
@@ -89,7 +89,7 @@ export async function trynaCommand(message: Message, args: string[]): Promise<vo
       (b) =>
         `• Mã: \`${b.bountyId}\` | **${b.posterName}** cần giúp **${b.targetDungeon}** ➔ Thưởng: ${formatDong(
           b.rewardDong
-        )} (\`vn truy_na nhan ${b.bountyId}\`)`
+        )} (\`vkl truy_na nhan ${b.bountyId}\`)`
     )
     .join('\n');
 

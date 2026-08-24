@@ -195,15 +195,15 @@ class UserService {
             .setDescription(`Bạn đã tháo **${oldName}** ${oldIdStr} cất lại vào túi đồ và mặc lên người ${itemDef.icon} **${itemDef.name}** (\`${itemId}\`)!`)
             .addFields({
             name: '💡 Gợi Ý Lệnh Cởi / Tháo Đồ',
-            value: `• Tháo trang bị này cất lại vào túi: \`vn unequip ${slotTypeName}\` hoặc \`vn thao ${slotTypeName}\``,
+            value: `• Tháo trang bị này cất lại vào túi: \`vkl unequip ${slotTypeName}\` hoặc \`vkl thao ${slotTypeName}\``,
             inline: false,
         }, {
             name: '💡 Gợi Ý Lệnh Mặc Đồ Khác',
-            value: `• Mặc món đồ khác: \`vn equip [mã_id]\` hoặc \`vn dung [mã_id]\``,
+            value: `• Mặc món đồ khác: \`vkl equip [mã_id]\` hoặc \`vkl use [mã_id]\``,
             inline: false,
         }, {
             name: '💡 Gợi Ý Kiểm Tra Trạng Thái',
-            value: `• Xem Hồ Sơ & Lực Chiến: \`vn profile\` (hoặc \`vn p\`)\n• Xem Túi Đồ: \`vn inv\` (hoặc \`vn i\`)`,
+            value: `• Xem Hồ Sơ & Lực Chiến: \`vkl profile\` (hoặc \`vkl p\`)\n• Xem Túi Đồ: \`vkl inv\` (hoặc \`vkl i\`)`,
             inline: false,
         });
         return {
@@ -234,15 +234,15 @@ class UserService {
             .setDescription(`Bạn đã tháo ${itemDef.icon} **${itemDef.name}** (\`${currentEquipped.itemId}\`) và cất lại an toàn vào túi đồ!`)
             .addFields({
             name: '💡 Gợi Ý Lệnh Mặc Lại Trang Bị',
-            value: `• Mặc trang bị từ túi đồ: \`vn equip ${currentEquipped.itemId}\` hoặc \`vn dung ${currentEquipped.itemId}\``,
+            value: `• Mặc trang bị từ túi đồ: \`vkl equip ${currentEquipped.itemId}\` hoặc \`vkl use ${currentEquipped.itemId}\``,
             inline: false,
         }, {
             name: '💡 Gợi Ý Rèn Đồ Mới Cấp Cao',
-            value: `• Rèn Vũ khí / Áo giáp cấp cao: \`vn craft sword\` hoặc \`vn craft armor\``,
+            value: `• Rèn Vũ khí / Áo giáp cấp cao: \`vkl craft sword_01a\``,
             inline: false,
         }, {
             name: '💡 Gợi Ý Lệnh Xem Túi Đồ',
-            value: `• Kiểm tra túi đồ: \`vn inv\` (hoặc \`vn i\`)`,
+            value: `• Kiểm tra túi đồ: \`vkl i\``,
             inline: false,
         });
         return {

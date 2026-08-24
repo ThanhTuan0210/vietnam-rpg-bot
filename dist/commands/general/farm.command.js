@@ -129,7 +129,7 @@ async function farmCommand(message, args) {
         if (cropKey === 'hat_giong') {
             const removed = await UserService_1.UserService.removeItemAtomic(userId, 'hat_giong', 1);
             if (!removed) {
-                await message.reply('❌ Bạn không có 🌱 **Hạt Giống Nông Nghiệp** trong túi đồ (`vn inv`)!');
+                await message.reply('❌ Bạn không có 🌱 **Hạt Giống Nông Nghiệp** trong túi đồ (`vkl inv`)!');
                 return;
             }
         }
@@ -200,12 +200,12 @@ async function farmCommand(message, args) {
     const plotList = farm.plots
         .map((p) => {
         if (!p.hatGiong || p.trangThai === 'TRONG') {
-            return `• Ô ${p.oDat}: 🟫 **Đất Trống** — *Sẵn sàng gieo hạt (\`vn gieo [tên_hạt] ${p.oDat}\`)*`;
+            return `• Ô ${p.oDat}: 🟫 **Đất Trống** — *Sẵn sàng gieo hạt (\`vkl gieo [tên_hạt] ${p.oDat}\`)*`;
         }
         const crop = exports.CROPS_BALANCED[p.hatGiong];
         const elapsed = Math.floor((Date.now() - new Date(p.thoiGianTrong).getTime()) / 60000);
         const isReady = elapsed >= (crop?.growMinutes || 10);
-        return `• Ô ${p.oDat}: ${crop?.icon || '🌱'} **${crop?.name || p.hatGiong}** — ${isReady ? '✅ **SẴN SÀNG THU HOẠCH** (`vn thu_hoach`)' : `⏳ Đang phát triển (${elapsed}/${crop?.growMinutes}m)`}`;
+        return `• Ô ${p.oDat}: ${crop?.icon || '🌱'} **${crop?.name || p.hatGiong}** — ${isReady ? '✅ **SẴN SÀNG THU HOẠCH** (`vkl thu_hoach`)' : `⏳ Đang phát triển (${elapsed}/${crop?.growMinutes}m)`}`;
     })
         .join('\n');
     const cropCatalog = Object.values(exports.CROPS_BALANCED)
@@ -215,7 +215,7 @@ async function farmCommand(message, args) {
         .setTitle('🏡 ĐIỀN TRANG NÔNG TRẠI (7 Ô ĐẤT CÂN BẰNG)')
         .setDescription(`**Trạng thái 7 ô đất điền trang:**\n${plotList}\n\n` +
         `**📜 Bảng Giá Hạt Giống & Trị Giá Thu Hoạch:**\n${cropCatalog}\n\n` +
-        `• \`vn gieo [tên_hạt] [ô_đất_1_đến_7]\` : Gieo hạt giống vào ô đất\n` +
-        `• \`vn thu_hoach\` : Thu hoạch tất cả nông sản đã chín`);
+        `• \`vkl gieo [tên_hạt] [ô_đất_1_đến_7]\` : Gieo hạt giống vào ô đất\n` +
+        `• \`vkl thu_hoach\` : Thu hoạch tất cả nông sản đã chín`);
     await message.reply({ embeds: [embed] });
 }

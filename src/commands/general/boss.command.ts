@@ -12,7 +12,7 @@ export async function bossCommand(message: Message): Promise<void> {
   const user = await UserModelAdvanced.findOne({ userId });
 
   if (!user || !user.hePhai) {
-    await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vn batdau` trước.');
+    await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vkl batdau` trước.');
     return;
   }
 
@@ -168,7 +168,7 @@ export async function bossCommand(message: Message): Promise<void> {
         endEmbed.setTitle('💀 BẠI TRẬN TRƯỚC BOSS VÙNG');
         endEmbed.setDescription(
           `Uy áp của **${boss.icon} ${boss.name}** quá kinh hoàng! Bạn đã tử trận và rơi về **0 HP**.\n` +
-            `Hãy dùng \`vn duongthuong\` để hồi phục và dùng \`vn congduc mua\` tích lũy thêm để phục thù!`
+            `Hãy dùng \`vkl duongthuong\` để hồi phục và dùng \`vkl congduc mua\` tích lũy thêm để phục thù!`
         );
       }
 

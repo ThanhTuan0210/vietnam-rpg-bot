@@ -145,7 +145,7 @@ class AreaBossService {
         if (user.taiChinh.dong < totalCost) {
             return {
                 success: false,
-                message: `❌ Bạn cần **${totalCost.toLocaleString('vi-VN')} Đồng** để quy đổi **${amount} Điểm Công Đức**!`,
+                message: `❌ Bạn cần **${totalCost.toLocaleString('vi-vkl')} Đồng** để quy đổi **${amount} Điểm Công Đức**!`,
             };
         }
         await User_model_1.UserModelAdvanced.updateOne({ userId }, {
@@ -156,7 +156,7 @@ class AreaBossService {
         });
         return {
             success: true,
-            message: `🎉 **ĐỔI CÔNG ĐỨC THÀNH CÔNG!** Bạn đã quy đổi **${totalCost.toLocaleString('vi-VN')} Đồng** thành **+${amount} Điểm Công Đức**!`,
+            message: `🎉 **ĐỔI CÔNG ĐỨC THÀNH CÔNG!** Bạn đã quy đổi **${totalCost.toLocaleString('vi-vkl')} Đồng** thành **+${amount} Điểm Công Đức**!`,
         };
     }
     /**
@@ -185,7 +185,7 @@ class AreaBossService {
             return {
                 canChallenge: false,
                 bossInfo: boss,
-                message: `❌ Để mở phong ấn khiêu chiến **${boss.name}**, bạn cần **${boss.requiredMerit} Điểm Công Đức** (Hiện có: ${currentMerit} Điểm)! Hãy dùng lệnh \`vn congduc mua [số_lượng]\` để quy đổi!`,
+                message: `❌ Để mở phong ấn khiêu chiến **${boss.name}**, bạn cần **${boss.requiredMerit} Điểm Công Đức** (Hiện có: ${currentMerit} Điểm)! Hãy dùng lệnh \`vkl congduc mua [số_lượng]\` để quy đổi!`,
             };
         }
         // Trừ Điểm Công Đức

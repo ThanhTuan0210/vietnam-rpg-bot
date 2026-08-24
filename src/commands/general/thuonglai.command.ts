@@ -10,7 +10,7 @@ export async function thuongLaiCommand(message: Message, args: string[]): Promis
   if (subCmd === 'mua') {
     const itemId = args[1]?.toLowerCase();
     if (!itemId) {
-      await message.reply('⚠️ **Cú pháp:** `vn thuonglai mua [ngoc_tinh_xao / bua_cuong_hoa_dac_biet]`');
+      await message.reply('⚠️ **Cú pháp:** `vkl thuonglai mua [ngoc_tinh_xao / bua_cuong_hoa_dac_biet]`');
       return;
     }
 
@@ -25,7 +25,7 @@ export async function thuongLaiCommand(message: Message, args: string[]): Promis
   const itemListStr = items
     .map(
       (i) =>
-        `${i.icon} **${i.name}** (\`${i.id}\`) — Giá: ${formatDong(i.price)} | Số lượng còn: **${i.stock}** (\`vn thuonglai mua ${i.id}\`)`
+        `${i.icon} **${i.name}** (\`${i.id}\`) — Giá: ${formatDong(i.price)} | Số lượng còn: **${i.stock}** (\`vkl thuonglai mua ${i.id}\`)`
     )
     .join('\n');
 

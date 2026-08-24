@@ -19,7 +19,7 @@ async function bauCuaCommand(message, args) {
     // 1. Parse số tiền cược
     const betAmount = parseInt(args[0], 10);
     if (isNaN(betAmount) || betAmount <= 0) {
-        await message.reply('⚠️ **Cú pháp:** `vn baucua [số tiền cược]` (Ví dụ: `vn baucua 100`)');
+        await message.reply('⚠️ **Cú pháp:** `vkl baucua [số tiền cược]` (Ví dụ: `vkl baucua 100`)');
         return;
     }
     // 2. Session Lock

@@ -86,8 +86,8 @@ async function vaultCommand(message, args) {
         .setDescription(`🏛️ **Kho Hợp Tác Xã Dành Cho Nhóm 3-5 Bạn Bè**\n\n` +
         `📊 **Danh mục tài nguyên trong Kho:**\n${vaultListStr}\n\n` +
         `📌 **Cú pháp Tiếng Anh 3 chữ đầu tiện lợi:**\n` +
-        `• Gửi đồ vào Kho: \`vn vlt dep <mã_đồ> <số_lượng>\` (VD: \`vn vlt dep ingot_01a 5\`)\n` +
-        `• Rút đồ từ Kho: \`vn vlt wth <mã_đồ> <số_lượng>\` (VD: \`vn vlt wth ingot_01a 5\`)`);
+        `• Gửi đồ vào Kho: \`vkl vlt dep <mã_đồ> <số_lượng>\` (VD: \`vkl vlt dep ingot_01a 5\`)\n` +
+        `• Rút đồ từ Kho: \`vkl vlt wth <mã_đồ> <số_lượng>\` (VD: \`vkl vlt wth ingot_01a 5\`)`);
     const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('cmd_tuido').setLabel('🎒 Túi Đồ Cá Nhân').setStyle(discord_js_1.ButtonStyle.Primary), new discord_js_1.ButtonBuilder().setCustomId('cmd_craft').setLabel('🔨 Lò Rèn').setStyle(discord_js_1.ButtonStyle.Success));
     await message.reply({ embeds: [embed], components: [row] });
 }

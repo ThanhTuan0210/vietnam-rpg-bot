@@ -31,7 +31,7 @@ export async function detuCommand(message: Message, args: string[]): Promise<voi
         `🎉 **Chúc mừng Sư Phụ ${message.author.username}!** Bạn đã thu nhận Đệ Tử Truyền Thừa:\n\n` +
           `👤 **Tên Đệ Tử:** \`${detuName}\` (Cấp 1)\n` +
           `⚔️ **Kỹ năng Trợ Chiến:** Buff Hồi 20% HP/MP & +15% ATK cho Sư Phụ trong combat.\n` +
-          `🔨 **Truyền Nghề:** Gõ \`vn detu hoc <nghề1> <nghề2>\` để dạy 2 Nghề Sản Xuất cho đệ tử nạp Kho Vault!`
+          `🔨 **Truyền Nghề:** Gõ \`vkl detu hoc <nghề1> <nghề2>\` để dạy 2 Nghề Sản Xuất cho đệ tử nạp Kho Vault!`
       );
     await message.reply({ embeds: [embed] });
     return;
@@ -47,8 +47,8 @@ export async function detuCommand(message: Message, args: string[]): Promise<voi
         `👦 **Đệ Tử:** \`${detuName}\` (Level ${detuLevel})\n` +
         `⚔️ **Trợ Chiến:** Active Buff +15% ATK & +20% HP Heal\n\n` +
         `📌 **Hướng dẫn:**\n` +
-        `• Nhận Đệ tử: \`vn detu nhan <tên_đệ_tử>\`\n` +
-        `• Truyền nghề: \`vn detu hoc <nghề1> <nghề2>\``
+        `• Nhận Đệ tử: \`vkl detu nhan <tên_đệ_tử>\`\n` +
+        `• Truyền nghề: \`vkl detu hoc <nghề1> <nghề2>\``
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

@@ -95,14 +95,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
     matchedPrefix = 'vkl ';
   } else if (lowerContent === 'vkl' || lowerContent.startsWith('vkl')) {
     matchedPrefix = 'vkl';
-  } else if (lowerContent.startsWith('vn ')) {
-    matchedPrefix = 'vn ';
-  } else if (lowerContent === 'vn' || lowerContent.startsWith('vn')) {
-    matchedPrefix = 'vn';
-  } else if (lowerContent.startsWith('nv ')) {
-    matchedPrefix = 'nv ';
-  } else if (lowerContent === 'nv' || lowerContent.startsWith('nv')) {
-    matchedPrefix = 'nv';
   }
 
   if (!matchedPrefix) return;

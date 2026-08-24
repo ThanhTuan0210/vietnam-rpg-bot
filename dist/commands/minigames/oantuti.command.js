@@ -32,7 +32,7 @@ async function oanTuTiCommand(message, args) {
         betAmount = parseInt(args[0], 10);
     }
     if (isNaN(betAmount) || betAmount <= 0) {
-        await message.reply('⚠️ **Cú pháp:** `vn oantuti [@user/bot] [tiền cược]` (Ví dụ: `vn oantuti 100` hoặc `vn oantuti @BanThan 200`)');
+        await message.reply('⚠️ **Cú pháp:** `vkl oantuti [@user/bot] [tiền cược]` (Ví dụ: `vkl oantuti 100` hoặc `vkl oantuti @BanThan 200`)');
         return;
     }
     const session = SessionManager_1.SessionManager.getInstance();

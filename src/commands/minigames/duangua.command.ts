@@ -9,7 +9,7 @@ export async function duaLinhThuCommand(message: Message, args: string[]): Promi
   const chosenPet = parseInt(args[1], 10) || 1;
 
   if (betDong <= 0 || chosenPet < 1 || chosenPet > 4) {
-    await message.reply('⚠️ **Cú pháp:** `vn dua_linhthu [tiền_cược] [số_linh_thú 1-4]` (Ví dụ: `vn dua_linhthu 10000 2`)');
+    await message.reply('⚠️ **Cú pháp:** `vkl dua_linhthu [tiền_cược] [số_linh_thú 1-4]` (Ví dụ: `vkl dua_linhthu 10000 2`)');
     return;
   }
 

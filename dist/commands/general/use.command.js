@@ -15,27 +15,27 @@ async function useCommand(message, args) {
             .setDescription('Vui lòng chọn mã vật phẩm hoặc thần dược muốn sử dụng:')
             .addFields({
             name: '📜 Thẻ Bỏ Qua Nhiệm Vụ (Cooldown 3 Giờ)',
-            value: '• `vn dung the_skip_nhiem_vu`',
+            value: '• `vkl dung the_skip_nhiem_vu`',
             inline: true,
         }, {
             name: '🌸 Đan Dược Đột Phá (+1 Level)',
-            value: '• `vn dung dan_dot_pha`',
+            value: '• `vkl dung dan_dot_pha`',
             inline: true,
         }, {
             name: '🪷 Linh Mộc Ưu Đàm (Hồi FULL 24h)',
-            value: '• `vn dung linh_moc_uu_dam`',
+            value: '• `vkl dung linh_moc_uu_dam`',
             inline: true,
         }, {
             name: '🍷 Thuốc Huyết Long (Hồi 100% HP & +50% Max HP)',
-            value: '• `vn dung thuoc_huyet_long`',
+            value: '• `vkl dung thuoc_huyet_long`',
             inline: true,
         }, {
             name: '💧 Thuốc Linh Khí (Hồi 100% MP & +50% Max MP)',
-            value: '• `vn dung thuoc_linh_khi`',
+            value: '• `vkl dung thuoc_linh_khi`',
             inline: true,
         }, {
             name: '💥 Đan Dược Cuồng Nộ (+25% ATK trong 30p)',
-            value: '• `vn dung dan_cuong_no`',
+            value: '• `vkl dung dan_cuong_no`',
             inline: true,
         });
         await message.reply({ embeds: [embed] });
@@ -165,17 +165,17 @@ async function useCommand(message, args) {
         await message.reply({ embeds: [embed] });
         return;
     }
-    // 4. CƠM LAM: HỒI 100% HP & MP
-    if (itemId === 'com_lam' || itemId === 'life_potion') {
-        const consumed = await UserService_1.UserService.consumeItemAtomic(userId, 'com_lam', 1);
+    // 4. THUỐC HỒI MÁU HP: HỒI 100% HP & MP
+    if (itemId === 'potion_01a' || itemId === 'life_potion' || itemId === 'com_lam') {
+        const consumed = await UserService_1.UserService.consumeItemAtomic(userId, 'potion_01a', 1);
         if (!consumed) {
-            await message.reply('❌ Bạn không có **Cơm Lam** (`com_lam`) trong túi đồ!');
+            await message.reply('❌ Bạn không có **Thuốc Hồi Máu HP** (`potion_01a`) trong túi đồ!');
             return;
         }
         await UserService_1.UserService.healUserAtomic(userId);
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
-            .setTitle('🍙 SỬ DỤNG CƠM LAM THÀNH CÔNG!')
-            .setDescription('Bạn thưởng thức Cơm Lam thơm ngon linh khí và được **HỒI 100% SINH LỰC & MANA**!');
+            .setTitle('🧪 SỬ DỤNG THUỐC HP THÀNH CÔNG!')
+            .setDescription('Bạn uống Dược Phép Hồi HP và được **HỒI 100% SINH LỰC (HP) & MANA (MP)**!');
         await message.reply({ embeds: [embed] });
         return;
     }
@@ -255,7 +255,7 @@ async function useCommand(message, args) {
         }
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('💰 KÍCH HOẠT BÙA CHIÊU TÀI!')
-            .setDescription('Tài lộc dâng tràn! Nhận **+50% TIỀN ĐỒNG THƯỞNG** khi đi săn `vn hunt` trong 1 Giờ!');
+            .setDescription('Tài lộc dâng tràn! Nhận **+50% TIỀN ĐỒNG THƯỞNG** khi đi săn `vkl hunt` trong 1 Giờ!');
         await message.reply({ embeds: [embed] });
         return;
     }
@@ -308,7 +308,7 @@ async function useCommand(message, args) {
         }
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('🍀 KÍCH HOẠT MAY MẮN RỚT ĐỒ!')
-            .setDescription('Vận khí dâng cao! Đảm bảo **100% RỚT NGUYÊN LIỆU HIẾM** trong 10 lần `vn hunt` tiếp theo!');
+            .setDescription('Vận khí dâng cao! Đảm bảo **100% RỚT NGUYÊN LIỆU HIẾM** trong 10 lần `vkl hunt` tiếp theo!');
         await message.reply({ embeds: [embed] });
         return;
     }

@@ -11,7 +11,7 @@ export async function bangHoiCommand(message: Message, args: string[]): Promise<
   if (subCommand === 'tao') {
     const guildName = args.slice(1).join(' ');
     if (!guildName) {
-      await message.reply('⚠️ **Cú pháp:** `vn bang tao [tên bang phái]`');
+      await message.reply('⚠️ **Cú pháp:** `vkl bang tao [tên bang phái]`');
       return;
     }
 
@@ -41,7 +41,7 @@ export async function bangHoiCommand(message: Message, args: string[]): Promise<
   if (subCommand === 'gop') {
     const amount = parseInt(args[1], 10);
     if (isNaN(amount) || amount <= 0) {
-      await message.reply('⚠️ **Cú pháp:** `vn bang gop [số đồng]`');
+      await message.reply('⚠️ **Cú pháp:** `vkl bang gop [số đồng]`');
       return;
     }
 
@@ -84,8 +84,8 @@ export async function bangHoiCommand(message: Message, args: string[]): Promise<
       .setTitle('🏰 HỆ THỐNG BANG HỘI ĐẠI VIỆT')
       .setDescription(
         `Bạn chưa gia nhập Bang Phái nào!\n\n` +
-          `• \`vn bang tao [tên]\` : Lập Bang Phái mới (${formatDong(500000)})\n` +
-          `• \`vn bang gop [số đồng]\` : Đóng góp tài nguyên nâng cấp Đình Làng`
+          `• \`vkl bang tao [tên]\` : Lập Bang Phái mới (${formatDong(500000)})\n` +
+          `• \`vkl bang gop [số đồng]\` : Đóng góp tài nguyên nâng cấp Đình Làng`
       );
     await message.reply({ embeds: [embed] });
     return;

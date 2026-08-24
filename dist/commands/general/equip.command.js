@@ -13,11 +13,11 @@ async function equipCommand(message, args) {
             .setDescription('Vui lòng nhập đúng cú pháp để mặc trang bị từ túi đồ:')
             .addFields({
             name: '🥋 Mặc Trang Bị (Equip)',
-            value: '• `vn equip [mã_id]` hoặc `vn dung [mã_id]`\n*Ví dụ: `vn equip dao_mac_dong` hoặc `vn dung basic armor`*',
+            value: '• `vkl equip [mã_id]` hoặc `vkl dung [mã_id]`\n*Ví dụ: `vkl equip dao_mac_dong` hoặc `vkl dung basic armor`*',
             inline: false,
         }, {
             name: '🥋 Cởi / Tháo Trang Bị (Unequip)',
-            value: '• `vn unequip vukhi` hoặc `vn thao vukhi` (Tháo vũ khí cất túi)\n• `vn unequip aogiap` hoặc `vn thao aogiap` (Tháo áo giáp cất túi)',
+            value: '• `vkl unequip vukhi` hoặc `vkl thao vukhi` (Tháo vũ khí cất túi)\n• `vkl unequip aogiap` hoặc `vkl thao aogiap` (Tháo áo giáp cất túi)',
             inline: false,
         });
         await message.reply({ embeds: [embed] });
@@ -58,11 +58,11 @@ async function unequipCommand(message, args) {
             .setDescription('Vui lòng chọn vị trí trang bị muốn tháo cất lại vào túi đồ:')
             .addFields({
             name: '🗡️ Tháo Vũ Khí',
-            value: '• `vn unequip vukhi` (hoặc `vn thao vukhi` / `vn unequip sword`)',
+            value: '• `vkl unequip vukhi` (hoặc `vkl thao vukhi` / `vkl unequip sword`)',
             inline: true,
         }, {
             name: '🥋 Tháo Áo Giáp',
-            value: '• `vn unequip aogiap` (hoặc `vn thao aogiap` / `vn unequip armor`)',
+            value: '• `vkl unequip aogiap` (hoặc `vkl thao aogiap` / `vkl unequip armor`)',
             inline: true,
         });
         await message.reply({ embeds: [embed] });

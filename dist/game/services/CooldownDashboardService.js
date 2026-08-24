@@ -82,7 +82,7 @@ class CooldownDashboardService {
             value: getStatusStr(farmKeys),
             inline: false,
         })
-            .setFooter({ text: 'Kiểm tra nhanh bằng lệnh "vn cd" hoặc "vn cooldown"' });
+            .setFooter({ text: 'Kiểm tra nhanh bằng lệnh "vkl cd" hoặc "vkl cooldown"' });
     }
 }
 exports.CooldownDashboardService = CooldownDashboardService;

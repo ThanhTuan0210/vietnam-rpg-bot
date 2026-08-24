@@ -12,7 +12,7 @@ async function bossCommand(message) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vn batdau` trước.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vkl batdau` trước.');
         return;
     }
     const session = SessionManager_1.SessionManager.getInstance();
@@ -132,7 +132,7 @@ async function bossCommand(message) {
                 await User_model_1.UserModelAdvanced.updateOne({ userId }, { $set: { 'chiSo.hp': 0 } });
                 endEmbed.setTitle('💀 BẠI TRẬN TRƯỚC BOSS VÙNG');
                 endEmbed.setDescription(`Uy áp của **${boss.icon} ${boss.name}** quá kinh hoàng! Bạn đã tử trận và rơi về **0 HP**.\n` +
-                    `Hãy dùng \`vn duongthuong\` để hồi phục và dùng \`vn congduc mua\` tích lũy thêm để phục thù!`);
+                    `Hãy dùng \`vkl duongthuong\` để hồi phục và dùng \`vkl congduc mua\` tích lũy thêm để phục thù!`);
             }
             await i.update({ embeds: [endEmbed], components: [disabledRow] });
             collector.stop('completed');

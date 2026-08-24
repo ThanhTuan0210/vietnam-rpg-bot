@@ -21,10 +21,10 @@ async function nangCapToolCommand(message, args) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('🪓 NÂNG CẤP DỤNG CỤ LAO ĐỘNG')
             .setDescription(`Cấp độ dụng cụ hiện tại của bạn:\n` +
-            `• 🪓 Rìu đốn củi: **Bậc ${dungCu.riu}** (\`vn nangcap riu\`)\n` +
-            `• 🎣 Cần câu cá: **Bậc ${dungCu.canCau}** (\`vn nangcap cancau\`)\n` +
-            `• ⛏️ Cuốc khai mỏ: **Bậc ${dungCu.cuoc}** (\`vn nangcap cuoc\`)\n` +
-            `• 🧺 Giỏ hái thuốc: **Bậc ${dungCu.gioThuoc}** (\`vn nangcap gio\`)\n\n` +
+            `• 🪓 Rìu đốn củi: **Bậc ${dungCu.riu}** (\`vkl nangcap riu\`)\n` +
+            `• 🎣 Cần câu cá: **Bậc ${dungCu.canCau}** (\`vkl nangcap cancau\`)\n` +
+            `• ⛏️ Cuốc khai mỏ: **Bậc ${dungCu.cuoc}** (\`vkl nangcap cuoc\`)\n` +
+            `• 🧺 Giỏ hái thuốc: **Bậc ${dungCu.gioThuoc}** (\`vkl nangcap gio\`)\n\n` +
             `*Dụng cụ bậc cao giúp tăng sản lượng thu hoạch và mở khóa nguyên liệu quý hiếm!*`);
         await message.reply({ embeds: [embed] });
         return;

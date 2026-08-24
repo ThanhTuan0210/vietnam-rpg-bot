@@ -10,11 +10,11 @@ async function banCommand(message, args) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn start`.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl start`.');
         return;
     }
     const subCmd = args[0]?.toLowerCase();
-    // 1. CƠ CHẾ BÁN TẤT CẢ TÀI NGUYÊN RÁC CHUẨN EPIC RPG (`vn sell all` / `vn ban tatca`)
+    // 1. CƠ CHẾ BÁN TẤT CẢ TÀI NGUYÊN RÁC CHUẨN EPIC RPG (`vkl sell all` / `vkl ban tatca`)
     if (subCmd === 'all' || subCmd === 'tatca') {
         const lootTypes = ['nguyenlieu', 'duoclieu'];
         let totalRevenue = 0;
@@ -49,13 +49,13 @@ async function banCommand(message, args) {
         await message.reply({ embeds: [embed] });
         return;
     }
-    // 2. CƠ CHẾ BÁN TỪNG MÓN (`vn sell [mã_item] [số_lượng]`)
+    // 2. CƠ CHẾ BÁN TỪNG MÓN (`vkl sell [mã_item] [số_lượng]`)
     const itemId = args[0]?.toLowerCase();
     const qty = parseInt(args[1], 10) || 1;
     if (!itemId) {
         await message.reply('⚠️ **Cú pháp bán chuẩn Epic RPG:**\n' +
-            '• Bán tất cả tài nguyên rác: `vn sell all` hoặc `vn ban tatca`\n' +
-            '• Bán từng món: `vn sell [mã_vật_phẩm] [số_lượng]` (Ví dụ: `vn sell go_tre_gai 10`)');
+            '• Bán tất cả tài nguyên rác: `vkl sell all` hoặc `vkl ban tatca`\n' +
+            '• Bán từng món: `vkl sell [mã_vật_phẩm] [số_lượng]` (Ví dụ: `vkl sell go_tre_gai 10`)');
         return;
     }
     const itemDef = items_1.ITEMS[itemId];

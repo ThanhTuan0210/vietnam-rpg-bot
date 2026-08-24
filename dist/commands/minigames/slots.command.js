@@ -10,7 +10,7 @@ async function slotsCommand(message, args) {
     const userId = message.author.id;
     const betAmount = parseInt(args[0], 10);
     if (isNaN(betAmount) || betAmount <= 0) {
-        await message.reply('⚠️ **Cú pháp:** `vn slots [số tiền cược]` (Ví dụ: `vn slots 100`)');
+        await message.reply('⚠️ **Cú pháp:** `vkl slots [số tiền cược]` (Ví dụ: `vkl slots 100`)');
         return;
     }
     const session = SessionManager_1.SessionManager.getInstance();

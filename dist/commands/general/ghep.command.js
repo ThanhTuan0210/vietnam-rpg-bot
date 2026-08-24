@@ -54,7 +54,7 @@ async function ghepCommand(message, args) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('🧈 HỢP THÀNH NGUYÊN LIỆU & BÁNH DÂN GIAN')
             .setDescription(`Nấu quặng thô thành Thỏi Kim Loại hoặc gói Bánh Chưng / Bánh Giầy dâng Vua Hùng!\n\n` +
-            `• Cú pháp: \`vn ghep [mã_vật_phẩm]\` (Ví dụ: \`vn ghep thoi_dong\` hoặc \`vn ghep banh_chung\`)\n\n` +
+            `• Cú pháp: \`vkl ghep [mã_vật_phẩm]\` (Ví dụ: \`vkl ghep thoi_dong\` hoặc \`vkl ghep banh_chung\`)\n\n` +
             `🧈 **Thỏi Đồng Thau** (\`thoi_dong\`) — Cần 10 Quặng Đồng (\`quang_dong\`) + 200đ\n` +
             `🧱 **Thỏi Sắt Tinh Luyện** (\`thoi_sat\`) — Cần 10 Quặng Sắt (\`quang_sat\`) + 500đ\n` +
             `🕋 **Thỏi Huyền Thiết** (\`thoi_huyen_thiet\`) — Cần 10 Huyền Thiết Thạch (\`huyen_thiet_thach\`) + 1,500đ\n` +
@@ -66,7 +66,7 @@ async function ghepCommand(message, args) {
     }
     const recipe = recipes[targetId];
     if (!recipe) {
-        await message.reply('❌ Công thức ghép không tồn tại! Gõ `vn ghep` để xem danh sách.');
+        await message.reply('❌ Công thức ghép không tồn tại! Gõ `vkl ghep` để xem danh sách.');
         return;
     }
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });

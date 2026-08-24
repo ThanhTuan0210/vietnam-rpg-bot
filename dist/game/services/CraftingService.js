@@ -13,24 +13,14 @@ class CraftingService {
     static resolveItemId(input) {
         const cleanInput = input.trim().toLowerCase().replace(/ +/g, '_');
         const aliases = {
-            // Level 1
-            wooden_sword: 'dao_tre_gai',
-            fish_armor: 'ao_la_chuoi',
-            // Level 3
-            fish_sword: 'giao_tre_gai',
-            wolf_armor: 'ao_toi_la',
-            // Level 5
-            apple_sword: 'chuy_go_nhan',
-            eye_armor: 'giap_tre_boc_mung',
-            // Level 10
-            zombie_sword: 'dao_mac_dong',
-            banana_armor: 'giap_dong_co_loa',
-            // Level 15
-            spear_bronze: 'giao_dong_co_loa',
-            shield_bronze: 'khien_dong_chim_lac',
-            // Level 20
-            ruby_sword: 'kiem_sat_ba_vi',
-            epic_armor: 'giap_sat_trao_phong',
+            sword: 'sword_01a',
+            shield: 'shield_01a',
+            staff: 'staff_01a',
+            bow: 'bow_01a',
+            excalibur: 'sword_03e',
+            potion: 'potion_01a',
+            antidote: 'potion_02a',
+            elixir: 'potion_03a',
         };
         return aliases[cleanInput] || cleanInput;
     }
@@ -40,52 +30,54 @@ class CraftingService {
     static async craftItem(userId, rawInput) {
         const user = await User_model_1.UserModelAdvanced.findOne({ userId });
         if (!user) {
-            return { success: false, message: '❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn start`.' };
+            return { success: false, message: '❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.' };
         }
         const targetItemId = this.resolveItemId(rawInput);
-        const recipe = recipes_1.RECIPES.find((r) => r.resultItemId === targetItemId);
+        const recipe = recipes_1.RECIPES.find((r) => r.resultItemId.toLowerCase() === targetItemId.toLowerCase());
         if (!recipe) {
-            return { success: false, message: `❌ Công thức chế tạo \`${rawInput}\` không tồn tại! Gõ \`vn craft\` để xem danh sách.` };
+            return { success: false, message: `❌ Công thức rèn \`${rawInput}\` không tồn tại! Gõ \`vkl craft\` để xem danh sách.` };
         }
         const resultItem = items_1.ITEMS[recipe.resultItemId];
         if (!resultItem) {
             return { success: false, message: '❌ Vật phẩm không hợp lệ!' };
         }
-        // 1. Kiểm tra Level Lock chi tiết
+        // Check Level Lock
         if (user.canhGioi.capDo < recipe.requiredLevel) {
             return {
                 success: false,
-                message: `🔒 **CHƯA ĐỦ CẤP ĐỘ CHẾ TẠO!** Bạn cần đạt **Level ${recipe.requiredLevel}** mới mở khóa công thức chế tạo **${resultItem.name}** (Hiện tại: Level ${user.canhGioi.capDo}).`,
+                message: `🔒 **Level chưa đủ!** Bạn cần **Level ${recipe.requiredLevel}** để chế tạo ${resultItem.icon} **${resultItem.name}**. (Cấp hiện tại: Lv ${user.canhGioi.capDo})`,
             };
         }
-        // 2. Kiểm tra Phí Tiền Đồng
-        if (user.taiChinh.dong < recipe.dongCost) {
-            return {
-                success: false,
-                message: `❌ Bạn không đủ **${(0, formatters_1.formatDong)(recipe.dongCost)}** phí lò rèn!`,
-            };
-        }
-        // 3. Kiểm tra Nguyên liệu trong Túi Đồ
+        // Check Materials
+        const inventory = user.inventory || [];
         for (const mat of recipe.materials) {
-            const userItem = user.tuiDo.find((i) => i.itemId === mat.itemId);
-            const matDef = items_1.ITEMS[mat.itemId] || { name: mat.itemId };
-            if (!userItem || userItem.soLuong < mat.quantity) {
+            const userItem = inventory.find((i) => i.itemId.toLowerCase() === mat.itemId.toLowerCase());
+            const hasQty = userItem?.quantity || userItem?.soLuong || 0;
+            if (hasQty < mat.quantity) {
+                const matDef = items_1.ITEMS[mat.itemId] || { name: mat.itemId, icon: '📦' };
                 return {
                     success: false,
-                    message: `❌ Bạn thiếu nguyên liệu **${matDef.name}** (Cần ${mat.quantity}, đang có ${userItem?.soLuong || 0}).`,
+                    message: `❌ Bạn thiếu nguyên liệu ${matDef.icon} **${matDef.name}**! (Cần \`${mat.quantity}\`, hiện có \`${hasQty}\`)`,
                 };
             }
         }
-        // 4. Khấu trừ Nguyên Liệu & Tiền Đồng
-        await UserService_1.UserService.deductDongAtomic(userId, recipe.dongCost);
+        // Check Gold
+        if (user.taiChinh.dong < recipe.dongCost) {
+            return {
+                success: false,
+                message: `❌ Bạn không đủ Tiền Vàng! Chi phí rèn là **${(0, formatters_1.formatDong)(recipe.dongCost)}** (Hiện có: ${(0, formatters_1.formatDong)(user.taiChinh.dong)}).`,
+            };
+        }
+        // Deduct Materials & Gold
+        user.taiChinh.dong -= recipe.dongCost;
         for (const mat of recipe.materials) {
             await UserService_1.UserService.consumeItemAtomic(userId, mat.itemId, mat.quantity);
         }
-        // 5. Nhận Vật Phẩm
+        // Add Result Item
         await UserService_1.UserService.addItemAtomic(userId, recipe.resultItemId, recipe.resultQty);
         return {
             success: true,
-            message: `🔨 **CHẾ TẠO THÀNH CÔNG!** Bạn đã đúc thành công ${resultItem.icon} **${resultItem.name} x${recipe.resultQty}** với phí ${(0, formatters_1.formatDong)(recipe.dongCost)}!`,
+            message: `🎉 **Rèn thành công ${recipe.resultQty}x ${resultItem.icon} ${resultItem.name}!**`,
         };
     }
 }

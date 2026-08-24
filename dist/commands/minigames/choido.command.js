@@ -11,7 +11,7 @@ async function choiDoCommand(message) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn batdau`.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl batdau`.');
         return;
     }
     const cooldownCheck = CooldownEngine_1.CooldownEngine.checkCooldown(user, 'choido', 60000);

@@ -99,8 +99,8 @@ export async function vaultCommand(message: Message, args: string[]): Promise<vo
       `🏛️ **Kho Hợp Tác Xã Dành Cho Nhóm 3-5 Bạn Bè**\n\n` +
         `📊 **Danh mục tài nguyên trong Kho:**\n${vaultListStr}\n\n` +
         `📌 **Cú pháp Tiếng Anh 3 chữ đầu tiện lợi:**\n` +
-        `• Gửi đồ vào Kho: \`vn vlt dep <mã_đồ> <số_lượng>\` (VD: \`vn vlt dep ingot_01a 5\`)\n` +
-        `• Rút đồ từ Kho: \`vn vlt wth <mã_đồ> <số_lượng>\` (VD: \`vn vlt wth ingot_01a 5\`)`
+        `• Gửi đồ vào Kho: \`vkl vlt dep <mã_đồ> <số_lượng>\` (VD: \`vkl vlt dep ingot_01a 5\`)\n` +
+        `• Rút đồ từ Kho: \`vkl vlt wth <mã_đồ> <số_lượng>\` (VD: \`vkl vlt wth ingot_01a 5\`)`
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

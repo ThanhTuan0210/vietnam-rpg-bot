@@ -127,7 +127,7 @@ export async function caoThiCommand(message: Message): Promise<void> {
         `2. ${quests[1]}\n` +
         `3. ${quests[2]}\n\n` +
         `*Nhiệm vụ tự động ghi nhận khi bạn thực hiện các thao tác tương ứng!*\n` +
-        `*Dùng thẻ \`vn dung the_skip_nhiem_vu\` để hoàn thành ngay và nhận quà!*`
+        `*Dùng thẻ \`vkl dung the_skip_nhiem_vu\` để hoàn thành ngay và nhận quà!*`
     );
 
   await message.reply({ embeds: [embed] });
@@ -212,7 +212,7 @@ export async function moRuongCommand(message: Message, args: string[]): Promise<
 
   const chest = CHESTS_BALANCED[chestKey];
   if (!chest) {
-    await message.reply('❌ Loại rương không hợp lệ! Cú pháp: `vn open ruong_go` hoặc `vn open common_lootbox`.');
+    await message.reply('❌ Loại rương không hợp lệ! Cú pháp: `vkl open ruong_go` hoặc `vkl open common_lootbox`.');
     return;
   }
 

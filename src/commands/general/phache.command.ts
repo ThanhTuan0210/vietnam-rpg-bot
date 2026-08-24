@@ -38,7 +38,7 @@ export async function phaCheCommand(message: Message, args: string[]): Promise<v
       .setTitle('🧪 DƯỢC LÒ PHA CHẾ — DÂN GIAN Y THUẬT')
       .setDescription(
         `Luyện dược liệu thuốc nam và nướng Cơm Lam dẻo thơm linh khí!\n\n` +
-          `• Cú pháp: \`vn phache [mã_vật_phẩm]\` (Ví dụ: \`vn phache com_lam\` hoặc \`vn phache binh_kim_dan\`)\n\n` +
+          `• Cú pháp: \`vkl phache [mã_vật_phẩm]\` (Ví dụ: \`vkl phache com_lam\` hoặc \`vkl phache binh_kim_dan\`)\n\n` +
           `🍙 **Cơm Lam x2** (\`com_lam\`) — Cần 1 Bó Nếp + 2 Gỗ Tre (\`go_tre_gai\`) + 100đ *(Hồi 100% HP & MP)*\n` +
           `🔮 **Bình Kim Đan** (\`binh_kim_dan\`) — Cần 10 Lá Thuốc Nam (\`la_thuoc_nam\`) + 2 Củ Nhân Sâm (\`cu_nhiem_sam\`) + 500đ *(+100% DEF trong 30p)*`
       );
@@ -48,7 +48,7 @@ export async function phaCheCommand(message: Message, args: string[]): Promise<v
 
   const recipe = recipes[targetId];
   if (!recipe) {
-    await message.reply('❌ Công thức pha chế không tồn tại! Gõ `vn phache` để xem danh sách.');
+    await message.reply('❌ Công thức pha chế không tồn tại! Gõ `vkl phache` để xem danh sách.');
     return;
   }
 

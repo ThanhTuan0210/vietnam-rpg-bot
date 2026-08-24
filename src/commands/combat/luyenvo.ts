@@ -11,7 +11,7 @@ export async function luyenVoCommand(message: Message): Promise<void> {
   const user = await UserModelAdvanced.findOne({ userId });
 
   if (!user || !user.hePhai) {
-    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn batdau`.');
+    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl batdau`.');
     return;
   }
 

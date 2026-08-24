@@ -18,7 +18,7 @@ async function leoThapCommandClean(message) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vn batdau` trước.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vkl batdau` trước.');
         return;
     }
     // ATOMIC LOCK CHỐNG SPAM CLICK NÚT LIÊN TỤC
@@ -135,12 +135,12 @@ async function leoThapCommandClean(message) {
             .setTitle(`🏯 THÁP THÍ LUYỆN ROGUELIKE — TẦNG ${session.currentFloor}/100`)
             .addFields({
             name: '🩸 Sinh Lực & Chân Khí',
-            value: `🩸 **Sinh Lực:** \`${session.currentHp.toLocaleString('vi-VN')} / ${session.maxHp.toLocaleString('vi-VN')}\` ${renderAsciiBar(session.currentHp, session.maxHp)}\n` +
-                `🔷 **Chân Khí:** \`${session.currentMp.toLocaleString('vi-VN')} / ${session.maxMp.toLocaleString('vi-VN')}\``,
+            value: `🩸 **Sinh Lực:** \`${session.currentHp.toLocaleString('vi-vkl')} / ${session.maxHp.toLocaleString('vi-vkl')}\` ${renderAsciiBar(session.currentHp, session.maxHp)}\n` +
+                `🔷 **Chân Khí:** \`${session.currentMp.toLocaleString('vi-vkl')} / ${session.maxMp.toLocaleString('vi-vkl')}\``,
             inline: false,
         }, {
             name: `👹 Đối Thủ Tầng Này: ${enemy.icon} ${enemy.name}`,
-            value: `❤️ **HP Dự Kiến:** \`${enemy.maxHp.toLocaleString('vi-VN')}\` | ⚔️ **ATK:** \`${enemy.atk}\` | 🛡️ **DEF:** \`${enemy.def}\``,
+            value: `❤️ **HP Dự Kiến:** \`${enemy.maxHp.toLocaleString('vi-vkl')}\` | ⚔️ **ATK:** \`${enemy.atk}\` | 🛡️ **DEF:** \`${enemy.def}\``,
             inline: false,
         }, {
             name: '✨ Bùa Đang Kích Hoạt',
@@ -193,7 +193,7 @@ async function leoThapCommandClean(message) {
                     resultEmbed.setTitle(`🎉 ĐẢ BẠI KẺ ĐỊCH TẦNG ${session.currentFloor}!`);
                     resultEmbed.setDescription(`📜 **Nhật ký giao tranh:**\n${combat.combatResult.logs.join('\n')}\n\n` +
                         `❤️ **Sinh Lực còn lại:** \`${combat.session.currentHp}/${combat.session.maxHp}\` HP\n\n` +
-                        `👉 Gõ \`vn leothap\` để tiếp tục tiến vào Tầng ${combat.session.currentFloor}!`);
+                        `👉 Gõ \`vkl leothap\` để tiếp tục tiến vào Tầng ${combat.session.currentFloor}!`);
                 }
                 await i.update({ embeds: [resultEmbed], components: [disabledRow] }).catch(() => { });
                 collector.stop('completed');
@@ -217,6 +217,6 @@ async function leoThapCommandClean(message) {
     catch (err) {
         sessionManager.unlock(userId);
         console.error('[leoThapCommandClean Error]', err);
-        await message.reply('❌ Đã xảy ra lỗi khi khởi tạo trận đấu Leo Tháp. Vui lòng gõ lại `vn leothap`.').catch(() => { });
+        await message.reply('❌ Đã xảy ra lỗi khi khởi tạo trận đấu Leo Tháp. Vui lòng gõ lại `vkl leothap`.').catch(() => { });
     }
 }

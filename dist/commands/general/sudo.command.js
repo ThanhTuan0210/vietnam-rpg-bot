@@ -8,13 +8,13 @@ async function suDoCommand(message, args) {
     const subCmd = args[0]?.toLowerCase();
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn batdau`.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl batdau`.');
         return;
     }
     if (subCmd === 'nhan') {
         const targetUser = message.mentions.users.first();
         if (!targetUser) {
-            await message.reply('⚠️ **Cú pháp:** `vn sudo nhan @User` (Nhận Đệ tử dưới Cấp 25)');
+            await message.reply('⚠️ **Cú pháp:** `vkl sudo nhan @User` (Nhận Đệ tử dưới Cấp 25)');
             return;
         }
         if (user.canhGioi.capDo < 50) {
@@ -48,6 +48,6 @@ async function suDoCommand(message, args) {
         .setDescription(`Sư Phụ: ${user.suDo?.suPhuId ? `<@${user.suDo.suPhuId}>` : '*(Chưa bái sư)*'}\n` +
         `Đệ Tử: **${deTuCount}/2** Người\n` +
         `✨ **Điểm Công Đức:** **${diemCongDuc} điểm**\n\n` +
-        `• \`vn sudo nhan @User\` : Nhận người chơi cấp thấp làm Đệ tử (Sư phụ Level 50+, Đệ tử < Level 25)`);
+        `• \`vkl sudo nhan @User\` : Nhận người chơi cấp thấp làm Đệ tử (Sư phụ Level 50+, Đệ tử < Level 25)`);
     await message.reply({ embeds: [embed] });
 }

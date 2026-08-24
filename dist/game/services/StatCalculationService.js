@@ -41,11 +41,12 @@ class StatCalculationService {
         const basePhysicalAtk = baseAtk + weaponAtk + gemAtk;
         const physicalAtk = Math.floor(basePhysicalAtk * (1 + weaponBonusAtkPercent / 100));
         const magicAtk = user.chiSo.magicAtk + Math.floor(physicalAtk * 0.4);
+        const cType = (user.hePhai || '').toString().toLowerCase();
         let critRate = user.chiSo.chiMang;
-        if (user.hePhai === 'THO_SAN')
+        if (cType === 'ranger' || cType === 'assassin' || cType === 'tho_san')
             critRate += 0.15;
         critRate = Math.min(1.0, Math.max(0.05, critRate));
-        const critDmg = user.chiSo.critDmg || 1.50; // Mặc định 150%
+        const critDmg = user.chiSo.critDmg || 1.50;
         const armorPen = user.chiSo.armorPen || 0.0;
         // 3. Chỉ số Phòng Vệ & Cơ Động
         const baseDef = user.chiSo.phongThu;
@@ -55,11 +56,11 @@ class StatCalculationService {
         const dmgReduction = (physicalDef / (physicalDef + 100 + level * 10)) * 100;
         const dmgReductionPercent = Math.min(85, Math.max(0, parseFloat(dmgReduction.toFixed(1))));
         let dodgeRate = user.chiSo.neTranh;
-        if (user.hePhai === 'THO_SAN')
+        if (cType === 'ranger' || cType === 'assassin' || cType === 'tho_san')
             dodgeRate += 0.10;
         dodgeRate = Math.min(0.40, Math.max(0.0, dodgeRate)); // Max 40%
         let lifeSteal = user.chiSo.lifeSteal;
-        if (user.hePhai === 'THO_SAN')
+        if (cType === 'assassin' || cType === 'tho_san')
             lifeSteal += 0.05;
         // 4. Bản Mệnh Ngũ Hành
         const nguHanh = user.nguHanh || 'KIM';

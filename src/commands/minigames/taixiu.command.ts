@@ -10,7 +10,7 @@ export async function taiXiuCommand(message: Message, args: string[]): Promise<v
   // Parse tiền cược
   const betAmount = parseInt(args[0], 10);
   if (isNaN(betAmount) || betAmount <= 0) {
-    await message.reply('⚠️ **Cú pháp:** `vn taixiu [số tiền cược]` (Ví dụ: `vn taixiu 500`)');
+    await message.reply('⚠️ **Cú pháp:** `vkl taixiu [số tiền cược]` (Ví dụ: `vkl taixiu 500`)');
     return;
   }
 

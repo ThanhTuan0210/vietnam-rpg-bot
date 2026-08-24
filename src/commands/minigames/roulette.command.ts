@@ -11,7 +11,7 @@ export async function rouletteCommand(message: Message, args: string[]): Promise
 
   const betAmount = parseInt(args[0], 10);
   if (isNaN(betAmount) || betAmount <= 0) {
-    await message.reply('⚠️ **Cú pháp:** `vn roulette [số tiền cược]` (Ví dụ: `vn roulette 200`)');
+    await message.reply('⚠️ **Cú pháp:** `vkl roulette [số tiền cược]` (Ví dụ: `vkl roulette 200`)');
     return;
   }
 

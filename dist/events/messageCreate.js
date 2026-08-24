@@ -71,18 +71,6 @@ async function onMessageCreate(message) {
     else if (lowerContent === 'vkl' || lowerContent.startsWith('vkl')) {
         matchedPrefix = 'vkl';
     }
-    else if (lowerContent.startsWith('vn ')) {
-        matchedPrefix = 'vn ';
-    }
-    else if (lowerContent === 'vn' || lowerContent.startsWith('vn')) {
-        matchedPrefix = 'vn';
-    }
-    else if (lowerContent.startsWith('nv ')) {
-        matchedPrefix = 'nv ';
-    }
-    else if (lowerContent === 'nv' || lowerContent.startsWith('nv')) {
-        matchedPrefix = 'nv';
-    }
     if (!matchedPrefix)
         return;
     console.log(`📩 [DISCORD COMMAND] ${message.author.tag} (${message.guild.name}): "${content}"`);

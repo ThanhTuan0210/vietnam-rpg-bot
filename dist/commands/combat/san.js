@@ -13,7 +13,7 @@ async function sanCommandAdvanced(message, isHardMode = false) {
     const userId = message.author.id;
     let user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn start` trước.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl start` trước.');
         return;
     }
     // 1. Cooldown Check 60s
@@ -22,7 +22,7 @@ async function sanCommandAdvanced(message, isHardMode = false) {
     const now = Date.now();
     if (now - lastUsed < 60000) {
         const remSec = Math.ceil((60000 - (now - lastUsed)) / 1000);
-        await message.reply(`⏰ **Cooldown:** Vui lòng chờ **${remSec}s** nữa mới có thể tiếp tục \`vn hunt\`.`);
+        await message.reply(`⏰ **Cooldown:** Vui lòng chờ **${remSec}s** nữa mới có thể tiếp tục \`vkl hunt\`.`);
         return;
     }
     // 2. Lấy quái ngẫu nhiên theo vùng

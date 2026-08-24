@@ -13,7 +13,7 @@ async function khamCommand(message, args) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('🔴 KHẢM NGỌC TRANG BỊ')
             .setDescription(`Đính Ngọc Lửa, Ngọc Băng vào Vũ Khí để tăng mạnh sát thương chiến đấu!\n\n` +
-            `• Cú pháp: \`vn kham vukhi [mã_ngọc]\` (Ví dụ: \`vn kham vukhi ngoc_lua_1\`)\n\n` +
+            `• Cú pháp: \`vkl kham vukhi [mã_ngọc]\` (Ví dụ: \`vkl kham vukhi ngoc_lua_1\`)\n\n` +
             `🔴 **Ngọc Lửa Lv.1** (\`ngoc_lua_1\`) — *+10 ATK Sát Thương*\n` +
             `🔴 **Ngọc Lửa Lv.2** (\`ngoc_lua_2\`) — *+25 ATK Sát Thương*\n` +
             `🔵 **Ngọc Băng Lv.1** (\`ngoc_bang_1\`) — *+10 DEF Hộ Giáp*\n` +

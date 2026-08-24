@@ -45,7 +45,7 @@ class WeatherService {
         return weathers[cycleHour];
     }
     /**
-     * Xin Xăm / Gieo Quẻ Kinh Dịch (vn xinxam) - Mỗi ngày 1 lần
+     * Xin Xăm / Gieo Quẻ Kinh Dịch (vkl xinxam) - Mỗi ngày 1 lần
      */
     static async drawDailyFortune(userId) {
         const user = await User_model_1.UserModelAdvanced.findOne({ userId });

@@ -140,8 +140,8 @@ export async function dungeonCommand(message: Message, args: string[]): Promise<
     .setTitle(`🏰 THỬ THÁCH NGỤC TỐI GOTHIC — ${floor.name.toUpperCase()}`)
     .setDescription(
       `🏛️ **ANH HÙNG:** ${username} (\`${(user.hePhai || '').toString().toUpperCase()}\` + \`${((user as any).producerJob || '').toString().toUpperCase()}\`)\n` +
-        `📊 **Lực Chiến CP:** \`${userCP.toLocaleString('vi-VN')} CP\` ${hasDualClass ? '✨ *(+20% Dual-Class Synergy!)*' : ''}\n` +
-        `⚔️ **Boss Ngục Tối:** **${floor.bossName}** (HP: \`${floor.bossHp.toLocaleString('vi-VN')}\` | Yêu cầu CP: \`${floor.reqCP.toLocaleString('vi-VN')}\`)\n\n` +
+        `📊 **Lực Chiến CP:** \`${userCP.toLocaleString('vi-vkl')} CP\` ${hasDualClass ? '✨ *(+20% Dual-Class Synergy!)*' : ''}\n` +
+        `⚔️ **Boss Ngục Tối:** **${floor.bossName}** (HP: \`${floor.bossHp.toLocaleString('vi-vkl')}\` | Yêu cầu CP: \`${floor.reqCP.toLocaleString('vi-vkl')}\`)\n\n` +
         `🎲 **SỰ KIỆN PHÒNG NGẪU NHIÊN:**\n` +
         `└ **${randomRoom.title}:** ${randomRoom.desc}\n\n` +
         `⚠️ **BOSS ĐANG VUNG KHIÊN CUỒNG NỘ! HÃY BẤM NÚT CHIẾN THUẬT BÊN DƯỚI ĐỂ CHIẾN ĐẤU!**`
@@ -204,7 +204,7 @@ export async function dungeonCommand(message: Message, args: string[]): Promise<
         .setDescription(
           `${extraText}\n` +
             `❌ Sát thương của **${floor.bossName}** quá tàn bạo! Tổ đội của bạn chưa đủ Lực Chiến CP!\n\n` +
-            `📊 **Lực chiến hiện tại:** \`${userCP.toLocaleString('vi-VN')} CP\` (Cần: \`${floor.reqCP.toLocaleString('vi-VN')} CP\`)\n\n` +
+            `📊 **Lực chiến hiện tại:** \`${userCP.toLocaleString('vi-vkl')} CP\` (Cần: \`${floor.reqCP.toLocaleString('vi-vkl')} CP\`)\n\n` +
             `💡 *Hãy nâng cấp vũ khí tại Thợ Rèn (\`vkl craft\`) và uống Thuốc HP (\`vkl brew\`) trước khi thử lại!*`
         );
 

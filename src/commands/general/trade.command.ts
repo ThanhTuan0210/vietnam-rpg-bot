@@ -6,7 +6,7 @@ export async function tradeCommand(message: Message, args: string[]): Promise<vo
   const targetUser = message.mentions.users.first();
 
   if (!targetUser) {
-    await message.reply('⚠️ **Vui lòng tag người chơi cần giao dịch!**\n*VD:* `vn trade @ThanhTuan`');
+    await message.reply('⚠️ **Vui lòng tag người chơi cần giao dịch!**\n*VD:* `vkl trade @ThanhTuan`');
     return;
   }
 

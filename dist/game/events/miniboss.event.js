@@ -66,7 +66,7 @@ function startMinibossSpawner(client, channelId) {
                 .setTitle(`🐉 SỰ KIỆN MINIBOSS REALTIME — ${boss.icon} ${boss.name.toUpperCase()} GIÁNG THẾ!`)
                 .setDescription(`**${boss.icon} ${boss.name}** vừa giáng thế xuất hiện trong kênh chat!\n` +
                 `💥 **Tuyệt kỹ:** *${boss.skillName}*\n` +
-                `❤️ **HP Thần Thoại:** \`${currentBossHp.toLocaleString('vi-VN')} / ${boss.hp.toLocaleString('vi-VN')}\`\n\n` +
+                `❤️ **HP Thần Thoại:** \`${currentBossHp.toLocaleString('vi-vkl')} / ${boss.hp.toLocaleString('vi-vkl')}\`\n\n` +
                 `⚠️ **TẤT CẢ ANH HÙNG HÃY BẤM NÚT DƯỚI ĐÂY ĐỂ HỢP LỰC ĐẢ BẠI TRÙM TRONG 60 GIÂY!**`);
             const msg = await channel.send({ embeds: [embed], components: [row] });
             const collector = msg.createMessageComponentCollector({

@@ -12,7 +12,7 @@ async function xiDachCommand(message, args) {
     // 1. Parse cược
     let betAmount = parseInt(args[0], 10);
     if (isNaN(betAmount) || betAmount <= 0) {
-        await message.reply('⚠️ **Cú pháp:** `vn xidach [số tiền cược]` (Ví dụ: `vn xidach 200`)');
+        await message.reply('⚠️ **Cú pháp:** `vkl xidach [số tiền cược]` (Ví dụ: `vkl xidach 200`)');
         return;
     }
     // 2. Session Lock

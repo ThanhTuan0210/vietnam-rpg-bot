@@ -9,7 +9,7 @@ export async function trungHoiCommand(message: Message): Promise<void> {
   const user = await UserModelAdvanced.findOne({ userId });
 
   if (!user) {
-    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn batdau`.');
+    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl batdau`.');
     return;
   }
 
@@ -65,7 +65,7 @@ export async function trungHoiCommand(message: Message): Promise<void> {
         const resultEmbed = createDongSonEmbed()
           .setTitle('✨ TRÙNG SINH THÀNH CÔNG!')
           .setDescription(
-            `Chúc mừng bạn đã tái sinh luân hồi thành công! Bạn nhận được **+10 Điểm Cân Cốt**.\n\nGõ \`vn cancot\` để nâng cấp điểm tiềm năng vĩnh viễn!`
+            `Chúc mừng bạn đã tái sinh luân hồi thành công! Bạn nhận được **+10 Điểm Cân Cốt**.\n\nGõ \`vkl cancot\` để nâng cấp điểm tiềm năng vĩnh viễn!`
           );
         await i.update({ embeds: [resultEmbed], components: [disabledRow] });
       }
@@ -97,10 +97,10 @@ export async function canCotCommand(message: Message, args: string[]): Promise<v
       .setDescription(
         `Số điểm Cân Cốt hiện có: **${pts} điểm**\n\n` +
           `**Các thuộc tính có thể nâng cấp:**\n` +
-          `• \`vn cancot tocsdo\` : Tăng tốc độ thu hoạch (+5%/cấp)\n` +
-          `• \`vn cancot cooldown\` : Giảm thời gian hồi chiêu (-2%/cấp)\n` +
-          `• \`vn cancot drop\` : Tăng tỷ lệ rớt đồ hiếm (+3%/cấp)\n` +
-          `• \`vn cancot exp\` : Hệ số nhân EXP vĩnh viễn (+0.5x/cấp)`
+          `• \`vkl cancot tocsdo\` : Tăng tốc độ thu hoạch (+5%/cấp)\n` +
+          `• \`vkl cancot cooldown\` : Giảm thời gian hồi chiêu (-2%/cấp)\n` +
+          `• \`vkl cancot drop\` : Tăng tỷ lệ rớt đồ hiếm (+3%/cấp)\n` +
+          `• \`vkl cancot exp\` : Hệ số nhân EXP vĩnh viễn (+0.5x/cấp)`
       );
     await message.reply({ embeds: [embed] });
     return;
@@ -115,7 +115,7 @@ export async function canCotCommand(message: Message, args: string[]): Promise<v
 
   const statKey = mapKey[statTypeInput];
   if (!statKey) {
-    await message.reply('❌ Thuộc tính không hợp lệ! Dùng `vn cancot` để xem danh sách.');
+    await message.reply('❌ Thuộc tính không hợp lệ! Dùng `vkl cancot` để xem danh sách.');
     return;
   }
 

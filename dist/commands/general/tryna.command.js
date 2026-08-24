@@ -12,7 +12,7 @@ async function trynaCommand(message, args) {
         const reward = parseInt(args[1], 10);
         const dungeonName = args.slice(2).join(' ') || 'Phụ Bản Trùm Vùng 2';
         if (isNaN(reward) || reward <= 0) {
-            await message.reply('⚠️ **Cú pháp:** `vn truy_na dang [số_tiền_thưởng] [tên_phụ_bản]`');
+            await message.reply('⚠️ **Cú pháp:** `vkl truy_na dang [số_tiền_thưởng] [tên_phụ_bản]`');
             return;
         }
         const paid = await UserService_1.UserService.deductDongAtomic(userId, reward);
@@ -38,7 +38,7 @@ async function trynaCommand(message, args) {
     if (subCmd === 'nhan') {
         const bountyId = args[1];
         if (!bountyId) {
-            await message.reply('⚠️ **Cú pháp:** `vn truy_na nhan [mã_khế_ước]`');
+            await message.reply('⚠️ **Cú pháp:** `vkl truy_na nhan [mã_khế_ước]`');
             return;
         }
         const bounty = await Bounty_model_1.BountyModel.findOne({ bountyId, status: 'PENDING' });
@@ -62,12 +62,12 @@ async function trynaCommand(message, args) {
     if (pendingBounties.length === 0) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('📜 BẢNG VÀNG KHẾ ƯỚC ĐÁNH THUÊ')
-            .setDescription('Hiện tại không có Khế Ước Đánh Thuê nào đang treo.\n\n• `vn truy_na dang [tiền_thưởng] [tên_phụ_bản]` để treo khế ước!');
+            .setDescription('Hiện tại không có Khế Ước Đánh Thuê nào đang treo.\n\n• `vkl truy_na dang [tiền_thưởng] [tên_phụ_bản]` để treo khế ước!');
         await message.reply({ embeds: [embed] });
         return;
     }
     const listStr = pendingBounties
-        .map((b) => `• Mã: \`${b.bountyId}\` | **${b.posterName}** cần giúp **${b.targetDungeon}** ➔ Thưởng: ${(0, formatters_1.formatDong)(b.rewardDong)} (\`vn truy_na nhan ${b.bountyId}\`)`)
+        .map((b) => `• Mã: \`${b.bountyId}\` | **${b.posterName}** cần giúp **${b.targetDungeon}** ➔ Thưởng: ${(0, formatters_1.formatDong)(b.rewardDong)} (\`vkl truy_na nhan ${b.bountyId}\`)`)
         .join('\n');
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
         .setTitle('📜 BẢNG VÀNG KHẾ ƯỚC ĐÁNH THUÊ')

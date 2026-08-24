@@ -11,7 +11,7 @@ export async function slotsCommand(message: Message, args: string[]): Promise<vo
 
   const betAmount = parseInt(args[0], 10);
   if (isNaN(betAmount) || betAmount <= 0) {
-    await message.reply('⚠️ **Cú pháp:** `vn slots [số tiền cược]` (Ví dụ: `vn slots 100`)');
+    await message.reply('⚠️ **Cú pháp:** `vkl slots [số tiền cược]` (Ví dụ: `vkl slots 100`)');
     return;
   }
 

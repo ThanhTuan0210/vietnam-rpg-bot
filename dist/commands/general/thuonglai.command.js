@@ -10,7 +10,7 @@ async function thuongLaiCommand(message, args) {
     if (subCmd === 'mua') {
         const itemId = args[1]?.toLowerCase();
         if (!itemId) {
-            await message.reply('⚠️ **Cú pháp:** `vn thuonglai mua [ngoc_tinh_xao / bua_cuong_hoa_dac_biet]`');
+            await message.reply('⚠️ **Cú pháp:** `vkl thuonglai mua [ngoc_tinh_xao / bua_cuong_hoa_dac_biet]`');
             return;
         }
         const res = await MerchantService_1.MerchantService.buyFlashSale(userId, itemId);
@@ -20,7 +20,7 @@ async function thuongLaiCommand(message, args) {
     // Hiển thị Chợ Phiên Phố Hiến Flash Sale
     const items = MerchantService_1.MerchantService.getFlashSaleItems();
     const itemListStr = items
-        .map((i) => `${i.icon} **${i.name}** (\`${i.id}\`) — Giá: ${(0, formatters_1.formatDong)(i.price)} | Số lượng còn: **${i.stock}** (\`vn thuonglai mua ${i.id}\`)`)
+        .map((i) => `${i.icon} **${i.name}** (\`${i.id}\`) — Giá: ${(0, formatters_1.formatDong)(i.price)} | Số lượng còn: **${i.stock}** (\`vkl thuonglai mua ${i.id}\`)`)
         .join('\n');
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
         .setTitle('👳 THƯƠNG LÁI VẮNG LAI — CHỢ PHIÊN PHỐ HIẾN')

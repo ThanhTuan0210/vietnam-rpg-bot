@@ -66,8 +66,8 @@ export async function bxhCommand(message: Message, args: string[]): Promise<void
     .setTitle('⚡ BẢNG XẾP HẠNG CẢNH GIỚI CAO THỦ')
     .setDescription(
       `TOP 10 Người Chơi Cấp Độ Cao Nhất:\n\n${listStr}\n\n` +
-        `• \`vn bxh thap\` : BXH Leo Tháp Thí Luyện\n` +
-        `• \`vn bxh giau\` : BXH Đại Phú Hào`
+        `• \`vkl bxh thap\` : BXH Leo Tháp Thí Luyện\n` +
+        `• \`vkl bxh giau\` : BXH Đại Phú Hào`
     );
 
   await message.reply({ embeds: [embed] });

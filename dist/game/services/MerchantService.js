@@ -37,7 +37,7 @@ class MerchantService {
         }
         const paid = await UserService_1.UserService.deductDongAtomic(userId, item.price);
         if (!paid) {
-            return { success: false, message: `❌ Bạn không đủ **${item.price.toLocaleString('vi-VN')} Đồng**!` };
+            return { success: false, message: `❌ Bạn không đủ **${item.price.toLocaleString('vi-vkl')} Đồng**!` };
         }
         item.stock -= 1;
         await UserService_1.UserService.addItemAtomic(userId, item.id, 1);

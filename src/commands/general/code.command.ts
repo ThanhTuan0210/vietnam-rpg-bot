@@ -12,7 +12,7 @@ export async function codeCommand(message: Message, args: string[]): Promise<voi
     const embed = createDongSonEmbed()
       .setTitle('🎁 NHẬP MÃ GIFTCODE QUÀ TẶNG')
       .setDescription(
-        `• Cú pháp: \`vn code [mã_quà_tặng]\`\n\n` +
+        `• Cú pháp: \`vkl code [mã_quà_tặng]\`\n\n` +
           `🔥 **GIFTCODE ĐẠI LỄ QUỐC KHÁNH 2/9 ĐANG MỞ:**\n` +
           `• Mã: \`QUOCKHANH29\` hoặc \`DOCLAP29\` — Nhận 3 Rương Báu Thượng Cổ + 29,000đ + 29 Kim Bảo!\n` +
           `• Mã: \`DAI_VIET_2026\` — Nhận Quà Tân Thủ Thần Thoại (50,000đ + 10 Kim Bảo)`

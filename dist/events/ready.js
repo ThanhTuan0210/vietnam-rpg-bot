@@ -23,7 +23,7 @@ async function onReady(client) {
     client.user?.setPresence({
         activities: [
             {
-                name: 'vn batdau | RPG Dân Gian Việt Nam 🌾',
+                name: 'vkl | Medieval Dark Fantasy RPG ⚔️',
                 type: discord_js_1.ActivityType.Playing,
             },
         ],

@@ -57,7 +57,7 @@ export class WeatherService {
   }
 
   /**
-   * Xin Xăm / Gieo Quẻ Kinh Dịch (vn xinxam) - Mỗi ngày 1 lần
+   * Xin Xăm / Gieo Quẻ Kinh Dịch (vkl xinxam) - Mỗi ngày 1 lần
    */
   public static async drawDailyFortune(userId: string): Promise<{ success: boolean; type?: string; message: string }> {
     const user = await UserModelAdvanced.findOne({ userId });

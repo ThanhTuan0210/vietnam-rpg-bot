@@ -11,7 +11,7 @@ async function rouletteCommand(message, args) {
     const userId = message.author.id;
     const betAmount = parseInt(args[0], 10);
     if (isNaN(betAmount) || betAmount <= 0) {
-        await message.reply('⚠️ **Cú pháp:** `vn roulette [số tiền cược]` (Ví dụ: `vn roulette 200`)');
+        await message.reply('⚠️ **Cú pháp:** `vkl roulette [số tiền cược]` (Ví dụ: `vkl roulette 200`)');
         return;
     }
     const session = SessionManager_1.SessionManager.getInstance();

@@ -8,7 +8,7 @@ export async function dismantleCommand(message: Message, args: string[]): Promis
   const slotType = args[0]?.toLowerCase();
 
   if (slotType !== 'vukhi' && slotType !== 'aogiap' && slotType !== 'sword' && slotType !== 'armor') {
-    await message.reply('⚠️ **Cú pháp phân tách chuẩn Epic RPG:** `vn dismantle [vukhi / aogiap]` (Ví dụ: `vn dismantle vukhi`)');
+    await message.reply('⚠️ **Cú pháp phân tách chuẩn Epic RPG:** `vkl dismantle [vukhi / aogiap]` (Ví dụ: `vkl dismantle vukhi`)');
     return;
   }
 

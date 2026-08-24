@@ -11,7 +11,7 @@ async function bangHoiCommand(message, args) {
     if (subCommand === 'tao') {
         const guildName = args.slice(1).join(' ');
         if (!guildName) {
-            await message.reply('⚠️ **Cú pháp:** `vn bang tao [tên bang phái]`');
+            await message.reply('⚠️ **Cú pháp:** `vkl bang tao [tên bang phái]`');
             return;
         }
         const cost = 500000;
@@ -36,7 +36,7 @@ async function bangHoiCommand(message, args) {
     if (subCommand === 'gop') {
         const amount = parseInt(args[1], 10);
         if (isNaN(amount) || amount <= 0) {
-            await message.reply('⚠️ **Cú pháp:** `vn bang gop [số đồng]`');
+            await message.reply('⚠️ **Cú pháp:** `vkl bang gop [số đồng]`');
             return;
         }
         const guild = await Guild_model_1.GuildModel.findOne({ thanhVien: userId });
@@ -70,8 +70,8 @@ async function bangHoiCommand(message, args) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
             .setTitle('🏰 HỆ THỐNG BANG HỘI ĐẠI VIỆT')
             .setDescription(`Bạn chưa gia nhập Bang Phái nào!\n\n` +
-            `• \`vn bang tao [tên]\` : Lập Bang Phái mới (${(0, formatters_1.formatDong)(500000)})\n` +
-            `• \`vn bang gop [số đồng]\` : Đóng góp tài nguyên nâng cấp Đình Làng`);
+            `• \`vkl bang tao [tên]\` : Lập Bang Phái mới (${(0, formatters_1.formatDong)(500000)})\n` +
+            `• \`vkl bang gop [số đồng]\` : Đóng góp tài nguyên nâng cấp Đình Làng`);
         await message.reply({ embeds: [embed] });
         return;
     }

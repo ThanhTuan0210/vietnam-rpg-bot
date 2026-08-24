@@ -9,7 +9,7 @@ export async function giveCommand(message: Message, args: string[]): Promise<voi
   const amount = parseInt(args[1], 10) || parseInt(args[0], 10);
 
   if (!targetUser || targetUser.id === userId || targetUser.bot || isNaN(amount) || amount <= 0) {
-    await message.reply('⚠️ **Cú pháp:** `vn cho @User [số_đồng]` (Ví dụ: `vn cho @Tuan 10000`)');
+    await message.reply('⚠️ **Cú pháp:** `vkl cho @User [số_đồng]` (Ví dụ: `vkl cho @Tuan 10000`)');
     return;
   }
 

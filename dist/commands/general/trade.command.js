@@ -7,7 +7,7 @@ const embedBuilder_1 = require("../../utils/embedBuilder");
 async function tradeCommand(message, args) {
     const targetUser = message.mentions.users.first();
     if (!targetUser) {
-        await message.reply('⚠️ **Vui lòng tag người chơi cần giao dịch!**\n*VD:* `vn trade @ThanhTuan`');
+        await message.reply('⚠️ **Vui lòng tag người chơi cần giao dịch!**\n*VD:* `vkl trade @ThanhTuan`');
         return;
     }
     if (targetUser.id === message.author.id) {

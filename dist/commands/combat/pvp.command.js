@@ -11,13 +11,13 @@ async function pvpCommand(message) {
     const userId = message.author.id;
     const targetUser = message.mentions.users.first();
     if (!targetUser || targetUser.id === userId || targetUser.bot) {
-        await message.reply('⚠️ **Cú pháp:** `vn pvp @User` (Thách đấu 1v1 Lôi Đài)');
+        await message.reply('⚠️ **Cú pháp:** `vkl pvp @User` (Thách đấu 1v1 Lôi Đài)');
         return;
     }
     const p1 = await User_model_1.UserModelAdvanced.findOne({ userId });
     const p2 = await User_model_1.UserModelAdvanced.findOne({ userId: targetUser.id });
     if (!p1 || !p1.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn batdau`.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl batdau`.');
         return;
     }
     if (!p2 || !p2.hePhai) {
