@@ -78,7 +78,7 @@ export function startMinibossSpawner(client: Client, channelId: string): void {
         .setDescription(
           `**${boss.icon} ${boss.name}** vừa giáng thế xuất hiện trong kênh chat!\n` +
             `💥 **Tuyệt kỹ:** *${boss.skillName}*\n` +
-            `❤️ **HP Thần Thoại:** \`${currentBossHp.toLocaleString('vi-vkl')} / ${boss.hp.toLocaleString('vi-vkl')}\`\n\n` +
+            `❤️ **HP Thần Thoại:** \`${currentBossHp.toLocaleString('vi-VN')} / ${boss.hp.toLocaleString('vi-VN')}\`\n\n` +
             `⚠️ **TẤT CẢ ANH HÙNG HÃY BẤM NÚT DƯỚI ĐÂY ĐỂ HỢP LỰC ĐẢ BẠI TRÙM TRONG 60 GIÂY!**`
         );
 

@@ -40,7 +40,7 @@ export async function nhanVatCommandAdvanced(message: Message): Promise<void> {
     .setTitle(`🛡️ HỒ SƠ ANH HÙNG TRUNG CỔ — ${message.author.username.toUpperCase()}`)
     .setThumbnail(message.author.displayAvatarURL())
     .setDescription(
-      `📊 **LỰC CHIẾN TỔNG HỢP (CP):** \`${cp.toLocaleString('vi-vkl')} CP\`\n\n` +
+      `📊 **LỰC CHIẾN TỔNG HỢP (CP):** \`${cp.toLocaleString('vi-VN')} CP\`\n\n` +
         `⚔️ **Class Chiến Đấu:** \`${combatClass}\`\n` +
         `🔨 **Class Sản Xuất (PP):** \`${producerClass}\`\n` +
         `🌟 **Level:** \`${user.canhGioi.capDo}\` | 🗺️ **Vùng Ngục Tối:** \`Tầng ${user.canhGioi.khuVuc}\`\n\n` +

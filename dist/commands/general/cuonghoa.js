@@ -36,7 +36,7 @@ async function cuongHoaCommand(message, args) {
     const cost = 5000;
     const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
         .setCustomId('random_enchant')
-        .setLabel(`🎲 Cường Hóa Tinh Thạch (-${cost.toLocaleString('vi-vkl')} Vàng)`)
+        .setLabel(`🎲 Cường Hóa Tinh Thạch (-${cost.toLocaleString('vi-VN')} Vàng)`)
         .setStyle(discord_js_1.ButtonStyle.Primary));
     const tierListStr = RefineService_1.RANDOM_ENCHANT_TIERS.map((t) => `• ${t.icon} **${t.name}**: **+${t.percent}% ${statTypeStr}** (Tỷ lệ rớt: ${Math.round(t.chance * 100)}%)`).join('\n');
     const embed = (0, embedBuilder_1.createDongSonEmbed)()

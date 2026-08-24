@@ -43,7 +43,7 @@ export async function cuongHoaCommand(message: Message, args: string[]): Promise
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId('random_enchant')
-      .setLabel(`🎲 Cường Hóa Tinh Thạch (-${cost.toLocaleString('vi-vkl')} Vàng)`)
+      .setLabel(`🎲 Cường Hóa Tinh Thạch (-${cost.toLocaleString('vi-VN')} Vàng)`)
       .setStyle(ButtonStyle.Primary)
   );
 

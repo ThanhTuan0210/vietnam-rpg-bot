@@ -49,7 +49,7 @@ export class MerchantService {
 
     const paid = await UserService.deductDongAtomic(userId, item.price);
     if (!paid) {
-      return { success: false, message: `❌ Bạn không đủ **${item.price.toLocaleString('vi-vkl')} Đồng**!` };
+      return { success: false, message: `❌ Bạn không đủ **${item.price.toLocaleString('vi-VN')} Đồng**!` };
     }
 
     item.stock -= 1;

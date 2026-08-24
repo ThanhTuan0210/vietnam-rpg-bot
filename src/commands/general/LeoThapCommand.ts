@@ -166,16 +166,16 @@ export async function leoThapCommandClean(message: Message): Promise<void> {
         {
           name: '🩸 Sinh Lực & Chân Khí',
           value:
-            `🩸 **Sinh Lực:** \`${session.currentHp.toLocaleString('vi-vkl')} / ${session.maxHp.toLocaleString('vi-vkl')}\` ${renderAsciiBar(
+            `🩸 **Sinh Lực:** \`${session.currentHp.toLocaleString('vi-VN')} / ${session.maxHp.toLocaleString('vi-VN')}\` ${renderAsciiBar(
               session.currentHp,
               session.maxHp
             )}\n` +
-            `🔷 **Chân Khí:** \`${session.currentMp.toLocaleString('vi-vkl')} / ${session.maxMp.toLocaleString('vi-vkl')}\``,
+            `🔷 **Chân Khí:** \`${session.currentMp.toLocaleString('vi-VN')} / ${session.maxMp.toLocaleString('vi-VN')}\``,
           inline: false,
         },
         {
           name: `👹 Đối Thủ Tầng Này: ${enemy.icon} ${enemy.name}`,
-          value: `❤️ **HP Dự Kiến:** \`${enemy.maxHp.toLocaleString('vi-vkl')}\` | ⚔️ **ATK:** \`${enemy.atk}\` | 🛡️ **DEF:** \`${enemy.def}\``,
+          value: `❤️ **HP Dự Kiến:** \`${enemy.maxHp.toLocaleString('vi-VN')}\` | ⚔️ **ATK:** \`${enemy.atk}\` | 🛡️ **DEF:** \`${enemy.def}\``,
           inline: false,
         },
         {

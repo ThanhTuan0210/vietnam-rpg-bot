@@ -145,7 +145,7 @@ class AreaBossService {
         if (user.taiChinh.dong < totalCost) {
             return {
                 success: false,
-                message: `❌ Bạn cần **${totalCost.toLocaleString('vi-vkl')} Đồng** để quy đổi **${amount} Điểm Công Đức**!`,
+                message: `❌ Bạn cần **${totalCost.toLocaleString('vi-VN')} Đồng** để quy đổi **${amount} Điểm Công Đức**!`,
             };
         }
         await User_model_1.UserModelAdvanced.updateOne({ userId }, {
@@ -156,7 +156,7 @@ class AreaBossService {
         });
         return {
             success: true,
-            message: `🎉 **ĐỔI CÔNG ĐỨC THÀNH CÔNG!** Bạn đã quy đổi **${totalCost.toLocaleString('vi-vkl')} Đồng** thành **+${amount} Điểm Công Đức**!`,
+            message: `🎉 **ĐỔI CÔNG ĐỨC THÀNH CÔNG!** Bạn đã quy đổi **${totalCost.toLocaleString('vi-VN')} Đồng** thành **+${amount} Điểm Công Đức**!`,
         };
     }
     /**
