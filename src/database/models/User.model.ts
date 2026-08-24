@@ -1,13 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
 
-export type HePhaiType = 'DUNG_TUONG' | 'DAO_SI' | 'THO_SAN';
+export type HePhaiType = 'warrior' | 'mage' | 'ranger' | 'assassin' | 'DUNG_TUONG' | 'DAO_SI' | 'THO_SAN' | string;
 export type NguHanhType = 'KIM' | 'MOC' | 'THUY' | 'HOA' | 'THO';
 export type DoHiemType = 'THUONG' | 'TINH_XAO' | 'SU_THI' | 'TRUYEN_THUYET' | 'THAN_THOAI';
 
 export interface ITuiDoItemAdvanced {
   itemId: string;
   soLuong: number;
-  doHiem: DoHiemType;
+  quantity?: number;
+  doHiem?: DoHiemType;
 }
 
 export interface IDungCuSet {
@@ -82,7 +83,7 @@ export interface ISuDoInfo {
 }
 
 export interface IKarmaInfo {
-  score: number; // >0: Chính Đạo, <0: Tà Đạo
+  score: number;
   alignment: 'CHINH_DAO' | 'TA_DAO' | 'TRUNG_LAP';
 }
 
@@ -103,16 +104,17 @@ export interface IUserAdvanced extends Document {
   dungCu: IDungCuSet;
   soLanTrungSinh: number;
   diemCanCot: number;
-  diemTiemNang: {
+  diemTiemNang?: {
     tocDoThuHoach: number;
     giamCooldown: number;
     tyLeDropHiem: number;
     heSoExp: number;
   };
   dailyFortune: IDailyFortune;
-  suDo: ISuDoInfo;
-  karma: IKarmaInfo;
-  tower: ITowerProgress;
+  suDo?: ISuDoInfo;
+  karma?: IKarmaInfo;
+  tower?: ITowerProgress;
+  inventory: ITuiDoItemAdvanced[];
   tuiDo: ITuiDoItemAdvanced[];
   cooldowns: Map<string, number>;
   createdAt: Date;
@@ -129,17 +131,15 @@ const UserAdvancedSchema = new Schema<IUserAdvanced>(
     },
     hePhai: {
       type: String,
-      enum: ['DUNG_TUONG', 'DAO_SI', 'THO_SAN', null],
       default: null,
     },
     nguHanh: {
       type: String,
-      enum: ['KIM', 'MOC', 'THUY', 'HOA', 'THO'],
       default: 'HOA',
     },
     danhHieu: {
       type: String,
-      default: '« Đệ Nhất Kiếm Thần »',
+      default: '« Hiệp Sĩ Gothic Trung Cổ »',
     },
     canhGioi: {
       capDo: { type: Number, default: 1 },
@@ -162,73 +162,51 @@ const UserAdvancedSchema = new Schema<IUserAdvanced>(
       lifeSteal: { type: Number, default: 0.0 },
     },
     taiChinh: {
-      dong: { type: Number, default: 100, min: 0 },
+      dong: { type: Number, default: 5000, min: 0 },
       kimBao: { type: Number, default: 0, min: 0 },
     },
     trangBi: {
       vuKhi: {
-        itemId: { type: String, default: 'none' },
+        itemId: { type: String, default: 'sword_01a' },
         capCuongHoa: { type: Number, default: 0 },
         bonusStat: { type: Number, default: 0 },
-        khamNgoc: { type: String, default: '' },
       },
       aoGiap: {
-        itemId: { type: String, default: 'none' },
+        itemId: { type: String, default: 'shield_01a' },
         capCuongHoa: { type: Number, default: 0 },
         bonusStat: { type: Number, default: 0 },
-        khamNgoc: { type: String, default: '' },
       },
-      phapBao: {
-        itemId: { type: String, default: 'none' },
-        capCuongHoa: { type: Number, default: 0 },
-        hieuUng: { type: String, default: '' },
-      },
-      linhThu: {
-        itemId: { type: String, default: 'none' },
-        name: { type: String, default: 'none' },
-        bac: { type: Number, default: 0 },
-      },
-    },
-    dungCu: {
-      riu: { type: Number, default: 1 },
-      canCau: { type: Number, default: 1 },
-      cuoc: { type: Number, default: 1 },
-      gioThuoc: { type: Number, default: 1 },
     },
     soLanTrungSinh: { type: Number, default: 0 },
     diemCanCot: { type: Number, default: 0 },
-    diemTiemNang: {
-      tocDoThuHoach: { type: Number, default: 0 },
-      giamCooldown: { type: Number, default: 0 },
-      tyLeDropHiem: { type: Number, default: 0 },
-      heSoExp: { type: Number, default: 1.0 },
-    },
     dailyFortune: {
-      type: { type: String, enum: ['DAI_CAT', 'TRUNG_CAT', 'TIEU_HUNG', 'DAI_HUNG', null], default: null },
-      lastDate: { type: Date },
+      type: { type: String, default: null },
     },
     suDo: {
       suPhuId: { type: String },
-      deTuIds: [{ type: String }],
+      deTuIds: { type: [String], default: [] },
       diemCongDuc: { type: Number, default: 0 },
     },
     karma: {
       score: { type: Number, default: 0 },
-      alignment: { type: String, enum: ['CHINH_DAO', 'TA_DAO', 'TRUNG_LAP'], default: 'TRUNG_LAP' },
+      alignment: { type: String, default: 'TRUNG_LAP' },
     },
     tower: {
       highestFloor: { type: Number, default: 0 },
       trialPoints: { type: Number, default: 0 },
     },
+    inventory: [
+      {
+        itemId: { type: String, required: true },
+        quantity: { type: Number, default: 1 },
+        soLuong: { type: Number, default: 1 },
+      },
+    ],
     tuiDo: [
       {
         itemId: { type: String, required: true },
-        soLuong: { type: Number, required: true, default: 1 },
-        doHiem: {
-          type: String,
-          enum: ['THUONG', 'TINH_XAO', 'SU_THI', 'TRUYEN_THUYET', 'THAN_THOAI'],
-          default: 'THUONG',
-        },
+        soLuong: { type: Number, default: 1 },
+        quantity: { type: Number, default: 1 },
       },
     ],
     cooldowns: {
@@ -237,9 +215,7 @@ const UserAdvancedSchema = new Schema<IUserAdvanced>(
       default: new Map(),
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true, strict: false }
 );
 
 export const UserModelAdvanced = model<IUserAdvanced>('UserAdvanced', UserAdvancedSchema);
