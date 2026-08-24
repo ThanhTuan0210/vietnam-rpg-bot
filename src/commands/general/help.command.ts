@@ -56,6 +56,7 @@ export async function handleHelpSelectInteraction(interaction: StringSelectMenuI
         `• \`vkl mine\` — Công việc Thợ Mỏ (Đào khoáng thạch & quặng)\n` +
         `• \`vkl brew\` — Công việc Thợ Bào Chế (Hái lá thuốc & nung ma dược)\n` +
         `• \`vkl craft <itemId>\` — Công việc Thợ Rèn (Rèn vũ khí & áo giáp từ quặng)\n` +
+        `• \`vkl mastery\` — Xem Bảng Mệnh Đề Thông Thạo Nghề (Destiny Board)\n` +
         `• \`vkl job\` — Xem & Chuyển đổi Class Sản Xuất (PP)`;
       break;
 

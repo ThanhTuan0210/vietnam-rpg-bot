@@ -17,6 +17,7 @@ import { detuCommand } from '../commands/general/detu.command';
 import { petCommand } from '../commands/general/pet.command';
 import { cooldownCommand } from '../commands/general/cooldown.command';
 import { bxhCommand } from '../commands/general/bxh.command';
+import { masteryCommand } from '../commands/general/mastery.command';
 import { caoThiCommand } from '../commands/general/caothi.command';
 import { diemDanhCommand } from '../commands/general/diemdanh.command';
 import { weeklyCommand } from '../commands/general/weekly.command';
@@ -190,6 +191,13 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'leaderboard':
       case 'bxh':
         await bxhCommand(message, args);
+        break;
+
+      case 'mastery':
+      case 'thongthao':
+      case 'thong_thao':
+      case 'destiny':
+        await masteryCommand(message);
         break;
 
       case 'quest':

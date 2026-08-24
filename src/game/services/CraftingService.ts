@@ -2,6 +2,7 @@ import { UserModelAdvanced } from '../../database/models/User.model';
 import { RECIPES } from '../data/recipes';
 import { ITEMS } from '../data/items';
 import { UserService } from './UserService';
+import { MasteryService } from './MasteryService';
 import { formatDong } from '../../utils/formatters';
 
 export class CraftingService {
@@ -26,12 +27,12 @@ export class CraftingService {
   }
 
   /**
-   * Chế tạo vật phẩm theo công thức với kiểm tra Level Lock chi tiết
+   * Chế tạo vật phẩm theo công thức với kiểm tra Level Lock & Phẩm Chất Tuyệt Phẩm Albion (.1, .2, .3 Tiers)
    */
   public static async craftItem(
     userId: string,
     rawInput: string
-  ): Promise<{ success: boolean; message: string }> {
+  ): Promise<{ success: boolean; message: string; qualitySuffix?: string }> {
     const user = await UserModelAdvanced.findOne({ userId });
     if (!user) {
       return { success: false, message: '❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.' };
@@ -85,12 +86,21 @@ export class CraftingService {
       await UserService.consumeItemAtomic(userId, mat.itemId, mat.quantity);
     }
 
+    // Roll Albion Quality Tier (.0, .1, .2, .3) based on Blacksmith Mastery Level
+    const blacksmithLevel = (user as any).producerMastery?.blacksmith?.level || 1;
+    const quality = MasteryService.rollQualityTier(blacksmithLevel);
+
     // Add Result Item
     await UserService.addItemAtomic(userId, recipe.resultItemId, recipe.resultQty);
 
+    // Award Blacksmith Mastery EXP (+30 EXP)
+    const masteryRes = await MasteryService.addMasteryExp(userId, 'blacksmith', 30);
+    const levelUpStr = masteryRes.levelUp ? `\n🎉 **THĂNG CẤP THÔNG THẠO!** Blacksmith của bạn đã đạt **Level ${masteryRes.newLevel}**!` : '';
+
     return {
       success: true,
-      message: `🎉 **Rèn thành công ${recipe.resultQty}x ${resultItem.icon} ${resultItem.name}!**`,
+      qualitySuffix: quality.suffix,
+      message: `🎉 **Rèn thành công ${recipe.resultQty}x ${resultItem.icon} ${resultItem.name}**${quality.suffix}!${levelUpStr}`,
     };
   }
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GatheringService = exports.TOOL_RARE_CHANCES = exports.TOOL_MULTIPLIERS = exports.TOOL_NAMES = void 0;
 const UserService_1 = require("./UserService");
 const items_1 = require("../data/items");
+const MasteryService_1 = require("./MasteryService");
 exports.TOOL_NAMES = {
     1: 'Gỗ Sơ Cấp',
     2: 'Sắt Rèn Trung Cổ',
@@ -72,6 +73,8 @@ class GatheringService {
         for (const item of itemsGained) {
             await UserService_1.UserService.addItemAtomic(userId, item.itemId, item.qty);
         }
+        // Cộng EXP Thông Thạo Thợ Mỏ Destiny Board
+        await MasteryService_1.MasteryService.addMasteryExp(userId, 'miner', 25);
         return { itemsGained };
     }
     /**

@@ -19,6 +19,7 @@ const detu_command_1 = require("../commands/general/detu.command");
 const pet_command_1 = require("../commands/general/pet.command");
 const cooldown_command_1 = require("../commands/general/cooldown.command");
 const bxh_command_1 = require("../commands/general/bxh.command");
+const mastery_command_1 = require("../commands/general/mastery.command");
 const caothi_command_1 = require("../commands/general/caothi.command");
 const diemdanh_command_1 = require("../commands/general/diemdanh.command");
 const weekly_command_1 = require("../commands/general/weekly.command");
@@ -172,6 +173,12 @@ async function onMessageCreate(message) {
             case 'leaderboard':
             case 'bxh':
                 await (0, bxh_command_1.bxhCommand)(message, args);
+                break;
+            case 'mastery':
+            case 'thongthao':
+            case 'thong_thao':
+            case 'destiny':
+                await (0, mastery_command_1.masteryCommand)(message);
                 break;
             case 'quest':
             case 'caothi':

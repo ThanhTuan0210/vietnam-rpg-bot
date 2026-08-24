@@ -1,5 +1,6 @@
 import { UserService } from './UserService';
 import { getItemIcon, ITEMS } from '../data/items';
+import { MasteryService } from './MasteryService';
 
 export const TOOL_NAMES: Record<number, string> = {
   1: 'Gỗ Sơ Cấp',
@@ -88,6 +89,9 @@ export class GatheringService {
     for (const item of itemsGained) {
       await UserService.addItemAtomic(userId, item.itemId, item.qty);
     }
+
+    // Cộng EXP Thông Thạo Thợ Mỏ Destiny Board
+    await MasteryService.addMasteryExp(userId, 'miner', 25);
 
     return { itemsGained };
   }

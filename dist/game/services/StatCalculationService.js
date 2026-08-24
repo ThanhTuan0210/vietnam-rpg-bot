@@ -12,21 +12,24 @@ class StatCalculationService {
         let gearHp = 0;
         let gemHp = 0;
         let gearMp = 0;
-        // Vũ khí
+        // Vũ khí & Phẩm Chất Tier (Albion Quality System)
         let weaponAtk = 0;
         if (user.trangBi.vuKhi && items_1.ITEMS[user.trangBi.vuKhi.itemId]) {
             const w = items_1.ITEMS[user.trangBi.vuKhi.itemId];
-            if (w.statBonus?.satThuong)
-                weaponAtk = w.statBonus.satThuong;
+            if (w.statBonus?.satThuong) {
+                const qualityMult = 1 + (user.trangBi.vuKhi.qualityTier || 0) * 0.25;
+                weaponAtk = Math.floor(w.statBonus.satThuong * qualityMult);
+            }
         }
-        // Giáp
+        // Giáp & Phẩm Chất Tier (Albion Quality System)
         let armorDef = 0;
         if (user.trangBi.aoGiap && items_1.ITEMS[user.trangBi.aoGiap.itemId]) {
             const a = items_1.ITEMS[user.trangBi.aoGiap.itemId];
+            const qualityMult = 1 + (user.trangBi.aoGiap.qualityTier || 0) * 0.25;
             if (a.statBonus?.phongThu)
-                armorDef = a.statBonus.phongThu;
+                armorDef = Math.floor(a.statBonus.phongThu * qualityMult);
             if (a.statBonus?.sinhLucToiDa)
-                gearHp += a.statBonus.sinhLucToiDa;
+                gearHp += Math.floor(a.statBonus.sinhLucToiDa * qualityMult);
         }
         // Tính % HP từ Cường hóa Áo Giáp (+5%, +15%, +25%, +50%, +75%)
         const armorBonusHpPercent = user.trangBi.aoGiap?.bonusStat || 0;
