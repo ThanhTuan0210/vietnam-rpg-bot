@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { UserService } from '../../game/services/UserService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
-import { ITEMS } from '../../game/data/items';
+import { ITEMS, getItemIcon } from '../../game/data/items';
 
 export async function tuiDoCommand(message: Message): Promise<void> {
   const userId = message.author.id;
@@ -22,7 +22,7 @@ export async function tuiDoCommand(message: Message): Promise<void> {
   for (const itemSlot of user.tuiDo) {
     if (itemSlot.soLuong <= 0) continue;
     const itemDef = ITEMS[itemSlot.itemId];
-    const icon = itemDef?.icon || '📦';
+    const icon = getItemIcon(itemSlot.itemId);
     const line = `${icon} **\`${itemSlot.itemId}\`**: ${itemSlot.soLuong}`;
 
     if (!itemDef) {

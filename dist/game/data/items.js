@@ -1,6 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ITEMS = void 0;
+exports.ITEMS = exports.CUSTOM_EMOJIS = void 0;
+exports.getItemIcon = getItemIcon;
+/**
+  BẢNG CẤU HÌNH DISCORD CUSTOM EMOJIS (2D/3D PIXEL ART)
+  Bạn có thể upload các ảnh icon đẹp mắt lên Server Discord của bạn,
+  sau đó dán định dạng `<:tên:ID>` vào đây để biến toàn bộ Icon vật phẩm thành hình ảnh 3D/2D cực đẹp!
+*/
+exports.CUSTOM_EMOJIS = {
+// Ví dụ cấu hình Custom Emoji:
+// ruong_go: '<:ruong_go_3d:123456789012345678>',
+// quang_sat: '<:quang_sat_3d:123456789012345678>',
+};
+function getItemIcon(itemId, defaultIcon = '📦') {
+    if (exports.CUSTOM_EMOJIS[itemId]) {
+        return exports.CUSTOM_EMOJIS[itemId];
+    }
+    const item = exports.ITEMS[itemId];
+    return item?.icon || defaultIcon;
+}
 exports.ITEMS = {
     // ==========================================
     // ⚔️ 1. VŨ KHÍ (WEAPONS - LEVEL 1 TO 100)

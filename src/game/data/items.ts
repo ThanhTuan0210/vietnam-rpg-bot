@@ -15,6 +15,25 @@ export interface ItemDefinition {
   icon: string;
 }
 
+/**
+  BẢNG CẤU HÌNH DISCORD CUSTOM EMOJIS (2D/3D PIXEL ART)
+  Bạn có thể upload các ảnh icon đẹp mắt lên Server Discord của bạn, 
+  sau đó dán định dạng `<:tên:ID>` vào đây để biến toàn bộ Icon vật phẩm thành hình ảnh 3D/2D cực đẹp!
+*/
+export const CUSTOM_EMOJIS: Record<string, string> = {
+  // Ví dụ cấu hình Custom Emoji:
+  // ruong_go: '<:ruong_go_3d:123456789012345678>',
+  // quang_sat: '<:quang_sat_3d:123456789012345678>',
+};
+
+export function getItemIcon(itemId: string, defaultIcon = '📦'): string {
+  if (CUSTOM_EMOJIS[itemId]) {
+    return CUSTOM_EMOJIS[itemId];
+  }
+  const item = ITEMS[itemId];
+  return item?.icon || defaultIcon;
+}
+
 export const ITEMS: Record<string, ItemDefinition> = {
   // ==========================================
   // ⚔️ 1. VŨ KHÍ (WEAPONS - LEVEL 1 TO 100)

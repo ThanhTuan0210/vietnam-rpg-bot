@@ -20,7 +20,7 @@ async function tuiDoCommand(message) {
         if (itemSlot.soLuong <= 0)
             continue;
         const itemDef = items_1.ITEMS[itemSlot.itemId];
-        const icon = itemDef?.icon || '📦';
+        const icon = (0, items_1.getItemIcon)(itemSlot.itemId);
         const line = `${icon} **\`${itemSlot.itemId}\`**: ${itemSlot.soLuong}`;
         if (!itemDef) {
             materialsList.push(line);
