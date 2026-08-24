@@ -167,4 +167,10 @@ export const ITEMS: Record<string, ItemDefinition> = {
   ruong_bac: { id: 'ruong_bac', name: 'Rương Bạc Thượng Cổ', type: 'ruong', description: 'Rương báu chứa tài bảo.', sellPrice: 20000, icon: '🟦' },
   ruong_vang: { id: 'ruong_vang', name: 'Rương Vàng Thượng Cổ', type: 'ruong', description: 'Rương báu cực hiếm.', sellPrice: 75000, icon: '🔮' },
   ruong_huyen_thiet: { id: 'ruong_huyen_thiet', name: 'Rương Huyền Thiết Hoàng Cung', type: 'ruong', description: 'Rương hoàng cung rớt Kim Bảo.', sellPrice: 200000, icon: '🏵️' },
+  hat_giong: { id: 'hat_giong', name: 'Hạt Giống Nông Nghiệp', type: 'nguyenlieu', description: 'Hạt giống nông nghiệp dùng gieo trồng ở điền trang (`vn gieo_hat`).', sellPrice: 50, icon: '🌱' },
+  lua_nuoc_hat: { id: 'lua_nuoc_hat', name: 'Hạt Lúa Nước', type: 'nguyenlieu', description: 'Nông sản lúa nước thu hoạch từ điền trang.', sellPrice: 240, icon: '🌾' },
+  dau_xanh_hat: { id: 'dau_xanh_hat', name: 'Hạt Đậu Xanh', type: 'nguyenlieu', description: 'Nông sản đậu xanh thu hoạch từ điền trang.', sellPrice: 625, icon: '🫘' },
+  nep_nuong_hat: { id: 'nep_nuong_hat', name: 'Hạt Nếp Nương', type: 'nguyenlieu', description: 'Nông sản nếp nương thu hoạch từ điền trang.', sellPrice: 2100, icon: '🌾' },
+  sen_vang_bup: { id: 'sen_vang_bup', name: 'Búp Sen Vàng', type: 'nguyenlieu', description: 'Nông sản sen vàng thu hoạch từ điền trang.', sellPrice: 33333, icon: '🪷' },
+  bua_com_lam: { id: 'bua_com_lam', name: 'Bữa Cơm Lam Thượng Hạng', type: 'duoclieu', description: 'Bữa cơm lam thơm ngon hồi 100% HP & MP.', sellPrice: 250, icon: '🍙' },
 };
