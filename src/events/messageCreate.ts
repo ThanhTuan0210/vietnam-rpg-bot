@@ -17,6 +17,7 @@ import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { GatheringService } from '../game/services/GatheringService';
+import { UserService } from '../game/services/UserService';
 import { createDongSonEmbed } from '../utils/embedBuilder';
 import { jobCommand } from '../commands/general/job.command';
 import { detuCommand } from '../commands/general/detu.command';
@@ -384,11 +385,17 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
 
       // --- 4 PRODUCER CLASS COMMANDS (PP: MINER, ALCHEMIST, BLACKSMITH, HUNTER) ---
-      // 1. 🪨 MINER COMMAND (Khai Thác Quặng & Tinh Thạch)
+      // 1. 🪨 MINER COMMAND (Chỉ Thợ Mỏ mới được đào quặng)
       case 'mine':
       case 'm':
       case 'min':
       case 'daokhoang': {
+        const user = await UserService.getOrCreateUser(message.author.id);
+        const pJob = ((user as any).producerJob || '').toLowerCase();
+        if (pJob && pJob !== 'miner' && pJob !== 'min') {
+          await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy nhờ đồng đội làm **MINER (THỢ MỎ)** đào quặng giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+          break;
+        }
         const mineRes = await GatheringService.mine(message.author.id);
         const mineText = mineRes.itemsGained.map((i: any) => `🪨 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
         const embed = createDongSonEmbed()
@@ -398,11 +405,17 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      // 2. 🧪 ALCHEMIST COMMAND (Bào Chế Ma Dược & Thuốc Kháng Độc)
+      // 2. 🧪 ALCHEMIST COMMAND (Chỉ Thợ Bào Chế mới được luyện thuốc)
       case 'brew':
       case 'alc':
       case 'potion':
       case 'phache': {
+        const user = await UserService.getOrCreateUser(message.author.id);
+        const pJob = ((user as any).producerJob || '').toLowerCase();
+        if (pJob && pJob !== 'alchemist' && pJob !== 'alc') {
+          await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy nhờ đồng đội làm **ALCHEMIST (BÀO CHẾ)** luyện thuốc giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+          break;
+        }
         const herbRes = await GatheringService.gatherHerbs(message.author.id);
         const herbText = herbRes.itemsGained.map((i: any) => `🧪 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
         const embed = createDongSonEmbed()
@@ -412,13 +425,20 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      // 3. 🔨 BLACKSMITH COMMAND (Rèn Vũ Khí, Giáp & Cuốc Mỏ)
+      // 3. 🔨 BLACKSMITH COMMAND (Chỉ Thợ Rèn mới được rèn đồ)
       case 'craft':
       case 'blk':
       case 'forge':
-      case 'ren':
+      case 'ren': {
+        const user = await UserService.getOrCreateUser(message.author.id);
+        const pJob = ((user as any).producerJob || '').toLowerCase();
+        if (args.length > 0 && pJob && pJob !== 'blacksmith' && pJob !== 'blk') {
+          await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy gửi nguyên liệu vào Kho Vault (\`vkl vlt dep\`) cho **BLACKSMITH (THỢ RÈN)** rèn đồ giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+          break;
+        }
         await renCommand(message, args);
         break;
+      }
 
       // 4. 🏹 HUNTER COMMAND (Săn Quái Lấy Vàng, Rương & Chìa Khóa)
       case 'hunt':

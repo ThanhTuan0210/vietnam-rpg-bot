@@ -16,6 +16,7 @@ const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
 const GatheringService_1 = require("../game/services/GatheringService");
+const UserService_1 = require("../game/services/UserService");
 const embedBuilder_1 = require("../utils/embedBuilder");
 const job_command_1 = require("../commands/general/job.command");
 const detu_command_1 = require("../commands/general/detu.command");
@@ -315,11 +316,17 @@ async function onMessageCreate(message) {
                 await (0, luyenvo_1.luyenVoCommand)(message);
                 break;
             // --- 4 PRODUCER CLASS COMMANDS (PP: MINER, ALCHEMIST, BLACKSMITH, HUNTER) ---
-            // 1. 🪨 MINER COMMAND (Khai Thác Quặng & Tinh Thạch)
+            // 1. 🪨 MINER COMMAND (Chỉ Thợ Mỏ mới được đào quặng)
             case 'mine':
             case 'm':
             case 'min':
             case 'daokhoang': {
+                const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
+                const pJob = (user.producerJob || '').toLowerCase();
+                if (pJob && pJob !== 'miner' && pJob !== 'min') {
+                    await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy nhờ đồng đội làm **MINER (THỢ MỎ)** đào quặng giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+                    break;
+                }
                 const mineRes = await GatheringService_1.GatheringService.mine(message.author.id);
                 const mineText = mineRes.itemsGained.map((i) => `🪨 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
@@ -328,11 +335,17 @@ async function onMessageCreate(message) {
                 await message.reply({ embeds: [embed] });
                 break;
             }
-            // 2. 🧪 ALCHEMIST COMMAND (Bào Chế Ma Dược & Thuốc Kháng Độc)
+            // 2. 🧪 ALCHEMIST COMMAND (Chỉ Thợ Bào Chế mới được luyện thuốc)
             case 'brew':
             case 'alc':
             case 'potion':
             case 'phache': {
+                const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
+                const pJob = (user.producerJob || '').toLowerCase();
+                if (pJob && pJob !== 'alchemist' && pJob !== 'alc') {
+                    await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy nhờ đồng đội làm **ALCHEMIST (BÀO CHẾ)** luyện thuốc giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+                    break;
+                }
                 const herbRes = await GatheringService_1.GatheringService.gatherHerbs(message.author.id);
                 const herbText = herbRes.itemsGained.map((i) => `🧪 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
@@ -341,13 +354,20 @@ async function onMessageCreate(message) {
                 await message.reply({ embeds: [embed] });
                 break;
             }
-            // 3. 🔨 BLACKSMITH COMMAND (Rèn Vũ Khí, Giáp & Cuốc Mỏ)
+            // 3. 🔨 BLACKSMITH COMMAND (Chỉ Thợ Rèn mới được rèn đồ)
             case 'craft':
             case 'blk':
             case 'forge':
-            case 'ren':
+            case 'ren': {
+                const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
+                const pJob = (user.producerJob || '').toLowerCase();
+                if (args.length > 0 && pJob && pJob !== 'blacksmith' && pJob !== 'blk') {
+                    await message.reply(`⛔ **CHUYÊN MÔN NGHỀ NGHIỆP GIỚI HẠN!**\nBạn đang là **${pJob.toUpperCase()}**!\n💡 *Bạn chỉ có thể thực hiện công việc chuyên môn của Class mình. Hãy gửi nguyên liệu vào Kho Vault (\`vkl vlt dep\`) cho **BLACKSMITH (THỢ RÈN)** rèn đồ giúp bạn hoặc đổi Class tại \`vkl job\`!*`);
+                    break;
+                }
                 await (0, ren_1.renCommand)(message, args);
                 break;
+            }
             // 4. 🏹 HUNTER COMMAND (Săn Quái Lấy Vàng, Rương & Chìa Khóa)
             case 'hunt':
             case 'hnt':
