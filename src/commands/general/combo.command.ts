@@ -23,6 +23,16 @@ export async function comboAllCommand(message: Message): Promise<void> {
     return;
   }
 
+  // Check 0 HP Faint
+  if ((user.chiSo.hp || 0) <= 0) {
+    await message.reply(
+      `💀 **BẠN ĐÃ BỊ TRỌNG THƯƠNG (0 HP)!**\n\n` +
+        `Bạn kiệt sức hoàn toàn và không thể tiếp tục chiến đấu/săn quái!\n\n` +
+        `💡 **Hãy uống Thuốc Hồi Máu HP (\`vkl use potion_01a\`) để hồi sinh 100% HP hoặc mua thêm thuốc tại Tiệm Dự Trữ (\`vkl shop\`)!**`
+    );
+    return;
+  }
+
   // 1. Kiểm tra Cooldown 60s
   const lastUsed = user.cooldowns?.get('combo_all') || 0;
   const now = Date.now();
@@ -44,8 +54,9 @@ export async function comboAllCommand(message: Message): Promise<void> {
   let damageDealt = Math.max(1, Math.floor(totalStats.totalAtk - baseMonster.def * 0.5));
   if (isCrit) damageDealt = Math.floor(damageDealt * 1.5);
 
-  const monsterDamage = Math.max(1, Math.floor(baseMonster.atk - totalStats.totalDef * 0.4));
-  const newPlayerHp = Math.max(0, user.chiSo.hp - monsterDamage);
+  const monsterDamage = Math.max(12, Math.floor(baseMonster.atk * 1.5 - totalStats.totalDef * 0.3));
+  const currentHp = user.chiSo.hp || totalStats.totalMaxHp;
+  const newPlayerHp = Math.max(0, currentHp - monsterDamage);
 
   const expEarned = baseMonster.expReward;
   const dongEarned = baseMonster.dongReward;
@@ -99,15 +110,26 @@ export async function comboAllCommand(message: Message): Promise<void> {
     ? `\n\n🎉 **THĂNG CẤP THÀNH CÔNG!** Bạn đã đạt **Level ${battleRes.newLevel}**!\n📈 **Chỉ số tự động cộng:** **+50 Max HP** | **+20 Max MP** | **+10 Sát Thương** | **+3 Phòng Thu**!`
     : '';
 
+  const hpStatusText =
+    newPlayerHp === 0
+      ? `💔 **Bị thương:** \`-${monsterDamage} HP\` | 💀 **HP:** \`0 / ${totalStats.totalMaxHp}\` *(TRỌNG THƯƠNG!)*`
+      : `💔 **Bị thương:** \`-${monsterDamage} HP\` | ❤️ **HP:** \`${newPlayerHp} / ${totalStats.totalMaxHp}\``;
+
+  const hpAlertText =
+    newPlayerHp === 0
+      ? `\n\n⚠️ **CẢNH BÁO TRỌNG THƯƠNG:** HP của bạn đã cạn về 0! Hãy dùng Thuốc HP (\`vkl use potion_01a\`) để bình phục!`
+      : '';
+
   const embed = createDongSonEmbed()
     .setTitle(`⚡ HOẠT ĐỘNG SẢN XUẤT NHÂN VẬT — ${message.author.username.toUpperCase()}`)
     .setDescription(
       `🎯 **KẾT QUẢ ĐƠN PHÁI CHUYÊN MÔN (1 COMBAT + 1 PRODUCER):**\n\n` +
         `⚔️ **HUNTING (Săn Quái):** Đả bại ${baseMonster.icon} **${baseMonster.name}** (Gây \`${damageDealt}\` DMG${critBadge})\n` +
+        `🩸 **Tổn Thất Sinh Lực:** ${hpStatusText}\n` +
         `✨ **Thưởng:** \`+${expEarned} EXP\` | \`+${dongEarned} Vàng\` | **Loot:** ${huntLootText}\n\n` +
         `${producerJobName}: ${producerResultText}` +
-        `${levelUpNotify}\n\n` +
-        `💡 *Đừng quên thả tài nguyên vào Kho Vault (\`vkl vlt dep\`) cho đồng đội trong nhóm 3-5 người dùng!*`
+        `${levelUpNotify}${hpAlertText}\n\n` +
+        `💡 *Uống Thuốc HP (\`vkl use potion_01a\`) khi HP giảm thấp để duy trì chiến đấu!*`
     );
 
   await message.reply({ embeds: [embed] });
