@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onMessageCreate = onMessageCreate;
-// General & RPG Commands
-const batdau_1 = require("../commands/general/batdau");
 const profile_command_1 = require("../commands/general/profile.command");
 const tuido_1 = require("../commands/general/tuido");
 const duongthuong_1 = require("../commands/general/duongthuong");
@@ -16,6 +14,7 @@ const farm_command_1 = require("../commands/general/farm.command");
 const equip_command_1 = require("../commands/general/equip.command");
 const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
+const master_menu_command_1 = require("../commands/general/master_menu.command");
 const job_command_1 = require("../commands/general/job.command");
 const detu_command_1 = require("../commands/general/detu.command");
 const vault_command_1 = require("../commands/general/vault.command");
@@ -98,7 +97,52 @@ async function onMessageCreate(message) {
                 break;
             case 'start':
             case 'batdau':
-                await (0, batdau_1.batDauCommand)(message);
+            case 'menu':
+            case '':
+                await (0, master_menu_command_1.masterMenuCommand)(message);
+                break;
+            case 'w':
+            case 'work':
+            case 'combo':
+            case 'c':
+            case 'cmb':
+                await (0, combo_command_1.comboAllCommand)(message);
+                break;
+            case 'h':
+            case 'hunt':
+            case 'san':
+                await (0, san_1.sanCommandAdvanced)(message);
+                break;
+            case 'd':
+            case 'dun':
+            case 'dungeon':
+            case 'nguctoi':
+                await (0, dungeon_command_1.dungeonCommand)(message, args);
+                break;
+            case 'i':
+            case 'inv':
+            case 'inventory':
+            case 'tuido':
+            case 'kho':
+                await (0, tuido_1.tuiDoCommand)(message);
+                break;
+            case 'p':
+            case 'pro':
+            case 'profile':
+            case 'nhanvat':
+                await (0, profile_command_1.profileCommandAdvanced)(message);
+                break;
+            case 'v':
+            case 'vlt':
+            case 'vault':
+            case 'khochung':
+                await (0, vault_command_1.vaultCommand)(message, args);
+                break;
+            case 't':
+            case 'trd':
+            case 'trade':
+            case 'giaodich':
+                await (0, trade_command_1.tradeCommand)(message, args);
                 break;
             case 'job':
             case 'songphai':
@@ -108,21 +152,6 @@ async function onMessageCreate(message) {
             case 'dtu':
             case 'apprentice':
                 await (0, detu_command_1.detuCommand)(message, args);
-                break;
-            case 'vault':
-            case 'vlt':
-            case 'khochung':
-                await (0, vault_command_1.vaultCommand)(message, args);
-                break;
-            case 'dungeon':
-            case 'dun':
-            case 'nguctoi':
-                await (0, dungeon_command_1.dungeonCommand)(message, args);
-                break;
-            case 'trade':
-            case 'trd':
-            case 'giaodich':
-                await (0, trade_command_1.tradeCommand)(message, args);
                 break;
             case 'pet':
             case 'linhthu':

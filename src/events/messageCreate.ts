@@ -15,6 +15,7 @@ import { farmCommand } from '../commands/general/farm.command';
 import { equipCommand, unequipCommand } from '../commands/general/equip.command';
 import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
+import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { jobCommand } from '../commands/general/job.command';
 import { detuCommand } from '../commands/general/detu.command';
 import { vaultCommand } from '../commands/general/vault.command';
@@ -118,7 +119,59 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'start':
       case 'batdau':
-        await batDauCommand(message);
+      case 'menu':
+      case '':
+        await masterMenuCommand(message);
+        break;
+
+      case 'w':
+      case 'work':
+      case 'combo':
+      case 'c':
+      case 'cmb':
+        await comboAllCommand(message);
+        break;
+
+      case 'h':
+      case 'hunt':
+      case 'san':
+        await sanCommandAdvanced(message);
+        break;
+
+      case 'd':
+      case 'dun':
+      case 'dungeon':
+      case 'nguctoi':
+        await dungeonCommand(message, args);
+        break;
+
+      case 'i':
+      case 'inv':
+      case 'inventory':
+      case 'tuido':
+      case 'kho':
+        await tuiDoCommand(message);
+        break;
+
+      case 'p':
+      case 'pro':
+      case 'profile':
+      case 'nhanvat':
+        await profileCommandAdvanced(message);
+        break;
+
+      case 'v':
+      case 'vlt':
+      case 'vault':
+      case 'khochung':
+        await vaultCommand(message, args);
+        break;
+
+      case 't':
+      case 'trd':
+      case 'trade':
+      case 'giaodich':
+        await tradeCommand(message, args);
         break;
 
       case 'job':
@@ -130,24 +183,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'dtu':
       case 'apprentice':
         await detuCommand(message, args);
-        break;
-
-      case 'vault':
-      case 'vlt':
-      case 'khochung':
-        await vaultCommand(message, args);
-        break;
-
-      case 'dungeon':
-      case 'dun':
-      case 'nguctoi':
-        await dungeonCommand(message, args);
-        break;
-
-      case 'trade':
-      case 'trd':
-      case 'giaodich':
-        await tradeCommand(message, args);
         break;
 
       case 'pet':
