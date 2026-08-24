@@ -1,84 +1,53 @@
 import { Message } from 'discord.js';
-
-// General & RPG Commands
-import { batDauCommand } from '../commands/general/batdau';
-import { profileCommandAdvanced } from '../commands/general/profile.command';
-import { tuiDoCommand } from '../commands/general/tuido';
-import { duongThuongCommand } from '../commands/general/duongthuong';
-import { cuongHoaCommand } from '../commands/general/cuonghoa';
-import { renCommand } from '../commands/general/ren';
-import { trungHoiCommand, canCotCommand } from '../commands/general/trunghoi';
-import { nangCapToolCommand } from '../commands/general/nangcap';
-import { caoThiCommand, ghepRuongCommand, moRuongCommand } from '../commands/general/caothi.command';
-import { bangHoiCommand } from '../commands/general/banghoi.command';
-import { farmCommand } from '../commands/general/farm.command';
-import { equipCommand, unequipCommand } from '../commands/general/equip.command';
-import { comboAllCommand } from '../commands/general/combo.command';
-import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { guideCommand } from '../commands/general/guide.command';
 import { eventTestCommand } from '../commands/general/event.command';
 import { GatheringService } from '../game/services/GatheringService';
 import { UserService } from '../game/services/UserService';
 import { createDongSonEmbed } from '../utils/embedBuilder';
+import { dungeonCommand } from '../commands/general/dungeon.command';
+import { tuiDoCommand } from '../commands/general/tuido';
+import { profileCommandAdvanced } from '../commands/general/profile.command';
+import { vaultCommand } from '../commands/general/vault.command';
+import { tradeCommand } from '../commands/general/trade.command';
 import { jobCommand } from '../commands/general/job.command';
 import { detuCommand } from '../commands/general/detu.command';
-import { vaultCommand } from '../commands/general/vault.command';
-import { dungeonCommand } from '../commands/general/dungeon.command';
-import { tradeCommand } from '../commands/general/trade.command';
 import { petCommand } from '../commands/general/pet.command';
-
-// Crafting Sub-systems
+import { cooldownCommand } from '../commands/general/cooldown.command';
+import { bxhCommand } from '../commands/general/bxh.command';
+import { caoThiCommand } from '../commands/general/caothi.command';
+import { diemDanhCommand } from '../commands/general/diemdanh.command';
+import { weeklyCommand } from '../commands/general/weekly.command';
+import { codeCommand } from '../commands/general/code.command';
+import { shopCommand } from '../commands/general/shop.command';
+import { banCommand } from '../commands/general/ban.command';
+import { useCommand } from '../commands/general/use.command';
+import { equipCommand, unequipCommand } from '../commands/general/equip.command';
+import { giveCommand } from '../commands/general/give.command';
+import { renCommand } from '../commands/general/ren';
+import { dismantleCommand } from '../commands/general/dismantle.command';
+import { cuongHoaCommand } from '../commands/general/cuonghoa';
 import { ghepCommand } from '../commands/general/ghep.command';
 import { phaCheCommand } from '../commands/general/phache.command';
 import { khamCommand } from '../commands/general/kham.command';
-
-// Parity & Help Commands
-import { helpCommand } from '../commands/general/help.command';
-import { giveCommand } from '../commands/general/give.command';
-import { shopCommand } from '../commands/general/shop.command';
-import { useCommand } from '../commands/general/use.command';
-import { dismantleCommand } from '../commands/general/dismantle.command';
-import { codeCommand } from '../commands/general/code.command';
-
-// Retention & Engagement Commands
-import { bxhCommand } from '../commands/general/bxh.command';
-import { diemDanhCommand } from '../commands/general/diemdanh.command';
-import { banCommand } from '../commands/general/ban.command';
-import { cooldownCommand } from '../commands/general/cooldown.command';
-import { weeklyCommand } from '../commands/general/weekly.command';
-import { pvpCommand } from '../commands/combat/pvp.command';
-import { duaLinhThuCommand } from '../commands/minigames/duangua.command';
-
-// Công Đức & Boss Progression Commands
-import { congDucCommand } from '../commands/general/congduc.command';
-import { bossCommand } from '../commands/general/boss.command';
-
-// New Advanced RPG Commands
-import { xinXamCommand } from '../commands/general/xinxam.command';
-import { leoThapCommandClean } from '../commands/general/LeoThapCommand';
-import { suDoCommand } from '../commands/general/sudo.command';
-import { thuongLaiCommand } from '../commands/general/thuonglai.command';
-import { trynaCommand } from '../commands/general/tryna.command';
-
-// Gathering Commands
-import { donCuiCommand } from '../commands/gathering/don_cui.command';
-import {
-  daoKhoangCommand,
-  cauCaCommand,
-  haiThuocCommand,
-  cheDuocCommand,
-  nauAnCommand,
-} from '../commands/gathering/dao_khoang.command';
-
-// Combat Commands
+import { nangCapToolCommand } from '../commands/general/nangcap';
 import { sanCommandAdvanced } from '../commands/combat/san';
 import { thamHiemCommand } from '../commands/combat/thamhiem';
+import { duongThuongCommand } from '../commands/general/duongthuong';
+import { pvpCommand } from '../commands/combat/pvp.command';
+import { leoThapCommandClean } from '../commands/general/LeoThapCommand';
+import { bossCommand } from '../commands/general/boss.command';
 import { luyenVoCommand } from '../commands/combat/luyenvo';
-import { phuBanCommandAdvanced } from '../commands/combat/phuban';
-
-// Minigames Commands
+import { farmCommand } from '../commands/general/farm.command';
+import { comboAllCommand } from '../commands/general/combo.command';
+import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
+import { trungHoiCommand, canCotCommand } from '../commands/general/trunghoi';
+import { xinXamCommand } from '../commands/general/xinxam.command';
+import { bangHoiCommand } from '../commands/general/banghoi.command';
+import { trynaCommand } from '../commands/general/tryna.command';
+import { thuongLaiCommand } from '../commands/general/thuonglai.command';
 import { bauCuaCommand } from '../commands/minigames/baucua.command';
+import { duaLinhThuCommand } from '../commands/minigames/duangua.command';
 import { taiXiuCommand } from '../commands/minigames/taixiu.command';
 import { xiDachCommand } from '../commands/minigames/xidach.command';
 import { oanTuTiCommand } from '../commands/minigames/oantuti.command';
@@ -108,11 +77,14 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
   try {
     switch (command) {
-      // --- ENGLISH & VIETNAMESE HELP & START ---
+      // --- MASTER MENU & GUIDE & EVENT ---
       case '':
       case 'help':
       case 'lenh':
       case 'trogiup':
+      case 'start':
+      case 'batdau':
+      case 'menu':
         await masterMenuCommand(message);
         break;
 
@@ -129,31 +101,30 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await eventTestCommand(message, args);
         break;
 
-      case 'start':
-      case 'batdau':
-      case 'menu':
-      case '':
-        await masterMenuCommand(message);
-        break;
-
+      // --- MAIN SHORTCUTS & ACTION COMMANDS ---
       case 'w':
       case 'work':
       case 'combo':
       case 'c':
       case 'cmb':
+      case 'all':
         await comboAllCommand(message);
         break;
 
       case 'h':
       case 'hunt':
-      case 'san':
-        await sanCommandAdvanced(message);
+      case 'hnt':
+      case 'san': {
+        const isHard = args[0]?.toLowerCase() === 'hard' || args[0]?.toLowerCase() === 'kho';
+        await sanCommandAdvanced(message, isHard);
         break;
+      }
 
       case 'd':
       case 'dun':
       case 'dungeon':
       case 'nguctoi':
+      case 'phuban':
         await dungeonCommand(message, args);
         break;
 
@@ -169,6 +140,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'pro':
       case 'profile':
       case 'nhanvat':
+      case 'stats':
         await profileCommandAdvanced(message);
         break;
 
@@ -202,22 +174,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await petCommand(message, args);
         break;
 
-      // --- PROGRESS & PROFILE COMMANDS ---
-      case 'profile':
-      case 'p':
-      case 'stats':
-      case 'nhanvat':
-        await profileCommandAdvanced(message);
-        break;
-
-      case 'inventory':
-      case 'inv':
-      case 'i':
-      case 'tuido':
-      case 'kho':
-        await tuiDoCommand(message);
-        break;
-
+      // --- PROGRESS & UTILITY COMMANDS ---
       case 'cooldowns':
       case 'cooldown':
       case 'cd':
@@ -250,7 +207,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await codeCommand(message, args);
         break;
 
-      // --- ECONOMY & CRAFTING & EQUIP COMMANDS ---
+      // --- ECONOMY & CRAFTING COMMANDS ---
       case 'shop':
       case 'cuahang':
         await shopCommand(message, args);
@@ -288,25 +245,14 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'open':
       case 'mo':
-      case 'mo_ruong':
       case 'moruong':
-        await moRuongCommand(message, args);
-        break;
-
-      case 'combine_chest':
-      case 'ghep_ruong':
       case 'ghepruong':
-        await ghepRuongCommand(message, args);
+        await ghepCommand(message, args);
         break;
 
       case 'give':
       case 'cho':
         await giveCommand(message, args);
-        break;
-
-      case 'craft':
-      case 'ren':
-        await renCommand(message, args);
         break;
 
       case 'dismantle':
@@ -326,12 +272,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await ghepCommand(message, args);
         break;
 
-      case 'brew':
-      case 'phache':
-      case 'duoc':
-        await phaCheCommand(message, args);
-        break;
-
       case 'socket':
       case 'kham':
         await khamCommand(message, args);
@@ -342,56 +282,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await nangCapToolCommand(message, args);
         break;
 
-      // --- FIGHTING & COMBAT COMMANDS ---
-      case 'hunt':
-      case 'h':
-      case 'san':
-        const isHard = args[0]?.toLowerCase() === 'hard' || args[0]?.toLowerCase() === 'kho';
-        await sanCommandAdvanced(message, isHard);
-        break;
-
-      case 'adventure':
-      case 'adv':
-      case 'thamhiem':
-        await thamHiemCommand(message);
-        break;
-
-      case 'heal':
-      case 'duongthuong':
-      case 'hoimau':
-        await duongThuongCommand(message);
-        break;
-
-      case 'duel':
-      case 'pvp':
-      case 'loidai':
-        await pvpCommand(message);
-        break;
-
-      case 'dungeon':
-      case 'phuban':
-        await phuBanCommandAdvanced(message);
-        break;
-
-      case 'arena':
-      case 'tower':
-      case 'leothap':
-      case 'thap':
-        await leoThapCommandClean(message);
-        break;
-
-      case 'boss':
-      case 'trum':
-        await bossCommand(message);
-        break;
-
-      case 'training':
-      case 'luyenvo':
-        await luyenVoCommand(message);
-        break;
-
-      // --- 4 PRODUCER CLASS COMMANDS (PP: MINER, ALCHEMIST, BLACKSMITH, HUNTER) ---
-      // 1. 🪨 MINER COMMAND (Chỉ Thợ Mỏ mới được đào quặng)
+      // --- PRODUCER CLASS SINGLE COMMANDS ---
       case 'mine':
       case 'm':
       case 'min':
@@ -411,7 +302,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      // 2. 🧪 ALCHEMIST COMMAND (Chỉ Thợ Bào Chế mới được luyện thuốc)
       case 'brew':
       case 'alc':
       case 'potion':
@@ -431,7 +321,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      // 3. 🔨 BLACKSMITH COMMAND (Chỉ Thợ Rèn mới được rèn đồ)
       case 'craft':
       case 'blk':
       case 'forge':
@@ -446,15 +335,41 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
       }
 
-      // 4. 🏹 HUNTER COMMAND (Săn Quái Lấy Vàng, Rương & Chìa Khóa)
-      case 'hunt':
-      case 'hnt':
-      case 'h':
-      case 'san': {
-        const isHard = args[0]?.toLowerCase() === 'hard' || args[0]?.toLowerCase() === 'kho';
-        await sanCommandAdvanced(message, isHard);
+      // --- COMBAT & OTHER ACTIVITIES ---
+      case 'adventure':
+      case 'adv':
+      case 'thamhiem':
+        await thamHiemCommand(message);
         break;
-      }
+
+      case 'heal':
+      case 'duongthuong':
+      case 'hoimau':
+        await duongThuongCommand(message);
+        break;
+
+      case 'duel':
+      case 'pvp':
+      case 'loidai':
+        await pvpCommand(message);
+        break;
+
+      case 'arena':
+      case 'tower':
+      case 'leothap':
+      case 'thap':
+        await leoThapCommandClean(message);
+        break;
+
+      case 'boss':
+      case 'trum':
+        await bossCommand(message);
+        break;
+
+      case 'training':
+      case 'luyenvo':
+        await luyenVoCommand(message);
+        break;
 
       case 'farm':
       case 'nongsang':
@@ -462,42 +377,17 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await farmCommand(message, args);
         break;
 
-      case 'gieo_hat':
-      case 'gieo':
-      case 'plant':
-        await farmCommand(message, ['gieo_hat', ...args]);
-        break;
-
-      case 'thu_hoach':
-      case 'thuhoach':
-      case 'harvest':
-        await farmCommand(message, ['thu_hoach', ...args]);
-        break;
-
-      case 'combo':
-      case 'all':
-      case 'work':
-      case 'tatca':
-      case 'hopnhat':
-      case 'nhat':
-        await comboAllCommand(message);
-        break;
-
       case 'sync_emojis':
       case 'emojis':
-      case 'scan_emojis':
         await syncEmojisCommand(message);
         break;
 
-      // --- REBIRTH & ADVANCED RPG COMMANDS ---
       case 'rebirth':
-      case 'timetravel':
       case 'trunghoi':
       case 'trungsinh':
         await trungHoiCommand(message);
         break;
 
-      case 'stats_point':
       case 'cancot':
         await canCotCommand(message, args);
         break;
@@ -523,7 +413,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await thuongLaiCommand(message, args);
         break;
 
-      // --- GAMBLING COMMANDS ---
+      // --- MINIGAMES ---
       case 'dice':
       case 'taixiu':
         await taiXiuCommand(message, args);
@@ -551,17 +441,20 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await oanTuTiCommand(message, args);
         break;
 
-      case 'race':
-      case 'dua_linhthu':
+      case 'choido':
+        await choiDoCommand(message);
+        break;
+
       case 'duangua':
+      case 'dua_linhthu':
         await duaLinhThuCommand(message, args);
         break;
 
       default:
         break;
     }
-  } catch (error) {
-    console.error(`[Command Error] Lỗi khi thực thi lệnh '${command}':`, error);
+  } catch (err: any) {
+    console.error(`❌ [COMMAND ERROR] Lỗi khi xử lý lệnh "${command}":`, err);
     await message.reply('❌ An internal error occurred while processing the command!').catch(() => {});
   }
 }
