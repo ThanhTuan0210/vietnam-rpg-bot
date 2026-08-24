@@ -44,22 +44,31 @@ export async function jobCommand(message: Message, args: string[]): Promise<void
 
     // If targetProducer is provided
     if (targetProducer) {
-      if (currentProducer && currentProducer !== 'chưa chọn' && currentProducer !== targetProducer) {
+      if (currentProducer && currentProducer !== 'chưa chọn' && currentProducer !== 'null' && currentProducer !== targetProducer) {
         const lastChange = user.cooldowns?.get('producer_job_change') || 0;
         const now = Date.now();
         const COOLDOWN_24H = 24 * 60 * 60 * 1000;
 
         if (now - lastChange < COOLDOWN_24H) {
-          const remainingMs = COOLDOWN_24H - (now - lastChange);
-          const remHours = Math.floor(remainingMs / (1000 * 60 * 60));
-          const remMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+          const hasResetScroll = await UserService.consumeItemAtomic(message.author.id, 'scroll_reset_job', 1);
 
-          await message.reply(
-            `⏰ **COOLDOWN CHUYỂN NGHỀ SẢN XUẤT (24h REAL-TIME)!**\n\n` +
-              `Bạn đã chuyển Class Sản Xuất gần đây. Bạn phải chờ thêm **${remHours} giờ ${remMins} phút** nữa mới có thể đổi Class Sản Xuất lần nữa!\n\n` +
-              `💡 *Nếu muốn chuyển nghề NGAY LẬP TỨC mà không cần chờ, hãy mua **📜 Sách Xóa Nghề Trung Cổ (\`scroll_reset_job\`)** trong Tiệm Thương Nhân (\`vkl shop\`) với giá **50.000 Vàng** rồi sử dụng (\`vkl use scroll_reset_job\`)!*`
-          );
-          return;
+          if (!hasResetScroll) {
+            const paidFee = await UserService.deductDongAtomic(message.author.id, 50000);
+            if (!paidFee) {
+              const remainingMs = COOLDOWN_24H - (now - lastChange);
+              const remHours = Math.floor(remainingMs / (1000 * 60 * 60));
+              const remMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+
+              await message.reply(
+                `⏰ **COOLDOWN CHUYỂN NGHỀ SẢN XUẤT (24h REAL-TIME)!**\n\n` +
+                  `Bạn đã chọn Class Sản Xuất gần đây. Bạn phải chờ thêm **${remHours} giờ ${remMins} phút** nữa mới có thể đổi sang Class **${targetProducer.toUpperCase()}**!\n\n` +
+                  `💡 **Để đổi nghề ngay lập tức:**\n` +
+                  `1️⃣ Mua **📜 Sách Xóa Nghề (\`scroll_reset_job\`)** tại \`vkl shop\` (50k Vàng) rồi sử dụng (\`vkl use scroll_reset_job\`).\n` +
+                  `2️⃣ Hoặc tích lũy **50.000 Vàng** trong ví để tự động trả phí đổi nghề!`
+              );
+              return;
+            }
+          }
         }
       }
 

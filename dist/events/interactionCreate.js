@@ -71,16 +71,47 @@ async function onInteractionCreate(interaction) {
             // Handle Class Selection Step 2 (Producer Class)
             if (customId.startsWith('job_producer_')) {
                 const producer = customId.replace('job_producer_', '');
+                const currentProducer = (user.producerJob || '').toString().toLowerCase();
+                if (currentProducer && currentProducer !== 'chưa chọn' && currentProducer !== 'null' && currentProducer !== producer) {
+                    const lastChange = user.cooldowns?.get('producer_job_change') || 0;
+                    const now = Date.now();
+                    const COOLDOWN_24H = 24 * 60 * 60 * 1000;
+                    if (now - lastChange < COOLDOWN_24H) {
+                        const hasResetScroll = await UserService_1.UserService.consumeItemAtomic(interaction.user.id, 'scroll_reset_job', 1);
+                        if (!hasResetScroll) {
+                            const paidFee = await UserService_1.UserService.deductDongAtomic(interaction.user.id, 50000);
+                            if (!paidFee) {
+                                const remainingMs = COOLDOWN_24H - (now - lastChange);
+                                const remHours = Math.floor(remainingMs / (1000 * 60 * 60));
+                                const remMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+                                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                                    .setTitle('⏰ COOLDOWN CHUYỂN NGHỀ SẢN XUẤT (24h REAL-TIME)!')
+                                    .setDescription(`Bạn đã chọn Class Sản Xuất trước đó. Đổi sang nghề **${producer.toUpperCase()}** yêu cầu chờ **${remHours}h ${remMins}m**!\n\n` +
+                                    `💡 **Để đổi nghề ngay lập tức:**\n` +
+                                    `1️⃣ Mua **📜 Sách Xóa Nghề (\`scroll_reset_job\`)** tại \`vkl shop\` (50k Vàng) rồi dùng (\`vkl use scroll_reset_job\`).\n` +
+                                    `2️⃣ Hoặc tích lũy **50.000 Vàng** trong ví để tự động trả phí đổi nghề!`);
+                                await interaction.reply({ embeds: [embed], ephemeral: true });
+                                return;
+                            }
+                        }
+                    }
+                }
                 user.producerJob = producer;
+                await UserService_1.UserService.updateCooldownAtomic(interaction.user.id, 'producer_job_change', Date.now());
                 await user.save();
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle('🎉 TẠO NHÂN VẬT THÀNH CÔNG! - CHÀO MỪNG ĐẾN KYRISE RPG')
-                    .setDescription(`✨ **Chúc mừng ${interaction.user.username}!** Bạn đã hoàn tất chọn Song Phái Dual-Class:\n\n` +
-                    `⚔️ **Class Chiến Đấu:** \`${(user.hePhai || '').toString().toUpperCase()}\`\n` +
+                    .setTitle('🎉 CHỌN CLASS SẢN XUẤT THÀNH CÔNG — KYRISE RPG')
+                    .setDescription(`✨ **Chúc mừng ${interaction.user.username}!** Bạn đã cập nhật Song Phái Dual-Class:\n\n` +
+                    `⚔️ **Class Chiến Đấu:** \`${(user.hePhai || 'CHƯA CHỌN').toString().toUpperCase()}\`\n` +
                     `🔨 **Class Sản Xuất (PP):** \`${producer.toUpperCase()}\`\n\n` +
                     `🚀 **Tất cả tính năng đã được mở khóa! Gõ \`vkl\` hoặc bấm nút bên dưới để bắt đầu chơi!**`);
                 const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('cmd_master_menu').setLabel('🎮 Bảng Master Menu (vkl)').setStyle(discord_js_1.ButtonStyle.Success), new discord_js_1.ButtonBuilder().setCustomId('cmd_combo').setLabel('⚡ Lao Động Combo (vkl w)').setStyle(discord_js_1.ButtonStyle.Primary));
-                await interaction.update({ embeds: [embed], components: [row] });
+                if (interaction.deferred || interaction.replied) {
+                    await interaction.followUp({ embeds: [embed], components: [row] });
+                }
+                else {
+                    await interaction.update({ embeds: [embed], components: [row] });
+                }
                 return;
             }
             // Handle Event Claim Button
