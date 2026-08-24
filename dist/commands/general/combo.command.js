@@ -9,11 +9,12 @@ const UserService_1 = require("../../game/services/UserService");
 const GatheringService_1 = require("../../game/services/GatheringService");
 const embedBuilder_1 = require("../../utils/embedBuilder");
 const formatters_1 = require("../../utils/formatters");
+const master_menu_command_1 = require("./master_menu.command");
 async function comboAllCommand(message) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.');
+        await (0, master_menu_command_1.masterMenuCommand)(message);
         return;
     }
     // 1. Kiểm tra Cooldown 60s

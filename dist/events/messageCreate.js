@@ -83,7 +83,6 @@ async function onMessageCreate(message) {
             case 'help':
             case 'lenh':
             case 'trogiup':
-            case 'h':
                 await (0, master_menu_command_1.masterMenuCommand)(message);
                 break;
             case 'start':

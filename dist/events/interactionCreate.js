@@ -14,11 +14,33 @@ const detu_command_1 = require("../commands/general/detu.command");
 const pet_command_1 = require("../commands/general/pet.command");
 const slots_command_1 = require("../commands/minigames/slots.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
+const job_command_1 = require("../commands/general/job.command");
+/**
+ * Tạo Mock Message Object gắn đúng thông tin người bấm nút (interaction.user)
+ */
+function createMockMessage(interaction) {
+    return {
+        author: interaction.user,
+        channel: interaction.channel,
+        guild: interaction.guild,
+        member: interaction.member,
+        client: interaction.client,
+        reply: async (options) => {
+            if (interaction.deferred || interaction.replied) {
+                return await interaction.followUp(options);
+            }
+            else {
+                return await interaction.reply(options);
+            }
+        },
+    };
+}
 async function onInteractionCreate(interaction) {
     if (!interaction.isButton() && !interaction.isStringSelectMenu())
         return;
     try {
         const user = await UserService_1.UserService.getOrCreateUser(interaction.user.id);
+        const mockMsg = createMockMessage(interaction);
         // --- BUTTON INTERACTIONS ---
         if (interaction.isButton()) {
             const customId = interaction.customId;
@@ -55,46 +77,33 @@ async function onInteractionCreate(interaction) {
             }
             // Action Buttons
             if (customId === 'cmd_master_menu') {
-                await interaction.deferUpdate();
-                await (0, master_menu_command_1.masterMenuCommand)(interaction.message);
+                await (0, master_menu_command_1.masterMenuCommand)(mockMsg);
                 return;
             }
             if (customId === 'cmd_combo') {
-                await interaction.deferReply();
-                await (0, combo_command_1.comboAllCommand)(interaction.message);
-                await interaction.deleteReply().catch(() => { });
+                await (0, combo_command_1.comboAllCommand)(mockMsg);
                 return;
             }
             if (customId.startsWith('cmd_dungeon')) {
                 const floorStr = customId.replace('cmd_dungeon_', '').replace('cmd_dungeon', '');
                 const floor = parseInt(floorStr) || 1;
-                await interaction.deferReply();
-                await (0, dungeon_command_1.dungeonCommand)(interaction.message, [floor.toString()]);
-                await interaction.deleteReply().catch(() => { });
+                await (0, dungeon_command_1.dungeonCommand)(mockMsg, [floor.toString()]);
                 return;
             }
             if (customId === 'cmd_tuido') {
-                await interaction.deferReply();
-                await (0, tuido_1.tuiDoCommand)(interaction.message);
-                await interaction.deleteReply().catch(() => { });
+                await (0, tuido_1.tuiDoCommand)(mockMsg);
                 return;
             }
             if (customId === 'cmd_profile') {
-                await interaction.deferReply();
-                await (0, nhanvat_1.nhanVatCommandAdvanced)(interaction.message);
-                await interaction.deleteReply().catch(() => { });
+                await (0, nhanvat_1.nhanVatCommandAdvanced)(mockMsg);
                 return;
             }
             if (customId === 'cmd_vault') {
-                await interaction.deferReply();
-                await (0, vault_command_1.vaultCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, vault_command_1.vaultCommand)(mockMsg, []);
                 return;
             }
             if (customId === 'cmd_trade') {
-                await interaction.deferReply();
-                await (0, trade_command_1.tradeCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, trade_command_1.tradeCommand)(mockMsg, []);
                 return;
             }
         }
@@ -102,39 +111,39 @@ async function onInteractionCreate(interaction) {
         if (interaction.isStringSelectMenu()) {
             const selectedValue = interaction.values[0];
             if (selectedValue === 'menu_job') {
-                await interaction.deferReply();
-                await (0, master_menu_command_1.masterMenuCommand)(interaction.message);
-                await interaction.deleteReply().catch(() => { });
+                await (0, job_command_1.jobCommand)(mockMsg, []);
+                return;
+            }
+            if (selectedValue === 'menu_inventory') {
+                await (0, tuido_1.tuiDoCommand)(mockMsg);
+                return;
+            }
+            if (selectedValue === 'menu_profile') {
+                await (0, nhanvat_1.nhanVatCommandAdvanced)(mockMsg);
                 return;
             }
             if (selectedValue === 'menu_vault') {
-                await interaction.deferReply();
-                await (0, vault_command_1.vaultCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, vault_command_1.vaultCommand)(mockMsg, []);
                 return;
             }
             if (selectedValue === 'menu_trade') {
-                await interaction.deferReply();
-                await (0, trade_command_1.tradeCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, trade_command_1.tradeCommand)(mockMsg, []);
                 return;
             }
             if (selectedValue === 'menu_detu') {
-                await interaction.deferReply();
-                await (0, detu_command_1.detuCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, detu_command_1.detuCommand)(mockMsg, []);
                 return;
             }
             if (selectedValue === 'menu_pet') {
-                await interaction.deferReply();
-                await (0, pet_command_1.petCommand)(interaction.message, []);
-                await interaction.deleteReply().catch(() => { });
+                await (0, pet_command_1.petCommand)(mockMsg, []);
+                return;
+            }
+            if (selectedValue === 'menu_dungeon') {
+                await (0, dungeon_command_1.dungeonCommand)(mockMsg, ['1']);
                 return;
             }
             if (selectedValue === 'menu_minigames') {
-                await interaction.deferReply();
-                await (0, slots_command_1.slotsCommand)(interaction.message, ['100']);
-                await interaction.deleteReply().catch(() => { });
+                await (0, slots_command_1.slotsCommand)(mockMsg, ['100']);
                 return;
             }
         }

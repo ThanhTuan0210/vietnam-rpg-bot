@@ -7,13 +7,14 @@ import { UserService } from '../../game/services/UserService';
 import { GatheringService } from '../../game/services/GatheringService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
 import { formatDong } from '../../utils/formatters';
+import { masterMenuCommand } from './master_menu.command';
 
 export async function comboAllCommand(message: Message): Promise<void> {
   const userId = message.author.id;
   const user = await UserModelAdvanced.findOne({ userId });
 
   if (!user || !user.hePhai) {
-    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.');
+    await masterMenuCommand(message);
     return;
   }
 

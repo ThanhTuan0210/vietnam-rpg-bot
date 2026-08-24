@@ -111,7 +111,6 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'help':
       case 'lenh':
       case 'trogiup':
-      case 'h':
         await masterMenuCommand(message);
         break;
 
