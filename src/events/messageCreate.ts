@@ -13,6 +13,7 @@ import { caoThiCommand, ghepRuongCommand, moRuongCommand } from '../commands/gen
 import { bangHoiCommand } from '../commands/general/banghoi.command';
 import { farmCommand } from '../commands/general/farm.command';
 import { equipCommand, unequipCommand } from '../commands/general/equip.command';
+import { comboAllCommand } from '../commands/general/combo.command';
 
 // Crafting Sub-systems
 import { ghepCommand } from '../commands/general/ghep.command';
@@ -342,6 +343,15 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'thuhoach':
       case 'harvest':
         await farmCommand(message, ['thu_hoach', ...args]);
+        break;
+
+      case 'combo':
+      case 'all':
+      case 'work':
+      case 'tatca':
+      case 'hopnhat':
+      case 'nhat':
+        await comboAllCommand(message);
         break;
 
       // --- REBIRTH & ADVANCED RPG COMMANDS ---

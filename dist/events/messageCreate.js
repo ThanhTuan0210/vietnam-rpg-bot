@@ -14,6 +14,7 @@ const caothi_command_1 = require("../commands/general/caothi.command");
 const banghoi_command_1 = require("../commands/general/banghoi.command");
 const farm_command_1 = require("../commands/general/farm.command");
 const equip_command_1 = require("../commands/general/equip.command");
+const combo_command_1 = require("../commands/general/combo.command");
 // Crafting Sub-systems
 const ghep_command_1 = require("../commands/general/ghep.command");
 const phache_command_1 = require("../commands/general/phache.command");
@@ -282,6 +283,14 @@ async function onMessageCreate(message) {
             case 'thuhoach':
             case 'harvest':
                 await (0, farm_command_1.farmCommand)(message, ['thu_hoach', ...args]);
+                break;
+            case 'combo':
+            case 'all':
+            case 'work':
+            case 'tatca':
+            case 'hopnhat':
+            case 'nhat':
+                await (0, combo_command_1.comboAllCommand)(message);
                 break;
             // --- REBIRTH & ADVANCED RPG COMMANDS ---
             case 'rebirth':
