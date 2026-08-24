@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.onReady = onReady;
 const discord_js_1 = require("discord.js");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
+const HourlyEventService_1 = require("../game/services/HourlyEventService");
 async function onReady(client) {
     console.log(`[Discord Bot] Đã đăng nhập thành công dưới tên: ${client.user?.tag}`);
     const guilds = client.guilds.cache;
@@ -29,4 +30,6 @@ async function onReady(client) {
         ],
         status: 'online',
     });
+    // Khởi động Sự Kiện Giờ Vàng (20h - 00h)
+    HourlyEventService_1.HourlyEventService.startEventLoop(client);
 }

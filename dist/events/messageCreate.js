@@ -16,6 +16,7 @@ const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
 const guide_command_1 = require("../commands/general/guide.command");
+const event_command_1 = require("../commands/general/event.command");
 const GatheringService_1 = require("../game/services/GatheringService");
 const UserService_1 = require("../game/services/UserService");
 const embedBuilder_1 = require("../utils/embedBuilder");
@@ -91,6 +92,11 @@ async function onMessageCreate(message) {
             case 'lore':
             case 'g':
                 await (0, guide_command_1.guideCommand)(message);
+                break;
+            case 'event':
+            case 'sukien':
+            case 'testevent':
+                await (0, event_command_1.eventTestCommand)(message, args);
                 break;
             case 'start':
             case 'batdau':

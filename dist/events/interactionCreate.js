@@ -15,6 +15,7 @@ const pet_command_1 = require("../commands/general/pet.command");
 const slots_command_1 = require("../commands/minigames/slots.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
 const job_command_1 = require("../commands/general/job.command");
+const HourlyEventService_1 = require("../game/services/HourlyEventService");
 /**
  * Tạo Mock Message Object gắn đúng thông tin người bấm nút (interaction.user)
  */
@@ -73,6 +74,12 @@ async function onInteractionCreate(interaction) {
                     `🚀 **Tất cả tính năng đã được mở khóa! Gõ \`vkl\` hoặc bấm nút bên dưới để bắt đầu chơi!**`);
                 const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('cmd_master_menu').setLabel('🎮 Bảng Master Menu (vkl)').setStyle(discord_js_1.ButtonStyle.Success), new discord_js_1.ButtonBuilder().setCustomId('cmd_combo').setLabel('⚡ Lao Động Combo (vkl w)').setStyle(discord_js_1.ButtonStyle.Primary));
                 await interaction.update({ embeds: [embed], components: [row] });
+                return;
+            }
+            // Handle Event Claim Button
+            if (customId.startsWith('event_claim_')) {
+                const eventId = customId.replace('event_claim_', '');
+                await HourlyEventService_1.HourlyEventService.handleClaim(interaction, eventId);
                 return;
             }
             // Action Buttons

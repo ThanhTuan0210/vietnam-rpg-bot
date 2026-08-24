@@ -1,5 +1,6 @@
 import { Client, ActivityType } from 'discord.js';
 import { syncEmojisFromDiscord } from '../commands/general/sync_emojis.command';
+import { HourlyEventService } from '../game/services/HourlyEventService';
 
 export async function onReady(client: Client): Promise<void> {
   console.log(`[Discord Bot] Đã đăng nhập thành công dưới tên: ${client.user?.tag}`);
@@ -30,4 +31,7 @@ export async function onReady(client: Client): Promise<void> {
     ],
     status: 'online',
   });
+
+  // Khởi động Sự Kiện Giờ Vàng (20h - 00h)
+  HourlyEventService.startEventLoop(client);
 }

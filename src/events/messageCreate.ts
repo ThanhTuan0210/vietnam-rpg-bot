@@ -17,6 +17,7 @@ import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { guideCommand } from '../commands/general/guide.command';
+import { eventTestCommand } from '../commands/general/event.command';
 import { GatheringService } from '../game/services/GatheringService';
 import { UserService } from '../game/services/UserService';
 import { createDongSonEmbed } from '../utils/embedBuilder';
@@ -120,6 +121,12 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'lore':
       case 'g':
         await guideCommand(message);
+        break;
+
+      case 'event':
+      case 'sukien':
+      case 'testevent':
+        await eventTestCommand(message, args);
         break;
 
       case 'start':

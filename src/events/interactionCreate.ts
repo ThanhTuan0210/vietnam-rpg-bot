@@ -12,6 +12,7 @@ import { petCommand } from '../commands/general/pet.command';
 import { slotsCommand } from '../commands/minigames/slots.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
 import { jobCommand } from '../commands/general/job.command';
+import { HourlyEventService } from '../game/services/HourlyEventService';
 
 /**
  * Tạo Mock Message Object gắn đúng thông tin người bấm nút (interaction.user)
@@ -91,6 +92,13 @@ export async function onInteractionCreate(interaction: Interaction): Promise<voi
         );
 
         await interaction.update({ embeds: [embed], components: [row] });
+        return;
+      }
+
+      // Handle Event Claim Button
+      if (customId.startsWith('event_claim_')) {
+        const eventId = customId.replace('event_claim_', '');
+        await HourlyEventService.handleClaim(interaction, eventId);
         return;
       }
 
