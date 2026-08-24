@@ -196,16 +196,21 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'quest':
       case 'caothi':
+      case 'nhiemvu':
+      case 'nhiem_vu':
+      case 'q':
         await caoThiCommand(message);
         break;
 
       case 'daily':
       case 'diemdanh':
+      case 'diem_danh':
         await diemDanhCommand(message);
         break;
 
       case 'weekly':
       case 'hangtuan':
+      case 'hang_tuan':
         await weeklyCommand(message);
         break;
 
@@ -258,6 +263,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'mo':
       case 'moruong':
       case 'mo_ruong':
+      case 'lootbox':
         await openChestCommand(message, args);
         break;
 
@@ -266,7 +272,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
         break;
 
       case 'give':
-      case 'cho':
+      case 'tang':
         await giveCommand(message, args);
         break;
 
@@ -301,7 +307,8 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'mine':
       case 'm':
       case 'min':
-      case 'daokhoang': {
+      case 'daokhoang':
+      case 'dao_khoang': {
         const user = await UserService.getOrCreateUser(message.author.id);
         const pJob = ((user as any).producerJob || '').toLowerCase();
         if (pJob && pJob !== 'miner' && pJob !== 'min') {
@@ -320,7 +327,11 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'brew':
       case 'alc':
       case 'potion':
-      case 'phache': {
+      case 'phache':
+      case 'haithuoc':
+      case 'hai_thuoc':
+      case 'herb':
+      case 'pickup': {
         const user = await UserService.getOrCreateUser(message.author.id);
         const pJob = ((user as any).producerJob || '').toLowerCase();
         if (pJob && pJob !== 'alchemist' && pJob !== 'alc') {
@@ -339,7 +350,12 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'craft':
       case 'blk':
       case 'forge':
-      case 'ren': {
+      case 'ren':
+      case 'wcut':
+      case 'woodcut':
+      case 'doncui':
+      case 'don_cui':
+      case 'chop': {
         const user = await UserService.getOrCreateUser(message.author.id);
         const pJob = ((user as any).producerJob || '').toLowerCase();
         if (args.length > 0 && pJob && pJob !== 'blacksmith' && pJob !== 'blk') {
@@ -347,6 +363,18 @@ export async function onMessageCreate(message: Message): Promise<void> {
           break;
         }
         await renCommand(message, args);
+        break;
+      }
+
+      case 'fish':
+      case 'cauca':
+      case 'cau_ca': {
+        const fishRes = await GatheringService.fish(message.author.id);
+        const fishText = fishRes.itemsGained.map((i: any) => `🐟 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+        const embed = createDongSonEmbed()
+          .setTitle(`🐟 CÂU CÁ BIỂN SÂU — KYRISE RPG`)
+          .setDescription(`🎣 **Bạn buông cần câu xuống vùng biển sâu Gothic và thu hoạch được:**\n\n${fishText}`);
+        await message.reply({ embeds: [embed] });
         break;
       }
 
@@ -366,6 +394,7 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'duel':
       case 'pvp':
       case 'loidai':
+      case 'loi_dai':
         await pvpCommand(message);
         break;
 
@@ -373,22 +402,29 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'tower':
       case 'leothap':
       case 'thap':
+      case 'leo_thap':
         await leoThapCommandClean(message);
         break;
 
       case 'boss':
       case 'trum':
+      case 'worldboss':
+      case 'trum_khuvuc':
         await bossCommand(message);
         break;
 
       case 'training':
       case 'luyenvo':
+      case 'luyen_vo':
+      case 'train':
         await luyenVoCommand(message);
         break;
 
       case 'farm':
       case 'nongsang':
       case 'nongtrai':
+      case 'nong_sang':
+      case 'nong_trai':
         await farmCommand(message, args);
         break;
 
@@ -409,12 +445,15 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'fortune':
       case 'xinxam':
+      case 'xin_xam':
+      case 'xam':
         await xinXamCommand(message);
         break;
 
       case 'guild':
       case 'bang':
       case 'banghoi':
+      case 'bang_hoi':
         await bangHoiCommand(message, args);
         break;
 
@@ -462,6 +501,8 @@ export async function onMessageCreate(message: Message): Promise<void> {
 
       case 'duangua':
       case 'dua_linhthu':
+      case 'dualinhthu':
+      case 'race':
         await duaLinhThuCommand(message, args);
         break;
 

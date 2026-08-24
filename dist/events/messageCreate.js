@@ -177,14 +177,19 @@ async function onMessageCreate(message) {
                 break;
             case 'quest':
             case 'caothi':
+            case 'nhiemvu':
+            case 'nhiem_vu':
+            case 'q':
                 await (0, caothi_command_1.caoThiCommand)(message);
                 break;
             case 'daily':
             case 'diemdanh':
+            case 'diem_danh':
                 await (0, diemdanh_command_1.diemDanhCommand)(message);
                 break;
             case 'weekly':
             case 'hangtuan':
+            case 'hang_tuan':
                 await (0, weekly_command_1.weeklyCommand)(message);
                 break;
             case 'code':
@@ -228,13 +233,14 @@ async function onMessageCreate(message) {
             case 'mo':
             case 'moruong':
             case 'mo_ruong':
+            case 'lootbox':
                 await (0, open_command_1.openChestCommand)(message, args);
                 break;
             case 'ghepruong':
                 await (0, ghep_command_1.ghepCommand)(message, args);
                 break;
             case 'give':
-            case 'cho':
+            case 'tang':
                 await (0, give_command_1.giveCommand)(message, args);
                 break;
             case 'dismantle':
@@ -263,7 +269,8 @@ async function onMessageCreate(message) {
             case 'mine':
             case 'm':
             case 'min':
-            case 'daokhoang': {
+            case 'daokhoang':
+            case 'dao_khoang': {
                 const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
                 const pJob = (user.producerJob || '').toLowerCase();
                 if (pJob && pJob !== 'miner' && pJob !== 'min') {
@@ -281,7 +288,11 @@ async function onMessageCreate(message) {
             case 'brew':
             case 'alc':
             case 'potion':
-            case 'phache': {
+            case 'phache':
+            case 'haithuoc':
+            case 'hai_thuoc':
+            case 'herb':
+            case 'pickup': {
                 const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
                 const pJob = (user.producerJob || '').toLowerCase();
                 if (pJob && pJob !== 'alchemist' && pJob !== 'alc') {
@@ -299,7 +310,12 @@ async function onMessageCreate(message) {
             case 'craft':
             case 'blk':
             case 'forge':
-            case 'ren': {
+            case 'ren':
+            case 'wcut':
+            case 'woodcut':
+            case 'doncui':
+            case 'don_cui':
+            case 'chop': {
                 const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
                 const pJob = (user.producerJob || '').toLowerCase();
                 if (args.length > 0 && pJob && pJob !== 'blacksmith' && pJob !== 'blk') {
@@ -307,6 +323,17 @@ async function onMessageCreate(message) {
                     break;
                 }
                 await (0, ren_1.renCommand)(message, args);
+                break;
+            }
+            case 'fish':
+            case 'cauca':
+            case 'cau_ca': {
+                const fishRes = await GatheringService_1.GatheringService.fish(message.author.id);
+                const fishText = fishRes.itemsGained.map((i) => `🐟 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                    .setTitle(`🐟 CÂU CÁ BIỂN SÂU — KYRISE RPG`)
+                    .setDescription(`🎣 **Bạn buông cần câu xuống vùng biển sâu Gothic và thu hoạch được:**\n\n${fishText}`);
+                await message.reply({ embeds: [embed] });
                 break;
             }
             // --- COMBAT & OTHER ACTIVITIES ---
@@ -323,25 +350,33 @@ async function onMessageCreate(message) {
             case 'duel':
             case 'pvp':
             case 'loidai':
+            case 'loi_dai':
                 await (0, pvp_command_1.pvpCommand)(message);
                 break;
             case 'arena':
             case 'tower':
             case 'leothap':
             case 'thap':
+            case 'leo_thap':
                 await (0, LeoThapCommand_1.leoThapCommandClean)(message);
                 break;
             case 'boss':
             case 'trum':
+            case 'worldboss':
+            case 'trum_khuvuc':
                 await (0, boss_command_1.bossCommand)(message);
                 break;
             case 'training':
             case 'luyenvo':
+            case 'luyen_vo':
+            case 'train':
                 await (0, luyenvo_1.luyenVoCommand)(message);
                 break;
             case 'farm':
             case 'nongsang':
             case 'nongtrai':
+            case 'nong_sang':
+            case 'nong_trai':
                 await (0, farm_command_1.farmCommand)(message, args);
                 break;
             case 'sync_emojis':
@@ -358,11 +393,14 @@ async function onMessageCreate(message) {
                 break;
             case 'fortune':
             case 'xinxam':
+            case 'xin_xam':
+            case 'xam':
                 await (0, xinxam_command_1.xinXamCommand)(message);
                 break;
             case 'guild':
             case 'bang':
             case 'banghoi':
+            case 'bang_hoi':
                 await (0, banghoi_command_1.bangHoiCommand)(message, args);
                 break;
             case 'bounty':
@@ -400,6 +438,8 @@ async function onMessageCreate(message) {
                 break;
             case 'duangua':
             case 'dua_linhthu':
+            case 'dualinhthu':
+            case 'race':
                 await (0, duangua_command_1.duaLinhThuCommand)(message, args);
                 break;
             default:
