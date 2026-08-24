@@ -23,17 +23,17 @@ exports.GLOBAL_MARKET_MULTIPLIERS = {
     gift_01a: 1.0,
 };
 exports.BASE_SHOP_PRICES = {
-    potion_01a: { name: 'Thuốc Hồi Máu HP Tier 1.1', basePrice: 500, type: 'Bào Chế', desc: 'Hồi phục 100 HP & MP ngay lập tức' },
-    potion_02a: { name: 'Thuốc Hồi Mana MP Tier 2.1', basePrice: 800, type: 'Bào Chế', desc: 'Hồi phục 100 MP mana phép thuật' },
-    potion_03a: { name: 'Ma Dược Kích Rèn Tier 3.1', basePrice: 2500, type: 'Bào Chế', desc: 'Tăng +20% Sát Thương (ATK) trong Ngục Tối' },
-    sword_01a: { name: 'Thép Kiếm Gothic Tier 1', basePrice: 5000, type: 'Rèn Đồ', desc: '+15 Sát Thương ATK Kị Sĩ' },
-    shield_01a: { name: 'Khiên Thép Gothic Tier 1', basePrice: 6000, type: 'Rèn Đồ', desc: '+10 Phòng Thủ DEF' },
-    staff_01a: { name: 'Trượng Gỗ Rừng Tier 1', basePrice: 5000, type: 'Rèn Đồ', desc: '+20 Sát Thương Phép Magic ATK' },
-    ingot_01a: { name: 'Thỏi Kim Loại Tier 1.1', basePrice: 1500, type: 'Quặng', desc: 'Nguyên liệu rèn vũ khí Tier 1' },
-    crystal_01a: { name: 'Tinh Thạch Ma Thuật Tier 1.1', basePrice: 4000, type: 'Tinh Thạch', desc: 'Nguyên liệu kích rèn & khảm ngọc' },
-    scroll_reset_job: { name: '📜 Sách Xóa Nghề Trung Cổ', basePrice: 100000, type: 'Sách Phép', desc: 'Xóa ngay lập tức 24h cooldown đổi Class' },
-    key_01a: { name: 'Chìa Khóa Ngục Tối Tầng 1', basePrice: 10000, type: 'Chìa Khóa', desc: 'Mở rương báu Goblin Rừng' },
-    gift_01a: { name: 'Rương Báu Thần Bí', basePrice: 25000, type: 'Rương Báu', desc: 'Mở ngẫu nhiên vũ khí & vàng' },
+    potion_01a: { name: 'Thuốc Hồi Máu HP Tier 1.1', basePrice: 2500, type: 'Bào Chế', desc: 'Hồi 100 HP (Gồm: Chi phí Thảo dược + Công hái/bào chế + Phụ phí dự trữ)' },
+    potion_02a: { name: 'Thuốc Hồi Mana MP Tier 2.1', basePrice: 3500, type: 'Bào Chế', desc: 'Hồi 100 MP (Gồm: Chi phí Thảo dược + Công hái/bào chế + Phụ phí dự trữ)' },
+    potion_03a: { name: 'Ma Dược Kích Rèn Tier 3.1', basePrice: 10000, type: 'Bào Chế', desc: '+20% ATK Ngục Tối (Gồm: Thảo dược hiếm + Công nung lò ma dược)' },
+    sword_01a: { name: 'Thép Kiếm Gothic Tier 1', basePrice: 25000, type: 'Rèn Đồ', desc: '+15 ATK (Gồm: 3x Thỏi Kim Loại + 2x Gỗ Sồi + Công Thợ Rèn)' },
+    shield_01a: { name: 'Khiên Thép Gothic Tier 1', basePrice: 30000, type: 'Rèn Đồ', desc: '+10 DEF (Gồm: 4x Thỏi Kim Loại + 3x Gỗ Sồi + Công Rèn Giáp)' },
+    staff_01a: { name: 'Trượng Gỗ Rừng Tier 1', basePrice: 25000, type: 'Rèn Đồ', desc: '+20 Magic ATK (Gồm: 4x Gỗ Sồi + 2x Tinh Thạch + Công Điêu Khắc)' },
+    ingot_01a: { name: 'Thỏi Kim Loại Tier 1.1', basePrice: 4500, type: 'Quặng', desc: 'Nguyên liệu rèn (Gồm: Quặng thô + Công đập mỏ & nung quặng 30s)' },
+    crystal_01a: { name: 'Tinh Thạch Ma Thuật Tier 1.1', basePrice: 12000, type: 'Tinh Thạch', desc: 'Nguyên liệu rèn/khảm (Gồm: Đá phép + Công mài giũa ma thuật)' },
+    scroll_reset_job: { name: '📜 Sách Xóa Nghề Trung Cổ', basePrice: 150000, type: 'Sách Phép', desc: 'Xóa ngay 24h CD (Gồm: Phép xóa ký ức + Công Đại Pháp Sư)' },
+    key_01a: { name: 'Chìa Khóa Ngục Tối Tầng 1', basePrice: 20000, type: 'Chìa Khóa', desc: 'Mở rương báu (Gồm: Phôi chìa + Công đúc kim khí)' },
+    gift_01a: { name: 'Rương Báu Thần Bí', basePrice: 50000, type: 'Rương Báu', desc: 'Mở ngẫu nhiên vũ khí (Gồm: Rương cổ + Chi phí bảo quản dự trữ)' },
 };
 function getDynamicItemPrice(itemId) {
     const item = exports.BASE_SHOP_PRICES[itemId];
