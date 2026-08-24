@@ -11,15 +11,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_01a",
     "resultQty": 1,
     "requiredLevel": 5,
-    "dongCost": 1050,
+    "dongCost": 700,
     "materials": [
-      {
-        "itemId": "wood_01a",
-        "quantity": 3
-      },
       {
         "itemId": "ingot_01a",
         "quantity": 4
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 1
       }
     ]
   },
@@ -27,15 +27,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_01b",
     "resultQty": 1,
     "requiredLevel": 10,
-    "dongCost": 1800,
+    "dongCost": 1200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 3
+        "itemId": "ingot_01a",
+        "quantity": 5
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 4
+        "itemId": "wood_01a",
+        "quantity": 1
       }
     ]
   },
@@ -43,15 +43,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_01c",
     "resultQty": 1,
     "requiredLevel": 15,
-    "dongCost": 2550,
+    "dongCost": 1700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 3
+        "itemId": "ingot_01a",
+        "quantity": 6
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 4
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -59,15 +59,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_01d",
     "resultQty": 1,
     "requiredLevel": 20,
-    "dongCost": 3300,
+    "dongCost": 2200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 3
+        "itemId": "ingot_01a",
+        "quantity": 7
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 4
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -75,15 +75,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_01e",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 4050,
+    "dongCost": 2700,
     "materials": [
+      {
+        "itemId": "ingot_01a",
+        "quantity": 8
+      },
       {
         "itemId": "wood_01a",
         "quantity": 3
-      },
-      {
-        "itemId": "ingot_01a",
-        "quantity": 4
       }
     ]
   },
@@ -91,15 +91,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_02a",
     "resultQty": 1,
     "requiredLevel": 30,
-    "dongCost": 4800,
+    "dongCost": 3200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 6
+        "itemId": "ingot_01a",
+        "quantity": 7
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 8
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -107,15 +107,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_02b",
     "resultQty": 1,
     "requiredLevel": 35,
-    "dongCost": 5550,
+    "dongCost": 3700,
     "materials": [
-      {
-        "itemId": "wood_01a",
-        "quantity": 6
-      },
       {
         "itemId": "ingot_01a",
         "quantity": 8
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -123,15 +123,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_02c",
     "resultQty": 1,
     "requiredLevel": 40,
-    "dongCost": 6300,
+    "dongCost": 4200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 6
+        "itemId": "ingot_01a",
+        "quantity": 9
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 8
+        "itemId": "wood_01a",
+        "quantity": 3
       }
     ]
   },
@@ -139,15 +139,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_02d",
     "resultQty": 1,
     "requiredLevel": 45,
-    "dongCost": 7050,
+    "dongCost": 4700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 6
+        "itemId": "ingot_01a",
+        "quantity": 10
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 8
+        "itemId": "wood_01a",
+        "quantity": 3
       }
     ]
   },
@@ -155,15 +155,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_02e",
     "resultQty": 1,
     "requiredLevel": 50,
-    "dongCost": 7800,
+    "dongCost": 5200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 6
+        "itemId": "ingot_01a",
+        "quantity": 11
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 8
+        "itemId": "wood_01a",
+        "quantity": 4
       }
     ]
   },
@@ -171,15 +171,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_03a",
     "resultQty": 1,
     "requiredLevel": 55,
-    "dongCost": 8550,
+    "dongCost": 5700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 10
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "wood_01a",
+        "quantity": 3
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 1
       }
     ]
   },
@@ -187,15 +191,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_03b",
     "resultQty": 1,
     "requiredLevel": 60,
-    "dongCost": 9300,
+    "dongCost": 6200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 11
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "wood_01a",
+        "quantity": 3
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 2
       }
     ]
   },
@@ -203,15 +211,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_03c",
     "resultQty": 1,
     "requiredLevel": 65,
-    "dongCost": 10050,
+    "dongCost": 6700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 12
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "wood_01a",
+        "quantity": 4
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 3
       }
     ]
   },
@@ -219,15 +231,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_03d",
     "resultQty": 1,
     "requiredLevel": 70,
-    "dongCost": 10800,
+    "dongCost": 7200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 13
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "wood_01a",
+        "quantity": 4
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 4
       }
     ]
   },
@@ -235,15 +251,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_03e",
     "resultQty": 1,
     "requiredLevel": 75,
-    "dongCost": 11550,
+    "dongCost": 7700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 14
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "wood_01a",
+        "quantity": 5
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 5
       }
     ]
   },
@@ -251,15 +271,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_04a",
     "resultQty": 1,
     "requiredLevel": 80,
-    "dongCost": 12300,
+    "dongCost": 8200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 13
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 16
+        "itemId": "wood_01a",
+        "quantity": 4
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 1
       }
     ]
   },
@@ -267,15 +291,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_04b",
     "resultQty": 1,
     "requiredLevel": 85,
-    "dongCost": 13050,
+    "dongCost": 8700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 14
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 16
+        "itemId": "wood_01a",
+        "quantity": 4
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 2
       }
     ]
   },
@@ -283,15 +311,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_04c",
     "resultQty": 1,
     "requiredLevel": 90,
-    "dongCost": 13800,
+    "dongCost": 9200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 15
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 16
+        "itemId": "wood_01a",
+        "quantity": 5
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 3
       }
     ]
   },
@@ -299,15 +331,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_04d",
     "resultQty": 1,
     "requiredLevel": 95,
-    "dongCost": 14550,
+    "dongCost": 9700,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 16
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 16
+        "itemId": "wood_01a",
+        "quantity": 5
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 4
       }
     ]
   },
@@ -315,15 +351,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "sword_04e",
     "resultQty": 1,
     "requiredLevel": 100,
-    "dongCost": 15300,
+    "dongCost": 10200,
     "materials": [
       {
-        "itemId": "wood_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 17
       },
       {
-        "itemId": "ingot_01a",
-        "quantity": 16
+        "itemId": "wood_01a",
+        "quantity": 6
+      },
+      {
+        "itemId": "gem_01a",
+        "quantity": 5
       }
     ]
   },
@@ -331,7 +371,7 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_01a",
     "resultQty": 1,
     "requiredLevel": 5,
-    "dongCost": 1150,
+    "dongCost": 800,
     "materials": [
       {
         "itemId": "wood_01a",
@@ -339,7 +379,7 @@ export const RECIPES: Recipe[] = [
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -347,15 +387,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_01b",
     "resultQty": 1,
     "requiredLevel": 10,
-    "dongCost": 1950,
+    "dongCost": 1350,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 5
+        "quantity": 6
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -363,11 +403,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_01c",
     "resultQty": 1,
     "requiredLevel": 15,
-    "dongCost": 2750,
+    "dongCost": 1900,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 5
+        "quantity": 7
       },
       {
         "itemId": "crystal_01a",
@@ -379,11 +419,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_01d",
     "resultQty": 1,
     "requiredLevel": 20,
-    "dongCost": 3550,
+    "dongCost": 2450,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 5
+        "quantity": 8
       },
       {
         "itemId": "crystal_01a",
@@ -395,11 +435,27 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_01e",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 4350,
+    "dongCost": 3000,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 5
+        "quantity": 9
+      },
+      {
+        "itemId": "crystal_01a",
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "resultItemId": "staff_02a",
+    "resultQty": 1,
+    "requiredLevel": 30,
+    "dongCost": 3550,
+    "materials": [
+      {
+        "itemId": "wood_01a",
+        "quantity": 9
       },
       {
         "itemId": "crystal_01a",
@@ -408,26 +464,10 @@ export const RECIPES: Recipe[] = [
     ]
   },
   {
-    "resultItemId": "staff_02a",
-    "resultQty": 1,
-    "requiredLevel": 30,
-    "dongCost": 5150,
-    "materials": [
-      {
-        "itemId": "wood_01a",
-        "quantity": 10
-      },
-      {
-        "itemId": "crystal_01a",
-        "quantity": 4
-      }
-    ]
-  },
-  {
     "resultItemId": "staff_02b",
     "resultQty": 1,
     "requiredLevel": 35,
-    "dongCost": 5950,
+    "dongCost": 4100,
     "materials": [
       {
         "itemId": "wood_01a",
@@ -435,7 +475,7 @@ export const RECIPES: Recipe[] = [
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -443,15 +483,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_02c",
     "resultQty": 1,
     "requiredLevel": 40,
-    "dongCost": 6750,
+    "dongCost": 4650,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 10
+        "quantity": 11
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 4
+        "quantity": 3
       }
     ]
   },
@@ -459,15 +499,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_02d",
     "resultQty": 1,
     "requiredLevel": 45,
-    "dongCost": 7550,
+    "dongCost": 5200,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 10
+        "quantity": 12
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 4
+        "quantity": 3
       }
     ]
   },
@@ -475,11 +515,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_02e",
     "resultQty": 1,
     "requiredLevel": 50,
-    "dongCost": 8350,
+    "dongCost": 5750,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 10
+        "quantity": 13
       },
       {
         "itemId": "crystal_01a",
@@ -491,15 +531,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_03a",
     "resultQty": 1,
     "requiredLevel": 55,
-    "dongCost": 9150,
+    "dongCost": 6300,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 15
+        "quantity": 13
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 6
+        "quantity": 3
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 1
       }
     ]
   },
@@ -507,15 +551,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_03b",
     "resultQty": 1,
     "requiredLevel": 60,
-    "dongCost": 9950,
+    "dongCost": 6850,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 15
+        "quantity": 14
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 6
+        "quantity": 3
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 2
       }
     ]
   },
@@ -523,7 +571,7 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_03c",
     "resultQty": 1,
     "requiredLevel": 65,
-    "dongCost": 10750,
+    "dongCost": 7400,
     "materials": [
       {
         "itemId": "wood_01a",
@@ -531,7 +579,11 @@ export const RECIPES: Recipe[] = [
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 6
+        "quantity": 4
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 3
       }
     ]
   },
@@ -539,15 +591,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_03d",
     "resultQty": 1,
     "requiredLevel": 70,
-    "dongCost": 11550,
+    "dongCost": 7950,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 15
+        "quantity": 16
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 6
+        "quantity": 4
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 4
       }
     ]
   },
@@ -555,15 +611,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_03e",
     "resultQty": 1,
     "requiredLevel": 75,
-    "dongCost": 12350,
+    "dongCost": 8500,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 15
+        "quantity": 17
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 6
+        "quantity": 5
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 5
       }
     ]
   },
@@ -571,15 +631,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_04a",
     "resultQty": 1,
     "requiredLevel": 80,
-    "dongCost": 13150,
+    "dongCost": 9050,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 20
+        "quantity": 17
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 8
+        "quantity": 4
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 1
       }
     ]
   },
@@ -587,15 +651,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_04b",
     "resultQty": 1,
     "requiredLevel": 85,
-    "dongCost": 13950,
+    "dongCost": 9600,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 20
+        "quantity": 18
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 8
+        "quantity": 4
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 2
       }
     ]
   },
@@ -603,15 +671,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_04c",
     "resultQty": 1,
     "requiredLevel": 90,
-    "dongCost": 14750,
+    "dongCost": 10150,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 20
+        "quantity": 19
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 8
+        "quantity": 5
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 3
       }
     ]
   },
@@ -619,7 +691,7 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_04d",
     "resultQty": 1,
     "requiredLevel": 95,
-    "dongCost": 15550,
+    "dongCost": 10700,
     "materials": [
       {
         "itemId": "wood_01a",
@@ -627,7 +699,11 @@ export const RECIPES: Recipe[] = [
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 8
+        "quantity": 5
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 4
       }
     ]
   },
@@ -635,15 +711,19 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "staff_04e",
     "resultQty": 1,
     "requiredLevel": 100,
-    "dongCost": 16350,
+    "dongCost": 11250,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 20
+        "quantity": 21
       },
       {
         "itemId": "crystal_01a",
-        "quantity": 8
+        "quantity": 6
+      },
+      {
+        "itemId": "crystal_01j",
+        "quantity": 5
       }
     ]
   },
@@ -651,15 +731,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_01a",
     "resultQty": 1,
     "requiredLevel": 5,
-    "dongCost": 1000,
+    "dongCost": 675,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 6
+        "quantity": 5
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -667,7 +747,7 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_01b",
     "resultQty": 1,
     "requiredLevel": 10,
-    "dongCost": 1700,
+    "dongCost": 1150,
     "materials": [
       {
         "itemId": "wood_01a",
@@ -675,7 +755,7 @@ export const RECIPES: Recipe[] = [
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -683,15 +763,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_01c",
     "resultQty": 1,
     "requiredLevel": 15,
-    "dongCost": 2400,
+    "dongCost": 1625,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 6
+        "quantity": 7
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -699,15 +779,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_01d",
     "resultQty": 1,
     "requiredLevel": 20,
-    "dongCost": 3100,
+    "dongCost": 2100,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 6
+        "quantity": 8
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 2
+        "quantity": 1
       }
     ]
   },
@@ -715,11 +795,27 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_01e",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 3800,
+    "dongCost": 2575,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 6
+        "quantity": 9
+      },
+      {
+        "itemId": "ingot_01a",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "resultItemId": "bow_02a",
+    "resultQty": 1,
+    "requiredLevel": 30,
+    "dongCost": 3050,
+    "materials": [
+      {
+        "itemId": "wood_01a",
+        "quantity": 10
       },
       {
         "itemId": "ingot_01a",
@@ -728,34 +824,18 @@ export const RECIPES: Recipe[] = [
     ]
   },
   {
-    "resultItemId": "bow_02a",
-    "resultQty": 1,
-    "requiredLevel": 30,
-    "dongCost": 4500,
-    "materials": [
-      {
-        "itemId": "wood_01a",
-        "quantity": 8
-      },
-      {
-        "itemId": "ingot_01a",
-        "quantity": 4
-      }
-    ]
-  },
-  {
     "resultItemId": "bow_02b",
     "resultQty": 1,
     "requiredLevel": 35,
-    "dongCost": 5200,
+    "dongCost": 3525,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 8
+        "quantity": 11
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -763,15 +843,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_02c",
     "resultQty": 1,
     "requiredLevel": 40,
-    "dongCost": 5900,
+    "dongCost": 4000,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 8
+        "quantity": 12
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -779,15 +859,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_02d",
     "resultQty": 1,
     "requiredLevel": 45,
-    "dongCost": 6600,
+    "dongCost": 4475,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 8
+        "quantity": 13
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -795,15 +875,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_02e",
     "resultQty": 1,
     "requiredLevel": 50,
-    "dongCost": 7300,
+    "dongCost": 4950,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 8
+        "quantity": 14
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -811,15 +891,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_03a",
     "resultQty": 1,
     "requiredLevel": 55,
-    "dongCost": 8000,
+    "dongCost": 5425,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 12
+        "quantity": 15
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 3
       }
     ]
   },
@@ -827,15 +907,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_03b",
     "resultQty": 1,
     "requiredLevel": 60,
-    "dongCost": 8700,
+    "dongCost": 5900,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 12
+        "quantity": 16
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 3
       }
     ]
   },
@@ -843,15 +923,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_03c",
     "resultQty": 1,
     "requiredLevel": 65,
-    "dongCost": 9400,
+    "dongCost": 6375,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 12
+        "quantity": 17
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 3
       }
     ]
   },
@@ -859,15 +939,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_03d",
     "resultQty": 1,
     "requiredLevel": 70,
-    "dongCost": 10100,
+    "dongCost": 6850,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 12
+        "quantity": 18
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 3
       }
     ]
   },
@@ -875,15 +955,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_03e",
     "resultQty": 1,
     "requiredLevel": 75,
-    "dongCost": 10800,
+    "dongCost": 7325,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 12
+        "quantity": 19
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 3
       }
     ]
   },
@@ -891,15 +971,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_04a",
     "resultQty": 1,
     "requiredLevel": 80,
-    "dongCost": 11500,
+    "dongCost": 7800,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 16
+        "quantity": 20
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 8
+        "quantity": 4
       }
     ]
   },
@@ -907,15 +987,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_04b",
     "resultQty": 1,
     "requiredLevel": 85,
-    "dongCost": 12200,
+    "dongCost": 8275,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 16
+        "quantity": 21
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 8
+        "quantity": 4
       }
     ]
   },
@@ -923,15 +1003,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_04c",
     "resultQty": 1,
     "requiredLevel": 90,
-    "dongCost": 12900,
+    "dongCost": 8750,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 16
+        "quantity": 22
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 8
+        "quantity": 4
       }
     ]
   },
@@ -939,15 +1019,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_04d",
     "resultQty": 1,
     "requiredLevel": 95,
-    "dongCost": 13600,
+    "dongCost": 9225,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 16
+        "quantity": 23
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 8
+        "quantity": 4
       }
     ]
   },
@@ -955,15 +1035,31 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "bow_04e",
     "resultQty": 1,
     "requiredLevel": 100,
-    "dongCost": 14300,
+    "dongCost": 9700,
     "materials": [
       {
         "itemId": "wood_01a",
-        "quantity": 16
+        "quantity": 24
       },
       {
         "itemId": "ingot_01a",
-        "quantity": 8
+        "quantity": 4
+      }
+    ]
+  },
+  {
+    "resultItemId": "arrow_01a",
+    "resultQty": 10,
+    "requiredLevel": 1,
+    "dongCost": 50,
+    "materials": [
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
+      },
+      {
+        "itemId": "ingot_01a",
+        "quantity": 1
       }
     ]
   },
@@ -971,11 +1067,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_01a",
     "resultQty": 1,
     "requiredLevel": 5,
-    "dongCost": 850,
+    "dongCost": 650,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 3
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -983,11 +1083,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_01a",
     "resultQty": 1,
     "requiredLevel": 5,
-    "dongCost": 1300,
+    "dongCost": 950,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 5
       }
     ]
   },
@@ -995,11 +1095,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_01b",
     "resultQty": 1,
     "requiredLevel": 10,
-    "dongCost": 1450,
+    "dongCost": 1100,
     "materials": [
       {
         "itemId": "ingot_01a",
         "quantity": 4
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1007,11 +1111,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_01b",
     "resultQty": 1,
     "requiredLevel": 10,
-    "dongCost": 2200,
+    "dongCost": 1600,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 7
       }
     ]
   },
@@ -1019,11 +1123,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_01c",
     "resultQty": 1,
     "requiredLevel": 15,
-    "dongCost": 2050,
+    "dongCost": 1550,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 5
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1031,11 +1139,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_01c",
     "resultQty": 1,
     "requiredLevel": 15,
-    "dongCost": 3100,
+    "dongCost": 2250,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 9
       }
     ]
   },
@@ -1043,11 +1151,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_01d",
     "resultQty": 1,
     "requiredLevel": 20,
-    "dongCost": 2650,
+    "dongCost": 2000,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 6
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1055,11 +1167,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_01d",
     "resultQty": 1,
     "requiredLevel": 20,
-    "dongCost": 4000,
+    "dongCost": 2900,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 11
       }
     ]
   },
@@ -1067,11 +1179,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_01e",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 3250,
+    "dongCost": 2450,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 4
+        "quantity": 7
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1079,11 +1195,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_01e",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 4900,
+    "dongCost": 3550,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 13
       }
     ]
   },
@@ -1091,11 +1207,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_02a",
     "resultQty": 1,
     "requiredLevel": 30,
-    "dongCost": 3850,
+    "dongCost": 2900,
     "materials": [
       {
         "itemId": "ingot_01a",
         "quantity": 6
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1103,7 +1223,7 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_02a",
     "resultQty": 1,
     "requiredLevel": 30,
-    "dongCost": 5800,
+    "dongCost": 4200,
     "materials": [
       {
         "itemId": "ingot_01a",
@@ -1115,11 +1235,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_02b",
     "resultQty": 1,
     "requiredLevel": 35,
-    "dongCost": 4450,
+    "dongCost": 3350,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 7
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1127,11 +1251,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_02b",
     "resultQty": 1,
     "requiredLevel": 35,
-    "dongCost": 6700,
+    "dongCost": 4850,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 10
+        "quantity": 12
       }
     ]
   },
@@ -1139,11 +1263,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_02c",
     "resultQty": 1,
     "requiredLevel": 40,
-    "dongCost": 5050,
+    "dongCost": 3800,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 8
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1151,11 +1279,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_02c",
     "resultQty": 1,
     "requiredLevel": 40,
-    "dongCost": 7600,
+    "dongCost": 5500,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 10
+        "quantity": 14
       }
     ]
   },
@@ -1163,11 +1291,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_02d",
     "resultQty": 1,
     "requiredLevel": 45,
-    "dongCost": 5650,
+    "dongCost": 4250,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 9
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1175,11 +1307,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_02d",
     "resultQty": 1,
     "requiredLevel": 45,
-    "dongCost": 8500,
+    "dongCost": 6150,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 10
+        "quantity": 16
       }
     ]
   },
@@ -1187,11 +1319,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_02e",
     "resultQty": 1,
     "requiredLevel": 50,
-    "dongCost": 6250,
+    "dongCost": 4700,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 6
+        "quantity": 10
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1199,11 +1335,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_02e",
     "resultQty": 1,
     "requiredLevel": 50,
-    "dongCost": 9400,
+    "dongCost": 6800,
     "materials": [
       {
         "itemId": "ingot_01a",
-        "quantity": 10
+        "quantity": 18
       }
     ]
   },
@@ -1211,11 +1347,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_03a",
     "resultQty": 1,
     "requiredLevel": 55,
-    "dongCost": 6850,
+    "dongCost": 5150,
     "materials": [
       {
-        "itemId": "ingot_01a",
+        "itemId": "ingot_01b",
         "quantity": 9
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1223,10 +1363,10 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_03a",
     "resultQty": 1,
     "requiredLevel": 55,
-    "dongCost": 10300,
+    "dongCost": 7450,
     "materials": [
       {
-        "itemId": "ingot_01a",
+        "itemId": "ingot_01b",
         "quantity": 15
       }
     ]
@@ -1235,11 +1375,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_03b",
     "resultQty": 1,
     "requiredLevel": 60,
-    "dongCost": 7450,
+    "dongCost": 5600,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 10
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1247,11 +1391,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_03b",
     "resultQty": 1,
     "requiredLevel": 60,
-    "dongCost": 11200,
+    "dongCost": 8100,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 15
+        "itemId": "ingot_01b",
+        "quantity": 17
       }
     ]
   },
@@ -1259,11 +1403,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_03c",
     "resultQty": 1,
     "requiredLevel": 65,
-    "dongCost": 8050,
+    "dongCost": 6050,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 11
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1271,11 +1419,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_03c",
     "resultQty": 1,
     "requiredLevel": 65,
-    "dongCost": 12100,
+    "dongCost": 8750,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 15
+        "itemId": "ingot_01b",
+        "quantity": 19
       }
     ]
   },
@@ -1283,11 +1431,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_03d",
     "resultQty": 1,
     "requiredLevel": 70,
-    "dongCost": 8650,
+    "dongCost": 6500,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 12
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1295,11 +1447,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_03d",
     "resultQty": 1,
     "requiredLevel": 70,
-    "dongCost": 13000,
+    "dongCost": 9400,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 15
+        "itemId": "ingot_01b",
+        "quantity": 21
       }
     ]
   },
@@ -1307,11 +1459,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_03e",
     "resultQty": 1,
     "requiredLevel": 75,
-    "dongCost": 9250,
+    "dongCost": 6950,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 9
+        "itemId": "ingot_01b",
+        "quantity": 13
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1319,11 +1475,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_03e",
     "resultQty": 1,
     "requiredLevel": 75,
-    "dongCost": 13900,
+    "dongCost": 10050,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 15
+        "itemId": "ingot_01b",
+        "quantity": 23
       }
     ]
   },
@@ -1331,11 +1487,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_04a",
     "resultQty": 1,
     "requiredLevel": 80,
-    "dongCost": 9850,
+    "dongCost": 7400,
     "materials": [
       {
-        "itemId": "ingot_01a",
+        "itemId": "ingot_01e",
         "quantity": 12
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1343,10 +1503,10 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_04a",
     "resultQty": 1,
     "requiredLevel": 80,
-    "dongCost": 14800,
+    "dongCost": 10700,
     "materials": [
       {
-        "itemId": "ingot_01a",
+        "itemId": "ingot_01e",
         "quantity": 20
       }
     ]
@@ -1355,11 +1515,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_04b",
     "resultQty": 1,
     "requiredLevel": 85,
-    "dongCost": 10450,
+    "dongCost": 7850,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 13
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1367,11 +1531,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_04b",
     "resultQty": 1,
     "requiredLevel": 85,
-    "dongCost": 15700,
+    "dongCost": 11350,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 20
+        "itemId": "ingot_01e",
+        "quantity": 22
       }
     ]
   },
@@ -1379,11 +1543,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_04c",
     "resultQty": 1,
     "requiredLevel": 90,
-    "dongCost": 11050,
+    "dongCost": 8300,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 14
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1391,11 +1559,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_04c",
     "resultQty": 1,
     "requiredLevel": 90,
-    "dongCost": 16600,
+    "dongCost": 12000,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 20
+        "itemId": "ingot_01e",
+        "quantity": 24
       }
     ]
   },
@@ -1403,11 +1571,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_04d",
     "resultQty": 1,
     "requiredLevel": 95,
-    "dongCost": 11650,
+    "dongCost": 8750,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 15
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1415,11 +1587,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_04d",
     "resultQty": 1,
     "requiredLevel": 95,
-    "dongCost": 17500,
+    "dongCost": 12650,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 20
+        "itemId": "ingot_01e",
+        "quantity": 26
       }
     ]
   },
@@ -1427,11 +1599,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "shield_04e",
     "resultQty": 1,
     "requiredLevel": 100,
-    "dongCost": 12250,
+    "dongCost": 9200,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 12
+        "itemId": "ingot_01e",
+        "quantity": 16
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 2
       }
     ]
   },
@@ -1439,11 +1615,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "armor_04e",
     "resultQty": 1,
     "requiredLevel": 100,
-    "dongCost": 18400,
+    "dongCost": 13300,
     "materials": [
       {
-        "itemId": "ingot_01a",
-        "quantity": 20
+        "itemId": "ingot_01e",
+        "quantity": 28
       }
     ]
   },
@@ -1451,11 +1627,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "potion_01a",
     "resultQty": 3,
     "requiredLevel": 1,
-    "dongCost": 200,
+    "dongCost": 100,
     "materials": [
       {
-        "itemId": "wood_01a",
+        "itemId": "fish_01a",
         "quantity": 2
+      },
+      {
+        "itemId": "wood_01a",
+        "quantity": 1
       }
     ]
   },
@@ -1463,11 +1643,15 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "potion_02a",
     "resultQty": 2,
     "requiredLevel": 10,
-    "dongCost": 400,
+    "dongCost": 250,
     "materials": [
       {
+        "itemId": "crystal_01a",
+        "quantity": 1
+      },
+      {
         "itemId": "wood_01a",
-        "quantity": 4
+        "quantity": 2
       }
     ]
   },
@@ -1475,11 +1659,11 @@ export const RECIPES: Recipe[] = [
     "resultItemId": "potion_03a",
     "resultQty": 1,
     "requiredLevel": 25,
-    "dongCost": 1000,
+    "dongCost": 500,
     "materials": [
       {
         "itemId": "crystal_01a",
-        "quantity": 2
+        "quantity": 3
       }
     ]
   }
