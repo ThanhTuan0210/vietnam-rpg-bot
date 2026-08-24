@@ -44,17 +44,34 @@ export async function codeCommand(message: Message, args: string[]): Promise<voi
         { itemId: 'potion_03a', name: 'Ma Dược Kích Rèn Thượng Cổ', icon: '🧪', qty: 5 },
       ],
     },
+    RESETJOB: {
+      rewardName: '📜 Quà Tự Do Đổi Nghề Trung Cổ',
+      dong: 50000,
+      items: [
+        { itemId: 'scroll_reset_job', name: 'Sách Xóa Nghề Trung Cổ', icon: '📜', qty: 2 },
+        { itemId: 'potion_01a', name: 'Thuốc Hồi Máu HP', icon: '🧪', qty: 10 },
+      ],
+    },
+    DOINGHE: {
+      rewardName: '📜 Quà Tự Do Đổi Nghề Trung Cổ',
+      dong: 50000,
+      items: [
+        { itemId: 'scroll_reset_job', name: 'Sách Xóa Nghề Trung Cổ', icon: '📜', qty: 2 },
+        { itemId: 'potion_01a', name: 'Thuốc Hồi Máu HP', icon: '🧪', qty: 10 },
+      ],
+    },
   };
 
   if (!codeStr || !validCodes[codeStr]) {
     const embed = createDongSonEmbed()
-      .setTitle('🎁 DANH SÁCH 3 MÃ GIFTCODE SIÊU XỊN (PREFIX: vkl)')
+      .setTitle('🎁 DANH SÁCH MÃ GIFTCODE SIÊU XỊN (PREFIX: vkl)')
       .setDescription(
         `📌 **Cú pháp nhận quà:** \`vkl code <mã_giftcode>\`\n\n` +
-          `🔥 **3 MÃ CODE ĐANG KÍCH HOẠT THÀNH CÔNG:**\n\n` +
-          `1. 🎁 **\`VKL2026\`** — Nhận 50.000 Vàng + 10x Thuốc HP + 10x Thỏi Đồng + 5x Tinh Thạch\n` +
-          `2. ⚔️ **\`EXCALIBUR\`** — Nhận 1x Kiếm Kị Sĩ + 1x Khiên Thép + 5x Chìa Khóa Ngục Tối + 3x Rương Báu\n` +
-          `3. 👑 **\`MEDIEVALVIP\`** — Nhận 100.000 Vàng + 1x 📜 Sách Xóa Nghề (50k) + 5x Hồng Ngọc + 5x Ma Dược`
+          `🔥 **4 MÃ CODE ĐANG KÍCH HOẠT THÀNH CÔNG:**\n\n` +
+          `1. 📜 **\`RESETJOB\`** (hoặc \`DOINGHE\`) — **TẶNG 2x 📜 SÁCH XÓA NGHỀ (Trị giá 100.000 Vàng) + 50.000 Vàng + 10x Thuốc HP!**\n` +
+          `2. 🎁 **\`VKL2026\`** — Nhận 50.000 Vàng + 10x Thuốc HP + 10x Thỏi Đồng + 5x Tinh Thạch\n` +
+          `3. ⚔️ **\`EXCALIBUR\`** — Nhận 1x Kiếm Kị Sĩ + 1x Khiên Thép + 5x Chìa Khóa Ngục Tối + 3x Rương Báu\n` +
+          `4. 👑 **\`MEDIEVALVIP\`** — Nhận 100.000 Vàng + 1x 📜 Sách Xóa Nghề + 5x Hồng Ngọc + 5x Ma Dược`
       );
     await message.reply({ embeds: [embed] });
     return;
@@ -87,7 +104,8 @@ export async function codeCommand(message: Message, args: string[]): Promise<voi
       `✨ **Chúc mừng ${message.author.username} đã nhận thưởng từ Mã Giftcode \`${codeStr}\`!**\n\n` +
         `💰 **Vàng Thưởng:** \`+${formatDong(codeData.dong)}\`\n\n` +
         `🎁 **VẬT PHẨM ĐOẠT ĐƯỢC:**\n${itemRewardText}\n` +
-        `💡 *Vật phẩm đã được chuyển trực tiếp vào Túi Đồ (\`vkl i\`)!*`
+        `💡 *Vật phẩm đã được chuyển trực tiếp vào Túi Đồ (\`vkl i\`)!\n` +
+        `💡 Dùng Sách Xóa Nghề bằng lệnh: \`vkl use scroll_reset_job\`*`
     );
 
   await message.reply({ embeds: [embed] });
