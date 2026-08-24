@@ -1,79 +1,74 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.codeCommand = codeCommand;
-const User_model_1 = require("../../database/models/User.model");
 const UserService_1 = require("../../game/services/UserService");
 const embedBuilder_1 = require("../../utils/embedBuilder");
 const formatters_1 = require("../../utils/formatters");
 async function codeCommand(message, args) {
     const userId = message.author.id;
     const codeStr = args[0]?.toUpperCase();
-    if (!codeStr) {
+    const validCodes = {
+        VKL2026: {
+            rewardName: '🎁 Quà Tân Thủ Gothic vkl2026',
+            dong: 50000,
+            items: [
+                { itemId: 'potion_01a', name: 'Thuốc Hồi Máu HP', icon: '🧪', qty: 10 },
+                { itemId: 'ingot_01a', name: 'Thỏi Đồng Cổ', icon: '🧱', qty: 10 },
+                { itemId: 'crystal_01a', name: 'Tinh Thạch Thượng Cổ', icon: '🔮', qty: 5 },
+            ],
+        },
+        EXCALIBUR: {
+            rewardName: '⚔️ Quà Hoàng Gia Excalibur',
+            dong: 30000,
+            items: [
+                { itemId: 'sword_01a', name: 'Kiếm Sơ Cấp Trung Cổ', icon: '⚔️', qty: 1 },
+                { itemId: 'shield_01a', name: 'Khiên Thép Kị Sĩ', icon: '🛡️', qty: 1 },
+                { itemId: 'key_01a', name: 'Chìa Khóa Ngục Tối Tầng 1', icon: '🗝️', qty: 5 },
+                { itemId: 'gift_01a', name: 'Rương Báu Thượng Cổ', icon: '🧰', qty: 3 },
+            ],
+        },
+        MEDIEVALVIP: {
+            rewardName: '👑 Quà Siêu VIP Medieval',
+            dong: 100000,
+            items: [
+                { itemId: 'scroll_reset_job', name: 'Sách Xóa Nghề Trung Cổ', icon: '📜', qty: 1 },
+                { itemId: 'gem_01a', name: 'Hồng Ngọc Trung Cổ', icon: '💎', qty: 5 },
+                { itemId: 'potion_03a', name: 'Ma Dược Kích Rèn Thượng Cổ', icon: '🧪', qty: 5 },
+            ],
+        },
+    };
+    if (!codeStr || !validCodes[codeStr]) {
         const embed = (0, embedBuilder_1.createDongSonEmbed)()
-            .setTitle('🎁 NHẬP MÃ GIFTCODE QUÀ TẶNG')
-            .setDescription(`• Cú pháp: \`vkl code [mã_quà_tặng]\`\n\n` +
-            `🔥 **GIFTCODE ĐẠI LỄ QUỐC KHÁNH 2/9 ĐANG MỞ:**\n` +
-            `• Mã: \`QUOCKHANH29\` hoặc \`DOCLAP29\` — Nhận 3 Rương Báu Thượng Cổ + 29,000đ + 29 Kim Bảo!\n` +
-            `• Mã: \`DAI_VIET_2026\` — Nhận Quà Tân Thủ Thần Thoại (50,000đ + 10 Kim Bảo)`);
+            .setTitle('🎁 DANH SÁCH 3 MÃ GIFTCODE SIÊU XỊN (PREFIX: vkl)')
+            .setDescription(`📌 **Cú pháp nhận quà:** \`vkl code <mã_giftcode>\`\n\n` +
+            `🔥 **3 MÃ CODE ĐANG KÍCH HOẠT THÀNH CÔNG:**\n\n` +
+            `1. 🎁 **\`VKL2026\`** — Nhận 50.000 Vàng + 10x Thuốc HP + 10x Thỏi Đồng + 5x Tinh Thạch\n` +
+            `2. ⚔️ **\`EXCALIBUR\`** — Nhận 1x Kiếm Kị Sĩ + 1x Khiên Thép + 5x Chìa Khóa Ngục Tối + 3x Rương Báu\n` +
+            `3. 👑 **\`MEDIEVALVIP\`** — Nhận 100.000 Vàng + 1x 📜 Sách Xóa Nghề (50k) + 5x Hồng Ngọc + 5x Ma Dược`);
         await message.reply({ embeds: [embed] });
         return;
     }
-    const user = await User_model_1.UserModelAdvanced.findOne({ userId });
-    if (!user)
-        return;
-    const validCodes = {
-        QUOCKHANH29: {
-            rewardName: '🇻🇳 Quà Mừng Đại Lễ Quốc Khánh 2/9',
-            dong: 29000,
-            kimBao: 29,
-            items: [
-                { itemId: 'ruong_vang', name: 'Rương Vàng Thượng Cổ', icon: '🔮', qty: 1 },
-                { itemId: 'ruong_huyen_thiet', name: 'Rương Huyền Thiết Hoàng Cung', icon: '🏵️', qty: 1 },
-                { itemId: 'ruong_bac', name: 'Rương Bạc Thượng Cổ', icon: '🟦', qty: 1 },
-            ],
-        },
-        DOCLAP29: {
-            rewardName: '🇻🇳 Quà Mừng Độc Lập 2/9',
-            dong: 29000,
-            kimBao: 29,
-            items: [
-                { itemId: 'ruong_vang', name: 'Rương Vàng Thượng Cổ', icon: '🔮', qty: 1 },
-                { itemId: 'ruong_huyen_thiet', name: 'Rương Huyền Thiết Hoàng Cung', icon: '🏵️', qty: 1 },
-                { itemId: 'ruong_bac', name: 'Rương Bạc Thượng Cổ', icon: '🟦', qty: 1 },
-            ],
-        },
-        DAI_VIET_2026: {
-            rewardName: '🌾 Quà Tân Thủ Đại Việt',
-            dong: 50000,
-            kimBao: 10,
-            items: [{ itemId: 'ruong_go', name: 'Rương Gỗ Thượng Cổ', icon: '📦', qty: 2 }],
-        },
-    };
-    const gift = validCodes[codeStr];
-    if (!gift) {
-        await message.reply('❌ Mã quà tặng không hợp lệ hoặc đã hết hạn!');
+    const user = await UserService_1.UserService.getOrCreateUser(userId);
+    const claimedKey = `code_${codeStr.toLowerCase()}`;
+    const hasClaimed = user.cooldowns?.get(claimedKey);
+    if (hasClaimed) {
+        await message.reply(`⚠️ **Bạn đã nhận mã Giftcode \`${codeStr}\` rồi!** Mỗi người chơi chỉ được nhận 1 lần.`);
         return;
     }
-    // Kiểm tra mã đã sử dụng chưa
-    const cooldownKey = `code_${codeStr}`;
-    const lastUsed = user.cooldowns?.get(cooldownKey) || 0;
-    if (lastUsed > 0) {
-        await message.reply(`❌ Bạn đã sử dụng mã quà tặng **${codeStr}** rồi! Mỗi mã chỉ được nhập 1 lần.`);
-        return;
-    }
-    // Trao thưởng
-    await UserService_1.UserService.addDongAtomic(userId, gift.dong);
-    await User_model_1.UserModelAdvanced.updateOne({ userId }, { $inc: { 'taiChinh.kimBao': gift.kimBao } });
-    for (const item of gift.items) {
+    const codeData = validCodes[codeStr];
+    user.taiChinh.dong += codeData.dong;
+    await UserService_1.UserService.updateCooldownAtomic(userId, claimedKey, Date.now());
+    let itemRewardText = '';
+    for (const item of codeData.items) {
         await UserService_1.UserService.addItemAtomic(userId, item.itemId, item.qty);
+        itemRewardText += `• **${item.qty}x** ${item.icon} **${item.name}** (\`${item.itemId}\`)\n`;
     }
-    await UserService_1.UserService.updateCooldownAtomic(userId, cooldownKey, Date.now());
-    const itemsStr = gift.items.map((i) => `• ${i.icon} **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+    await user.save();
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
-        .setTitle(`🎉 KÍCH HOẠT GIFTCODE THÀNH CÔNG — ${codeStr}!`)
-        .setDescription(`Chúc mừng **${message.author.username}** đã nhận thành công **${gift.rewardName}**!\n\n` +
-        `💰 **Tiền Đồng:** +${(0, formatters_1.formatDong)(gift.dong)}\n` +
-        `💎 **Kim Bảo:** +${(0, formatters_1.formatKimBao)(gift.kimBao)}\n` +
-        `🎁 **Vật Phẩm:**\n${itemsStr}`);
+        .setTitle(`🎉 NHẬP CODE THÀNH CÔNG — ${codeData.rewardName.toUpperCase()}`)
+        .setDescription(`✨ **Chúc mừng ${message.author.username} đã nhận thưởng từ Mã Giftcode \`${codeStr}\`!**\n\n` +
+        `💰 **Vàng Thưởng:** \`+${(0, formatters_1.formatDong)(codeData.dong)}\`\n\n` +
+        `🎁 **VẬT PHẨM ĐOẠT ĐƯỢC:**\n${itemRewardText}\n` +
+        `💡 *Vật phẩm đã được chuyển trực tiếp vào Túi Đồ (\`vkl i\`)!*`);
     await message.reply({ embeds: [embed] });
 }
