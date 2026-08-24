@@ -6,10 +6,12 @@ const UserService_1 = require("../../game/services/UserService");
 const embedBuilder_1 = require("../../utils/embedBuilder");
 async function masterMenuCommand(message) {
     const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
-    const currentCombat = (user.hePhai || 'Chưa Chọn').toUpperCase();
-    const currentProducer = (user.producerJob || 'Chưa Chọn').toUpperCase();
+    const validClasses = ['WARRIOR', 'MAGE', 'RANGER', 'ASSASSIN', 'warrior', 'mage', 'ranger', 'assassin'];
+    const rawCombat = (user.hePhai || '').toString();
+    const currentCombat = validClasses.includes(rawCombat) ? rawCombat.toUpperCase() : 'CHƯA CHỌN';
+    const currentProducer = (user.producerJob || 'CHƯA CHỌN').toUpperCase();
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
-        .setTitle('🎮 TRUYỀN KỲ THỦY TỔ TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
+        .setTitle('🎮 HÀNH TRÌNH TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
         .setDescription(`👤 **Anh Hùng:** ${message.author.username}\n` +
         `⚔️ **Class Chiến Đấu:** \`${currentCombat}\` | 🔨 **Class Sản Xuất:** \`${currentProducer}\`\n\n` +
         `💡 **BẤM NÚT HOẶC CHỌN MENU BÊN DƯỚI ĐỂ CHƠI NGAY (KHÔNG CẦN GÕ CHỮ TRẮC TRỞ!):**`);

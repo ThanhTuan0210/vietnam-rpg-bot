@@ -5,11 +5,13 @@ import { createDongSonEmbed } from '../../utils/embedBuilder';
 export async function masterMenuCommand(message: Message): Promise<void> {
   const user = await UserService.getOrCreateUser(message.author.id);
 
-  const currentCombat = (user.hePhai || 'Chưa Chọn').toUpperCase();
-  const currentProducer = ((user as any).producerJob || 'Chưa Chọn').toUpperCase();
+  const validClasses = ['WARRIOR', 'MAGE', 'RANGER', 'ASSASSIN', 'warrior', 'mage', 'ranger', 'assassin'];
+  const rawCombat = (user.hePhai || '').toString();
+  const currentCombat = validClasses.includes(rawCombat) ? rawCombat.toUpperCase() : 'CHƯA CHỌN';
+  const currentProducer = ((user as any).producerJob || 'CHƯA CHỌN').toUpperCase();
 
   const embed = createDongSonEmbed()
-    .setTitle('🎮 TRUYỀN KỲ THỦY TỔ TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
+    .setTitle('🎮 HÀNH TRÌNH TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
     .setDescription(
       `👤 **Anh Hùng:** ${message.author.username}\n` +
         `⚔️ **Class Chiến Đấu:** \`${currentCombat}\` | 🔨 **Class Sản Xuất:** \`${currentProducer}\`\n\n` +

@@ -4,12 +4,12 @@ exports.createDongSonEmbed = createDongSonEmbed;
 const discord_js_1 = require("discord.js");
 function createDongSonEmbed() {
     return new discord_js_1.EmbedBuilder()
-        .setColor('#D4AF37') // Mầu vàng đồng cổ Đông Sơn
+        .setColor('#DAA520') // Vàng Kim Gothic Trung Cổ
         .setAuthor({
-        name: '🏛️ HÙNG VƯƠNG TRUYỀN KỲ - BẢN SẮC DÂN GIAN VIỆT NAM 🏛️',
+        name: '⚔️ MEDIEVAL KYRISE RPG - KỶ NGUYÊN TRUNG CỔ ⚔️',
     })
         .setFooter({
-        text: '🐉 Con Rồng Cháu Tiên • Trừ tà diệt quái, săn quái tích truyền kỳ',
+        text: '🛡️ Medieval Dark Fantasy • 7 Ngục Tối & Giao Thương Song Phái',
     })
         .setTimestamp();
 }
