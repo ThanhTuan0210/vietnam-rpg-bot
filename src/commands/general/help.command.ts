@@ -87,7 +87,7 @@ export async function handleHelpSelectInteraction(interaction: StringSelectMenuI
         `• \`vkl xidach [tiền]\` — Đánh bài Xì Dách 21 điểm\n` +
         `• \`vkl baucua [tiền] [con_vật]\` — Lắc Bầu Cua tôm cá\n` +
         `• \`vkl slots [tiền]\` — Quay Nổ Hũ Slot Machine\n` +
-        `• \`vkl dua_linhthu [tiền] [1-4]\` — Đua Linh Thú`;
+        `• \`vkl rps [tiền] [keo/bua/bao]\` — Trò chơi Oẳn Tù Tì thắng thua`;
       break;
   }
 
