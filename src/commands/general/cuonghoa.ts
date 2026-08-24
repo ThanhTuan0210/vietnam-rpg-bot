@@ -11,7 +11,7 @@ export async function cuongHoaCommand(message: Message, args: string[]): Promise
   const user = await UserModelAdvanced.findOne({ userId });
 
   if (!user) {
-    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vn start`.');
+    await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.');
     return;
   }
 
@@ -26,7 +26,7 @@ export async function cuongHoaCommand(message: Message, args: string[]): Promise
   const itemDef = ITEMS[gearSlot.itemId];
 
   if (!itemDef) {
-    await message.reply(`❌ Bạn chưa trang bị ${slotType === 'vuKhi' ? 'Vũ khí' : 'Áo giáp'} để cường hóa! (Gõ \`vn enchant vukhi\` hoặc \`vn enchant aogiap\`)`);
+    await message.reply(`❌ Bạn chưa trang bị ${slotType === 'vuKhi' ? 'Vũ khí' : 'Áo giáp'} để cường hóa! (Gõ \`vkl enchant vukhi\` hoặc \`vkl enchant aogiap\`)`);
     return;
   }
 
@@ -38,12 +38,12 @@ export async function cuongHoaCommand(message: Message, args: string[]): Promise
 
   const currentPercent = gearSlot.bonusStat || 0;
   const statTypeStr = slotType === 'vuKhi' ? 'ATK' : 'HP';
-  const cost = 5000; // 5,000 Đồng / lần gieo
+  const cost = 5000;
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setCustomId('random_enchant')
-      .setLabel(`🎲 Gieo Ngẫu Nhiên Chỉ Số (-${cost.toLocaleString('vi-VN')}đ)`)
+      .setLabel(`🎲 Cường Hóa Tinh Thạch (-${cost.toLocaleString('vi-VN')} Vàng)`)
       .setStyle(ButtonStyle.Primary)
   );
 
@@ -52,56 +52,47 @@ export async function cuongHoaCommand(message: Message, args: string[]): Promise
   ).join('\n');
 
   const embed = createDongSonEmbed()
-    .setTitle(`🔥 LÒ RÈN CƯỜNG HÓA CHỈ SỐ NGẪU NHIÊN - ${itemDef.icon} ${itemDef.name.toUpperCase()}`)
+    .setTitle(`🔥 LÒ RÈN CƯỜNG HÓA TRUNG CỔ - ${itemDef.icon} ${itemDef.name.toUpperCase()}`)
     .setDescription(
       `Trang bị đang chọn: ${itemDef.icon} **${itemDef.name}** (\`${gearSlot.itemId}\`)\n` +
         `📊 **Chỉ số linh khí hiện tại:** **+${currentPercent}% ${statTypeStr}**\n` +
         `💰 **Chi phí 1 lần gieo:** ${formatDong(cost)}\n\n` +
-        `🎲 **BẢNG TỶ LỆ RA PHẦN TRĂM CHỈ SỐ NGẪU NHIÊN:**\n${tierListStr}`
+        `🎲 **BẢNG TỶ LỆ CƯỜNG HÓA TISNH THẠCH:**\n${tierListStr}`
     );
 
   const replyMsg = await message.reply({ embeds: [embed], components: [row] });
 
   const collector = replyMsg.createMessageComponentCollector({
     componentType: ComponentType.Button,
-    time: 60000,
-    filter: (i) => i.user.id === userId,
+    time: 30000,
   });
 
   collector.on('collect', async (i) => {
-    const result = await RefineService.randomEnchantEquipment(userId, slotType);
-
-    session.unlock(userId);
-
-    const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder()
-        .setCustomId('random_enchant_done')
-        .setLabel(`🎲 Gieo Thành Công (+${result.percentBonus}%)`)
-        .setStyle(ButtonStyle.Success)
-        .setDisabled(true)
-    );
-
-    const resultEmbed = createDongSonEmbed();
-
-    if (result.success) {
-      resultEmbed.setTitle('🎉 GIEO NGUYÊN KHÍ THÀNH CÔNG!');
-      resultEmbed.setDescription(result.message);
-    } else {
-      resultEmbed.setTitle('❌ LỖI THỰC THI');
-      resultEmbed.setDescription(result.message);
+    if (i.user.id !== userId) {
+      await i.reply({ content: '⚠️ Bạn không thể điều khiển lò rèn của người khác!', ephemeral: true });
+      return;
     }
 
-    await i.update({ embeds: [resultEmbed], components: [disabledRow] });
-    collector.stop('completed');
+    const res = await RefineService.randomEnchantGear(userId, slotType, cost);
+    if (!res.success) {
+      await i.reply({ content: `❌ ${res.message}`, ephemeral: true });
+      return;
+    }
+
+    const tierDef = res.tier;
+    const newEmbed = createDongSonEmbed()
+      .setTitle(`✨ KẾT QUẢ CƯỜNG HÓA TRUNG CỔ — ${itemDef.name.toUpperCase()}`)
+      .setDescription(
+        `🎉 **Cường hóa thành công!**\n\n` +
+          `• Phẩm cấp đạt được: ${tierDef.icon} **${tierDef.name}**\n` +
+          `• Chỉ số gia tăng: **+${tierDef.percent}% ${statTypeStr}** (Cũ: +${res.oldPercent}%)\n\n` +
+          `💡 *Chỉ số mới đã được áp dụng trực tiếp vào Lực chiến CP (\`vkl p\`)!*`
+      );
+
+    await i.update({ embeds: [newEmbed], components: [row] });
   });
 
-  collector.on('end', async (_, reason) => {
+  collector.on('end', () => {
     session.unlock(userId);
-    if (reason === 'time') {
-      const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        new ButtonBuilder().setCustomId('random_enchant_t').setLabel('🎲 Hết thời gian').setStyle(ButtonStyle.Secondary).setDisabled(true)
-      );
-      await replyMsg.edit({ components: [disabledRow] }).catch(() => {});
-    }
   });
 }

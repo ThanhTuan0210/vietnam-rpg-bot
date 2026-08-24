@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RefineService = exports.RANDOM_ENCHANT_TIERS = void 0;
-const User_model_1 = require("../../database/models/User.model");
 const UserService_1 = require("./UserService");
 exports.RANDOM_ENCHANT_TIERS = [
     { name: 'Phẩm Cốt', icon: '⚪', percent: 5, chance: 0.40 }, // 40% cơ hội +5%
@@ -12,68 +11,45 @@ exports.RANDOM_ENCHANT_TIERS = [
 ];
 class RefineService {
     /**
-     * Thực hiện Cường hóa Ngẫu nhiên chỉ số (+5%, +15%, +25%, +50%, +75%)
+     * Cường hóa ngẫu nhiên trang bị (vkl enchant)
      */
-    static async randomEnchantEquipment(userId, slotType) {
-        const user = await User_model_1.UserModelAdvanced.findOne({ userId });
-        if (!user) {
-            return {
-                success: false,
-                tierName: '',
-                tierIcon: '',
-                percentBonus: 0,
-                message: '❌ Không tìm thấy thông tin nhân vật!',
-            };
+    static async randomEnchantGear(userId, slotType, cost = 5000) {
+        const user = await UserService_1.UserService.getOrCreateUser(userId);
+        if (user.taiChinh.dong < cost) {
+            return { success: false, oldPercent: 0, tier: exports.RANDOM_ENCHANT_TIERS[0], message: 'Không đủ Tiền Vàng!' };
         }
-        const gearSlot = user.trangBi[slotType];
-        if (!gearSlot || !gearSlot.itemId) {
-            return {
-                success: false,
-                tierName: '',
-                tierIcon: '',
-                percentBonus: 0,
-                message: `❌ Bạn chưa trang bị ${slotType === 'vuKhi' ? 'Vũ khí' : 'Áo giáp'} để cường hóa!`,
-            };
-        }
-        const cost = 5000; // 5,000 Đồng / lần gieo ngẫu nhiên
-        // Trừ tiền cược Atomic
-        const paid = await UserService_1.UserService.deductDongAtomic(userId, cost);
-        if (!paid) {
-            return {
-                success: false,
-                tierName: '',
-                tierIcon: '',
-                percentBonus: gearSlot.bonusStat || 0,
-                message: `❌ Bạn không đủ **5,000 Đồng** để thực hiện gieo ngẫu nhiên cường hóa!`,
-            };
-        }
-        // Quay ngẫu nhiên Phẩm chất từ Bảng tỷ lệ
+        user.taiChinh.dong -= cost;
+        if (!user.trangBi)
+            user.trangBi = { vuKhi: { itemId: 'sword_01a', capCuongHoa: 0 }, aoGiap: { itemId: 'shield_01a', capCuongHoa: 0 } };
+        if (!user.trangBi[slotType])
+            user.trangBi[slotType] = { itemId: 'sword_01a', capCuongHoa: 0, bonusStat: 0 };
+        const oldPercent = user.trangBi[slotType].bonusStat || 0;
+        // Roll random tier
         const rand = Math.random();
         let accumulated = 0;
         let selectedTier = exports.RANDOM_ENCHANT_TIERS[0];
-        for (const tier of exports.RANDOM_ENCHANT_TIERS) {
-            accumulated += tier.chance;
+        for (const t of exports.RANDOM_ENCHANT_TIERS) {
+            accumulated += t.chance;
             if (rand <= accumulated) {
-                selectedTier = tier;
+                selectedTier = t;
                 break;
             }
         }
-        // Cập nhật CSDL
-        await User_model_1.UserModelAdvanced.updateOne({ userId }, {
-            $set: {
-                [`trangBi.${slotType}.capCuongHoa`]: selectedTier.percent, // Lưu phần trăm
-                [`trangBi.${slotType}.bonusStat`]: selectedTier.percent,
-            },
-        });
-        const statTypeStr = slotType === 'vuKhi' ? 'Sát Thương (ATK)' : 'Sinh Lực (HP)';
+        user.trangBi[slotType].bonusStat = selectedTier.percent;
+        await user.save();
+        return { success: true, oldPercent, tier: selectedTier };
+    }
+    /**
+     * Thực hiện Cường hóa Ngẫu nhiên chỉ số (+5%, +15%, +25%, +50%, +75%)
+     */
+    static async randomEnchantEquipment(userId, slotType) {
+        const res = await this.randomEnchantGear(userId, slotType, 5000);
         return {
-            success: true,
-            tierName: selectedTier.name,
-            tierIcon: selectedTier.icon,
-            percentBonus: selectedTier.percent,
-            message: `🎉 **CƯỜNG HÓA THÀNH CÔNG!**\n` +
-                `Trang bị đã nhận linh khí ${selectedTier.icon} **${selectedTier.name}**!\n` +
-                `🔥 Tăng thêm **+${selectedTier.percent}% ${statTypeStr}** cho nhân vật!`,
+            success: res.success,
+            tierName: res.tier?.name || 'Thất bại',
+            tierIcon: res.tier?.icon || '⚪',
+            percentBonus: res.tier?.percent || 0,
+            message: res.message || 'Cường hóa thành công!',
         };
     }
 }
