@@ -16,6 +16,8 @@ import { equipCommand, unequipCommand } from '../commands/general/equip.command'
 import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
 import { masterMenuCommand } from '../commands/general/master_menu.command';
+import { GatheringService } from '../game/services/GatheringService';
+import { createDongSonEmbed } from '../utils/embedBuilder';
 import { jobCommand } from '../commands/general/job.command';
 import { detuCommand } from '../commands/general/detu.command';
 import { vaultCommand } from '../commands/general/vault.command';
@@ -381,30 +383,54 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await luyenVoCommand(message);
         break;
 
-      // --- WORKING & GATHERING COMMANDS ---
+      // --- WORKING & GATHERING COMMANDS (MEDIEVAL KYRISE 300+ ITEMS) ---
       case 'chop':
       case 'don_cui':
-      case 'doncui':
-        await donCuiCommand(message);
+      case 'doncui': {
+        const woodRes = await GatheringService.woodcut(message.author.id);
+        const woodText = woodRes.itemsGained.map((i: any) => `🪵 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+        const embed = createDongSonEmbed()
+          .setTitle(`🪵 CHOP — ĐỐN CỦI RỪNG TRUNG CỔ`)
+          .setDescription(`Ư Vung rìu sắt đốn củi trong rừng thâm Gothic và thu hoạch được:\n\n${woodText}`);
+        await message.reply({ embeds: [embed] });
         break;
+      }
 
       case 'mine':
       case 'dao_khoang':
-      case 'daokhoang':
-        await daoKhoangCommand(message);
+      case 'daokhoang': {
+        const mineRes = await GatheringService.mine(message.author.id);
+        const mineText = mineRes.itemsGained.map((i: any) => `🪨 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+        const embed = createDongSonEmbed()
+          .setTitle(`🪨 MINE — ĐÀO KHOÁNG MỎ TRUNG CỔ`)
+          .setDescription(`⛏️ Vung cuốc đập đá trong mỏ hầm ngầm Gothic và thu hoạch được:\n\n${mineText}`);
+        await message.reply({ embeds: [embed] });
         break;
+      }
 
       case 'fish':
       case 'cau_ca':
-      case 'cauca':
-        await cauCaCommand(message);
+      case 'cauca': {
+        const fishRes = await GatheringService.fish(message.author.id);
+        const fishText = fishRes.itemsGained.map((i: any) => `🎣 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+        const embed = createDongSonEmbed()
+          .setTitle(`🎣 FISH — CÂU CÁ BIỂN SÂU GOTHIC`)
+          .setDescription(`🎣 Thả cần câu xuống dòng biển sâu Gothic và thu hoạch được:\n\n${fishText}`);
+        await message.reply({ embeds: [embed] });
         break;
+      }
 
       case 'pickup':
       case 'hai_thuoc':
-      case 'haithuoc':
-        await haiThuocCommand(message);
+      case 'haithuoc': {
+        const herbRes = await GatheringService.gatherHerbs(message.author.id);
+        const herbText = herbRes.itemsGained.map((i: any) => `🍃 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+        const embed = createDongSonEmbed()
+          .setTitle(`🍃 PICKUP — HÁI THẢO DƯỢC MA PHÁP`)
+          .setDescription(`🍃 Thu hái thảo dược linh khí ma pháp Gothic và thu hoạch được:\n\n${herbText}`);
+        await message.reply({ embeds: [embed] });
         break;
+      }
 
       case 'farm':
       case 'nongsang':

@@ -15,6 +15,8 @@ const equip_command_1 = require("../commands/general/equip.command");
 const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
 const master_menu_command_1 = require("../commands/general/master_menu.command");
+const GatheringService_1 = require("../game/services/GatheringService");
+const embedBuilder_1 = require("../utils/embedBuilder");
 const job_command_1 = require("../commands/general/job.command");
 const detu_command_1 = require("../commands/general/detu.command");
 const vault_command_1 = require("../commands/general/vault.command");
@@ -44,9 +46,6 @@ const xinxam_command_1 = require("../commands/general/xinxam.command");
 const LeoThapCommand_1 = require("../commands/general/LeoThapCommand");
 const thuonglai_command_1 = require("../commands/general/thuonglai.command");
 const tryna_command_1 = require("../commands/general/tryna.command");
-// Gathering Commands
-const don_cui_command_1 = require("../commands/gathering/don_cui.command");
-const dao_khoang_command_1 = require("../commands/gathering/dao_khoang.command");
 // Combat Commands
 const san_1 = require("../commands/combat/san");
 const thamhiem_1 = require("../commands/combat/thamhiem");
@@ -315,27 +314,51 @@ async function onMessageCreate(message) {
             case 'luyenvo':
                 await (0, luyenvo_1.luyenVoCommand)(message);
                 break;
-            // --- WORKING & GATHERING COMMANDS ---
+            // --- WORKING & GATHERING COMMANDS (MEDIEVAL KYRISE 300+ ITEMS) ---
             case 'chop':
             case 'don_cui':
-            case 'doncui':
-                await (0, don_cui_command_1.donCuiCommand)(message);
+            case 'doncui': {
+                const woodRes = await GatheringService_1.GatheringService.woodcut(message.author.id);
+                const woodText = woodRes.itemsGained.map((i) => `🪵 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                    .setTitle(`🪵 CHOP — ĐỐN CỦI RỪNG TRUNG CỔ`)
+                    .setDescription(`Ư Vung rìu sắt đốn củi trong rừng thâm Gothic và thu hoạch được:\n\n${woodText}`);
+                await message.reply({ embeds: [embed] });
                 break;
+            }
             case 'mine':
             case 'dao_khoang':
-            case 'daokhoang':
-                await (0, dao_khoang_command_1.daoKhoangCommand)(message);
+            case 'daokhoang': {
+                const mineRes = await GatheringService_1.GatheringService.mine(message.author.id);
+                const mineText = mineRes.itemsGained.map((i) => `🪨 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                    .setTitle(`🪨 MINE — ĐÀO KHOÁNG MỎ TRUNG CỔ`)
+                    .setDescription(`⛏️ Vung cuốc đập đá trong mỏ hầm ngầm Gothic và thu hoạch được:\n\n${mineText}`);
+                await message.reply({ embeds: [embed] });
                 break;
+            }
             case 'fish':
             case 'cau_ca':
-            case 'cauca':
-                await (0, dao_khoang_command_1.cauCaCommand)(message);
+            case 'cauca': {
+                const fishRes = await GatheringService_1.GatheringService.fish(message.author.id);
+                const fishText = fishRes.itemsGained.map((i) => `🎣 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                    .setTitle(`🎣 FISH — CÂU CÁ BIỂN SÂU GOTHIC`)
+                    .setDescription(`🎣 Thả cần câu xuống dòng biển sâu Gothic và thu hoạch được:\n\n${fishText}`);
+                await message.reply({ embeds: [embed] });
                 break;
+            }
             case 'pickup':
             case 'hai_thuoc':
-            case 'haithuoc':
-                await (0, dao_khoang_command_1.haiThuocCommand)(message);
+            case 'haithuoc': {
+                const herbRes = await GatheringService_1.GatheringService.gatherHerbs(message.author.id);
+                const herbText = herbRes.itemsGained.map((i) => `🍃 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const embed = (0, embedBuilder_1.createDongSonEmbed)()
+                    .setTitle(`🍃 PICKUP — HÁI THẢO DƯỢC MA PHÁP`)
+                    .setDescription(`🍃 Thu hái thảo dược linh khí ma pháp Gothic và thu hoạch được:\n\n${herbText}`);
+                await message.reply({ embeds: [embed] });
                 break;
+            }
             case 'farm':
             case 'nongsang':
             case 'nongtrai':
