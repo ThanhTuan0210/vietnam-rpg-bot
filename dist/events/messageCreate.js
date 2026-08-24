@@ -16,6 +16,12 @@ const farm_command_1 = require("../commands/general/farm.command");
 const equip_command_1 = require("../commands/general/equip.command");
 const combo_command_1 = require("../commands/general/combo.command");
 const sync_emojis_command_1 = require("../commands/general/sync_emojis.command");
+const job_command_1 = require("../commands/general/job.command");
+const detu_command_1 = require("../commands/general/detu.command");
+const vault_command_1 = require("../commands/general/vault.command");
+const dungeon_command_1 = require("../commands/general/dungeon.command");
+const trade_command_1 = require("../commands/general/trade.command");
+const pet_command_1 = require("../commands/general/pet.command");
 // Crafting Sub-systems
 const ghep_command_1 = require("../commands/general/ghep.command");
 const phache_command_1 = require("../commands/general/phache.command");
@@ -93,6 +99,31 @@ async function onMessageCreate(message) {
             case 'start':
             case 'batdau':
                 await (0, batdau_1.batDauCommand)(message);
+                break;
+            case 'job':
+            case 'nghe':
+            case 'songphai':
+                await (0, job_command_1.jobCommand)(message, args);
+                break;
+            case 'detu':
+            case 'apprentice':
+                await (0, detu_command_1.detuCommand)(message, args);
+                break;
+            case 'vault':
+            case 'khochung':
+                await (0, vault_command_1.vaultCommand)(message, args);
+                break;
+            case 'dungeon':
+            case 'nguctoi':
+                await (0, dungeon_command_1.dungeonCommand)(message, args);
+                break;
+            case 'trade':
+            case 'giaodich':
+                await (0, trade_command_1.tradeCommand)(message, args);
+                break;
+            case 'pet':
+            case 'linhthu':
+                await (0, pet_command_1.petCommand)(message, args);
                 break;
             // --- PROGRESS & PROFILE COMMANDS ---
             case 'profile':

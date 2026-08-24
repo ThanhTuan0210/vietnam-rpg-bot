@@ -15,6 +15,12 @@ import { farmCommand } from '../commands/general/farm.command';
 import { equipCommand, unequipCommand } from '../commands/general/equip.command';
 import { comboAllCommand } from '../commands/general/combo.command';
 import { syncEmojisCommand } from '../commands/general/sync_emojis.command';
+import { jobCommand } from '../commands/general/job.command';
+import { detuCommand } from '../commands/general/detu.command';
+import { vaultCommand } from '../commands/general/vault.command';
+import { dungeonCommand } from '../commands/general/dungeon.command';
+import { tradeCommand } from '../commands/general/trade.command';
+import { petCommand } from '../commands/general/pet.command';
 
 // Crafting Sub-systems
 import { ghepCommand } from '../commands/general/ghep.command';
@@ -113,6 +119,37 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'start':
       case 'batdau':
         await batDauCommand(message);
+        break;
+
+      case 'job':
+      case 'nghe':
+      case 'songphai':
+        await jobCommand(message, args);
+        break;
+
+      case 'detu':
+      case 'apprentice':
+        await detuCommand(message, args);
+        break;
+
+      case 'vault':
+      case 'khochung':
+        await vaultCommand(message, args);
+        break;
+
+      case 'dungeon':
+      case 'nguctoi':
+        await dungeonCommand(message, args);
+        break;
+
+      case 'trade':
+      case 'giaodich':
+        await tradeCommand(message, args);
+        break;
+
+      case 'pet':
+      case 'linhthu':
+        await petCommand(message, args);
         break;
 
       // --- PROGRESS & PROFILE COMMANDS ---
