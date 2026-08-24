@@ -194,6 +194,10 @@ async function onMessageCreate(message) {
             // --- ECONOMY & CRAFTING COMMANDS ---
             case 'shop':
             case 'cuahang':
+            case 'dutru':
+            case 'shop_dutru':
+            case 'tiem':
+            case 'cho':
                 await (0, shop_command_1.shopCommand)(message, args);
                 break;
             case 'kimbao':

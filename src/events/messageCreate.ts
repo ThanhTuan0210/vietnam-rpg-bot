@@ -217,6 +217,10 @@ export async function onMessageCreate(message: Message): Promise<void> {
       // --- ECONOMY & CRAFTING COMMANDS ---
       case 'shop':
       case 'cuahang':
+      case 'dutru':
+      case 'shop_dutru':
+      case 'tiem':
+      case 'cho':
         await shopCommand(message, args);
         break;
 
