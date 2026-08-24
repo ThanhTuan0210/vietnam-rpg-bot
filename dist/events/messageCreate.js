@@ -27,6 +27,7 @@ const shop_command_1 = require("../commands/general/shop.command");
 const ban_command_1 = require("../commands/general/ban.command");
 const use_command_1 = require("../commands/general/use.command");
 const equip_command_1 = require("../commands/general/equip.command");
+const open_command_1 = require("../commands/general/open.command");
 const give_command_1 = require("../commands/general/give.command");
 const ren_1 = require("../commands/general/ren");
 const dismantle_command_1 = require("../commands/general/dismantle.command");
@@ -222,6 +223,9 @@ async function onMessageCreate(message) {
             case 'open':
             case 'mo':
             case 'moruong':
+            case 'mo_ruong':
+                await (0, open_command_1.openChestCommand)(message, args);
+                break;
             case 'ghepruong':
                 await (0, ghep_command_1.ghepCommand)(message, args);
                 break;

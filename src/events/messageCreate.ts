@@ -25,6 +25,7 @@ import { shopCommand } from '../commands/general/shop.command';
 import { banCommand } from '../commands/general/ban.command';
 import { useCommand } from '../commands/general/use.command';
 import { equipCommand, unequipCommand } from '../commands/general/equip.command';
+import { openChestCommand } from '../commands/general/open.command';
 import { giveCommand } from '../commands/general/give.command';
 import { renCommand } from '../commands/general/ren';
 import { dismantleCommand } from '../commands/general/dismantle.command';
@@ -252,6 +253,10 @@ export async function onMessageCreate(message: Message): Promise<void> {
       case 'open':
       case 'mo':
       case 'moruong':
+      case 'mo_ruong':
+        await openChestCommand(message, args);
+        break;
+
       case 'ghepruong':
         await ghepCommand(message, args);
         break;
