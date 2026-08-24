@@ -61,7 +61,7 @@ export async function sanCommandAdvanced(message: Message, isHardMode = false): 
 
   // Cập nhật CSDL
   await UserService.updateCooldownAtomic(userId, cooldownKey, Date.now());
-  await UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, droppedItems);
+  const battleRes = await UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, droppedItems);
 
   // 5. Render Embed Kết Quả Đòn Đánh Instant
   const critBadge = isCrit ? ' 💥 **CRITICAL HIT!**' : '';
@@ -75,6 +75,10 @@ export async function sanCommandAdvanced(message: Message, isHardMode = false): 
           .join('\n')
       : '📦 *Không có rớt đồ.*';
 
+  const levelUpStr = battleRes.levelUp
+    ? `\n\n🎉 **THĂNG CẤP THÀNH CÔNG!** Bạn đã đạt **Level ${battleRes.newLevel}**!\n📈 **Chỉ số tự động cộng:** **+50 Max HP** | **+20 Max MP** | **+10 Sát Thương (ATK)** | **+3 Phòng Thủ (DEF)**!`
+    : '';
+
   const embed = createDongSonEmbed()
     .setTitle(`⚔️ HUNT — ${message.author.username.toUpperCase()}`)
     .setDescription(
@@ -82,7 +86,7 @@ export async function sanCommandAdvanced(message: Message, isHardMode = false): 
         `⚔️ **Sát thương gây ra:** \`${damageDealt}\` DMG${critBadge}\n` +
         `🩸 **Trảm hạ quái vật!** *(Máu còn ${newPlayerHp}/${totalStats.totalMaxHp} HP)*\n\n` +
         `✨ **Thưởng:** **+${expEarned} EXP** | **+${formatDong(dongEarned)}**\n` +
-        `${lootStr}`
+        `${lootStr}${levelUpStr}`
     );
 
   await message.reply({ embeds: [embed] });
