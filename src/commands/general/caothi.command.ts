@@ -3,7 +3,7 @@ import { UserService } from '../../game/services/UserService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
 import { formatDong } from '../../utils/formatters';
 
-// HÀM TẠO NHIỆM VỤ CÁO THỊ SĂN QUÁI ĐƠN GIẢN TRONG 3 GIỜ REAL-TIME
+// HÀM TẠO NHIỆM VỤ CÁO THỊ SĂN QUÁI CÂN BẰNG THƯỞNG 3 GIỜ REAL-TIME
 function generateRandomQuestsForUser(userId: string) {
   const cycleIndex = Math.floor(Date.now() / (3 * 3600 * 1000));
   const userNum = userId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
@@ -15,21 +15,21 @@ function generateRandomQuestsForUser(userId: string) {
   };
 
   const pool1 = [
-    `🐺 **Tiêu diệt 3 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **20.000 Vàng** | ✨ **+500 EXP**`,
-    `⚔️ **Tiêu diệt 4 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **25.000 Vàng** | 🧪 **2x Thuốc HP (\`potion_01a\`)**`,
-    `🛡️ **Tiêu diệt 5 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **30.000 Vàng** | 🗝️ **1x Chìa Khóa Ngục Tối (\`key_01a\`)**`,
+    `🐺 **Tiêu diệt 3 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **1.200 Vàng** | ✨ **+120 EXP**`,
+    `⚔️ **Tiêu diệt 4 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **1.600 Vàng** | 🧪 **1x Thuốc HP (\`potion_01a\`)**`,
+    `🛡️ **Tiêu diệt 5 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **2.000 Vàng** | 🗝️ **1x Chìa Khóa Ngục Tối (\`key_01a\`)**`,
   ];
 
   const pool2 = [
-    `🏰 **Chinh phục 1 Tầng Ngục Tối bất kỳ (\`vkl d 1\`) trong 3 Giờ** — Thưởng: 💰 **40.000 Vàng** | 🧰 **1x Rương Báu Thượng Cổ**`,
-    `💀 **Tiêu diệt 6 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **35.000 Vàng** | ✨ **+1,000 EXP**`,
-    `🔥 **Tiêu diệt 8 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **50.000 Vàng** | 📜 **1x Sách Xóa Nghề**`,
+    `🏰 **Chinh phục 1 Tầng Ngục Tối bất kỳ (\`vkl d 1\`) trong 3 Giờ** — Thưởng: 💰 **3.000 Vàng** | ✨ **+250 EXP**`,
+    `💀 **Tiêu diệt 6 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **2.500 Vàng** | ✨ **+250 EXP**`,
+    `🔥 **Tiêu diệt 8 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **3.500 Vàng** | ✨ **+350 EXP**`,
   ];
 
   const pool3 = [
-    `🤺 **Đả bại 1 Đối Thủ Lôi Đài PVP (\`vkl pvp\`) trong 3 Giờ** — Thưởng: 💰 **35.000 Vàng** | ✨ **+800 EXP**`,
-    `👑 **Khiêu chiến 1 Boss Thế Giới (\`vkl boss\`) trong 3 Giờ** — Thưởng: 💰 **60.000 Vàng** | 🧰 **1x Rương Báu Thượng Cổ**`,
-    `🐲 **Tiêu diệt 10 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **70.000 Vàng** | 🗝️ **2x Chìa Khóa Ngục Tối**`,
+    `🤺 **Đả bại 1 Đối Thủ Lôi Đài PVP (\`vkl pvp\`) trong 3 Giờ** — Thưởng: 💰 **2.500 Vàng** | ✨ **+200 EXP**`,
+    `👑 **Khiêu chiến 1 Boss Thế Giới (\`vkl boss\`) trong 3 Giờ** — Thưởng: 💰 **5.000 Vàng** | ✨ **+400 EXP**`,
+    `🐲 **Tiêu diệt 10 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **5.000 Vàng** | 🗝️ **1x Chìa Khóa Ngục Tối**`,
   ];
 
   const idx1 = Math.floor(pseudoRandom(1) * pool1.length);
@@ -61,7 +61,7 @@ export async function caoThiCommand(message: Message): Promise<void> {
         `1. ${quests[0]}\n\n` +
         `2. ${quests[1]}\n\n` +
         `3. ${quests[2]}\n\n` +
-        `💡 *Chỉ cần gõ \`vkl w\` hoặc \`vkl h\` để đả bại quái vật và hoàn thành Cáo Thị nhận Vàng & EXP dễ dàng!*`
+        `💡 *Chỉ cần gõ \`vkl w\` hoặc \`vkl h\` để đả bại quái vật và hoàn thành Cáo Thị nhận Vàng & EXP vừa phải!*`
     );
 
   await message.reply({ embeds: [embed] });
