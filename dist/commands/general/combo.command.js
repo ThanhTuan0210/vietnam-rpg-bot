@@ -13,25 +13,20 @@ async function comboAllCommand(message) {
     const userId = message.author.id;
     const user = await User_model_1.UserModelAdvanced.findOne({ userId });
     if (!user || !user.hePhai) {
-        await message.reply('❌ Bạn chưa khởi tạo nhân vật hoặc chọn Hệ Phái! Hãy gõ `vn batdau` trước.');
+        await message.reply('❌ Bạn chưa khởi tạo nhân vật! Hãy gõ `vkl`.');
         return;
     }
-    // 1. Kiểm tra Cooldown 60s dồn lệnh
+    // 1. Kiểm tra Cooldown 60s
     const lastUsed = user.cooldowns?.get('combo_all') || 0;
     const now = Date.now();
     if (now - lastUsed < 60000) {
         const remSec = Math.ceil((60000 - (now - lastUsed)) / 1000);
-        await message.reply(`⏰ **Cooldown Bách Nghệ:** Vui lòng chờ **${remSec}s** nữa mới có thể tiếp tục gõ \`vn combo\` (hoặc \`vn all\`, \`vn work\`).`);
+        await message.reply(`⏰ **Cooldown:** Vui lòng chờ **${remSec}s** nữa mới có thể tiếp tục \`vkl w\`.`);
         return;
     }
-    // Cập nhật Cooldown đồng bộ cho tất cả kỹ năng
+    // Cập nhật Cooldown
     await UserService_1.UserService.updateCooldownAtomic(userId, 'combo_all', now);
-    await UserService_1.UserService.updateCooldownAtomic(userId, 'san', now);
-    await UserService_1.UserService.updateCooldownAtomic(userId, 'don_cui', now);
-    await UserService_1.UserService.updateCooldownAtomic(userId, 'dao_khoang', now);
-    await UserService_1.UserService.updateCooldownAtomic(userId, 'cau_ca', now);
-    await UserService_1.UserService.updateCooldownAtomic(userId, 'hai_thuoc', now);
-    // 2. Thực hiện [1] SĂN QUÁI (HUNT)
+    // 2. Thực hiện [1] HUNTER (SĂN QUÁI & RƯƠNG BÁU)
     const areaMonsters = monsters_1.MONSTERS.filter((m) => m.area === user.canhGioi.khuVuc && !m.isBoss);
     const baseMonster = areaMonsters[Math.floor(Math.random() * areaMonsters.length)] || monsters_1.MONSTERS[0];
     const totalStats = CombatEngine_1.CombatEngineAdvanced.calculateTotalStats(user);
@@ -46,7 +41,7 @@ async function comboAllCommand(message) {
     const huntLoot = [];
     for (const drop of baseMonster.dropTable) {
         const itemDef = items_1.ITEMS[drop.itemId];
-        if (itemDef && itemDef.type !== 'vukhi' && itemDef.type !== 'aogiap' && itemDef.type !== 'mu' && itemDef.type !== 'giay') {
+        if (itemDef && itemDef.type !== 'vukhi' && itemDef.type !== 'aogiap') {
             const dropChance = Math.max(0.2, drop.chance);
             if (Math.random() <= dropChance) {
                 const qty = Math.floor(Math.random() * (drop.maxQty - drop.minQty + 1)) + drop.minQty;
@@ -55,40 +50,33 @@ async function comboAllCommand(message) {
         }
     }
     const battleRes = await UserService_1.UserService.applyBattleResults(userId, newPlayerHp, expEarned, dongEarned, false, user.canhGioi.capDo, huntLoot);
-    // 3. Thực hiện [2] ĐỐN CỦI (CHOP)
-    const woodRes = await GatheringService_1.GatheringService.woodcut(userId);
-    // 4. Thực hiện [3] ĐÀO QUẶNG (MINE)
+    // 3. Thực hiện [2] MINER (ĐÀO QUẶNG & TINH THẠCH)
     const mineRes = await GatheringService_1.GatheringService.mine(userId);
-    // 5. Thực hiện [4] CÂU CÁ (FISH)
-    const fishRes = await GatheringService_1.GatheringService.fish(userId);
-    // 6. Thực hiện [5] HÁI THUỐC (PICKUP)
+    // 4. Thực hiện [3] ALCHEMIST (BÀO CHẾ MA DƯỢC)
     const herbRes = await GatheringService_1.GatheringService.gatherHerbs(userId);
-    // 7. Tổng hợp hiển thị tất cả vật phẩm nhận được
-    const critBadge = isCrit ? ' 💥 **BẠO KÍCH!**' : '';
+    // 5. Tổng hợp kết quả
+    const critBadge = isCrit ? ' 💥 **CRITICAL!**' : '';
     const huntLootText = huntLoot.length > 0
         ? huntLoot
             .map((d) => {
-            const itemDef = items_1.ITEMS[d.itemId] || { name: d.itemId, icon: '📦' };
-            return `${itemDef.icon} **${itemDef.name}** x${d.quantity}`;
+            const icon = (0, items_1.getItemIcon)(d.itemId);
+            const itemDef = items_1.ITEMS[d.itemId] || { name: d.itemId };
+            return `${icon} **${itemDef.name}** x${d.quantity}`;
         })
             .join(', ')
         : 'Không có';
-    const woodText = woodRes.itemsGained.map((i) => `🪵 **${i.name}** x${i.qty}`).join(', ');
     const mineText = mineRes.itemsGained.map((i) => `🪨 **${i.name}** x${i.qty}`).join(', ');
-    const fishText = fishRes.itemsGained.map((i) => `🎣 **${i.name}** x${i.qty}`).join(', ');
-    const herbText = herbRes.itemsGained.map((i) => `🍃 **${i.name}** x${i.qty}`).join(', ');
+    const herbText = herbRes.itemsGained.map((i) => `🧪 **${i.name}** x${i.qty}`).join(', ');
     const levelUpNotify = battleRes.levelUp
         ? `\n\n🎉 **THĂNG CẤP THÀNH CÔNG!** Bạn đã đạt **Level ${battleRes.newLevel}**!\n📈 **Chỉ số tự động cộng:** **+50 Max HP** | **+20 Max MP** | **+10 Sát Thương** | **+3 Phòng Thủ**!`
         : '';
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
-        .setTitle(`🌾 BÁCH NGHỆ TẬP TRUNG (5 TRONG 1) — ${message.author.username.toUpperCase()}`)
-        .setDescription(`⚡ **Bạn vừa đồng thời thực hiện 5 công việc lao động & săn bắt dũng mãnh:**\n\n` +
-        `⚔️ **SĂN QUÁI (HUNT):** Đả bại **${baseMonster.icon} ${baseMonster.name}** (Gây \`${damageDealt}\` DMG${critBadge})\n` +
-        `✨ Thưởng Săn: **+${expEarned} EXP** | **+${(0, formatters_1.formatDong)(dongEarned)}** | Loot: ${huntLootText}\n\n` +
-        `🪵 **ĐỐN CỦI (CHOP):** ${woodText}\n` +
-        `🪨 **ĐÀO QUẶNG (MINE):** ${mineText}\n` +
-        `🎣 **CÂU CÁ (FISH):** ${fishText}\n` +
-        `🍃 **HÁI THUỐC (PICKUP):** ${herbText}${levelUpNotify}`)
-        .setFooter({ text: '💡 Mẹo: Bạn có thể gõ vn combo, vn all, hoặc vn work để thực hiện 5 việc cùng lúc mỗi 60 giây!' });
+        .setTitle(`⚡ HOẠT ĐỘNG SẢN XUẤT TỔ ĐỘI (WORK COMBO) — ${message.author.username.toUpperCase()}`)
+        .setDescription(`🎯 **Kết quả sản xuất tài nguyên 4 Class PP:**\n\n` +
+        `🏹 **HUNTER (Săn Quái):** Đả bại **${baseMonster.icon} ${baseMonster.name}** (Gây \`${damageDealt}\` DMG${critBadge})\n` +
+        `✨ Thưởng: **+${expEarned} EXP** | **+${(0, formatters_1.formatDong)(dongEarned)}** | Loot: ${huntLootText}\n\n` +
+        `🪨 **MINER (Đào Mỏ):** ${mineText}\n` +
+        `🧪 **ALCHEMIST (Bào Chế):** ${herbText}${levelUpNotify}\n\n` +
+        `💡 *Đừng quên thả nguyên liệu vào Kho Vault (\`vkl vlt dep\`) cho đồng đội trong nhóm 3-5 người dùng!*`);
     await message.reply({ embeds: [embed] });
 }

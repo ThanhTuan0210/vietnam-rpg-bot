@@ -314,49 +314,47 @@ async function onMessageCreate(message) {
             case 'luyenvo':
                 await (0, luyenvo_1.luyenVoCommand)(message);
                 break;
-            // --- WORKING & GATHERING COMMANDS (MEDIEVAL KYRISE 300+ ITEMS) ---
-            case 'chop':
-            case 'don_cui':
-            case 'doncui': {
-                const woodRes = await GatheringService_1.GatheringService.woodcut(message.author.id);
-                const woodText = woodRes.itemsGained.map((i) => `🪵 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
-                const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle(`🪵 CHOP — ĐỐN CỦI RỪNG TRUNG CỔ`)
-                    .setDescription(`Ư Vung rìu sắt đốn củi trong rừng thâm Gothic và thu hoạch được:\n\n${woodText}`);
-                await message.reply({ embeds: [embed] });
-                break;
-            }
+            // --- 4 PRODUCER CLASS COMMANDS (PP: MINER, ALCHEMIST, BLACKSMITH, HUNTER) ---
+            // 1. 🪨 MINER COMMAND (Khai Thác Quặng & Tinh Thạch)
             case 'mine':
-            case 'dao_khoang':
+            case 'm':
+            case 'min':
             case 'daokhoang': {
                 const mineRes = await GatheringService_1.GatheringService.mine(message.author.id);
                 const mineText = mineRes.itemsGained.map((i) => `🪨 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle(`🪨 MINE — ĐÀO KHOÁNG MỎ TRUNG CỔ`)
-                    .setDescription(`⛏️ Vung cuốc đập đá trong mỏ hầm ngầm Gothic và thu hoạch được:\n\n${mineText}`);
+                    .setTitle(`🪨 MINER — ĐÀO KHOÁNG MỎ THẠCH GOTHIC`)
+                    .setDescription(`⛏️ **Thợ Mỏ vung cuốc đập đá trong hầm mỏ ngầm và thu hoạch được:**\n\n${mineText}\n\n💡 *Gửi Quặng vào Kho Vault (\`vkl vlt dep\`) cho Thợ Rèn rèn đồ!*`);
                 await message.reply({ embeds: [embed] });
                 break;
             }
-            case 'fish':
-            case 'cau_ca':
-            case 'cauca': {
-                const fishRes = await GatheringService_1.GatheringService.fish(message.author.id);
-                const fishText = fishRes.itemsGained.map((i) => `🎣 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
-                const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle(`🎣 FISH — CÂU CÁ BIỂN SÂU GOTHIC`)
-                    .setDescription(`🎣 Thả cần câu xuống dòng biển sâu Gothic và thu hoạch được:\n\n${fishText}`);
-                await message.reply({ embeds: [embed] });
-                break;
-            }
-            case 'pickup':
-            case 'hai_thuoc':
-            case 'haithuoc': {
+            // 2. 🧪 ALCHEMIST COMMAND (Bào Chế Ma Dược & Thuốc Kháng Độc)
+            case 'brew':
+            case 'alc':
+            case 'potion':
+            case 'phache': {
                 const herbRes = await GatheringService_1.GatheringService.gatherHerbs(message.author.id);
-                const herbText = herbRes.itemsGained.map((i) => `🍃 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
+                const herbText = herbRes.itemsGained.map((i) => `🧪 **${i.name}** (\`${i.itemId}\`) x${i.qty}`).join('\n');
                 const embed = (0, embedBuilder_1.createDongSonEmbed)()
-                    .setTitle(`🍃 PICKUP — HÁI THẢO DƯỢC MA PHÁP`)
-                    .setDescription(`🍃 Thu hái thảo dược linh khí ma pháp Gothic và thu hoạch được:\n\n${herbText}`);
+                    .setTitle(`🧪 ALCHEMIST — NUNG LÒ BÀO CHẾ MA DƯỢC`)
+                    .setDescription(`🔥 **Thợ Bào Chế nung lò vạc luyện ma dược và thu hoạch được:**\n\n${herbText}\n\n💡 *Gửi Thuốc vào Kho Vault (\`vkl vlt dep\`) cho Kị Sĩ đi đánh Boss Ngục Tối!*`);
                 await message.reply({ embeds: [embed] });
+                break;
+            }
+            // 3. 🔨 BLACKSMITH COMMAND (Rèn Vũ Khí, Giáp & Cuốc Mỏ)
+            case 'craft':
+            case 'blk':
+            case 'forge':
+            case 'ren':
+                await (0, ren_1.renCommand)(message, args);
+                break;
+            // 4. 🏹 HUNTER COMMAND (Săn Quái Lấy Vàng, Rương & Chìa Khóa)
+            case 'hunt':
+            case 'hnt':
+            case 'h':
+            case 'san': {
+                const isHard = args[0]?.toLowerCase() === 'hard' || args[0]?.toLowerCase() === 'kho';
+                await (0, san_1.sanCommandAdvanced)(message, isHard);
                 break;
             }
             case 'farm':
