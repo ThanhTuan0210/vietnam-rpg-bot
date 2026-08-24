@@ -3,7 +3,7 @@ import { UserService } from '../../game/services/UserService';
 import { createDongSonEmbed } from '../../utils/embedBuilder';
 import { formatDong } from '../../utils/formatters';
 
-// HÀM TẠO NHIỆM VỤ CÁO THỊ TRUNG CỔ NGẪU NHIÊN 3H REAL-TIME
+// HÀM TẠO NHIỆM VỤ CÁO THỊ SĂN QUÁI ĐƠN GIẢN TRONG 3 GIỜ REAL-TIME
 function generateRandomQuestsForUser(userId: string) {
   const cycleIndex = Math.floor(Date.now() / (3 * 3600 * 1000));
   const userNum = userId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
@@ -15,27 +15,21 @@ function generateRandomQuestsForUser(userId: string) {
   };
 
   const pool1 = [
-    `🪵 **Đốn 15 Gỗ Sồi Cổ Gothic (\`vkl wcut\` / \`vkl craft\`)** — Thưởng: 💰 ${formatDong(15000)} | 🔮 **5x Tinh Thạch Lam**`,
-    `⛏️ **Đào 10 Thỏi Kim Loại Thạch (\`vkl mine\` / \`vkl m\`)** — Thưởng: 💰 ${formatDong(20000)} | 🔮 **5x Tinh Thạch Lam**`,
-    `🧪 **Bào Chế 5 Ma Dược HP/MP (\`vkl brew\`)** — Thưởng: 💰 ${formatDong(15000)} | 🧪 **3x Thuốc HP (\`potion_01a\`)**`,
-    `🔨 **Rèn 1 Vũ Khí/Giáp Tại Công Xưởng (\`vkl craft sword_01a\`)** — Thưởng: 💰 ${formatDong(30000)} | 🧰 **1x Rương Báu Thượng Cổ**`,
-    `🎣 **Câu 5 Cá Biển Sâu Gothic (\`vkl fish\`)** — Thưởng: 💰 ${formatDong(12000)} | 🧪 **2x Thuốc Mana MP**`,
+    `🐺 **Tiêu diệt 3 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **20.000 Vàng** | ✨ **+500 EXP**`,
+    `⚔️ **Tiêu diệt 4 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **25.000 Vàng** | 🧪 **2x Thuốc HP (\`potion_01a\`)**`,
+    `🛡️ **Tiêu diệt 5 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **30.000 Vàng** | 🗝️ **1x Chìa Khóa Ngục Tối (\`key_01a\`)**`,
   ];
 
   const pool2 = [
-    `⚔️ **Thực Hiện Lao Động Combo 3 Lần (\`vkl w\`)** — Thưởng: 💰 ${formatDong(25000)} | ✨ **+500 EXP**`,
-    `🐺 **Đả Bại Sói Rừng Âm Linh Gothic (\`vkl h\` / \`vkl hunt\`)** — Thưởng: 💰 ${formatDong(30000)} | 🗝️ **1x Chìa Khóa Ngục Tối**`,
-    `🏰 **Chinh Phục Ngục Tối Tầng 1-7 (\`vkl d 1\`)** — Thưởng: 💰 ${formatDong(50000)} | 🧰 **1x Rương Báu Thượng Cổ**`,
-    `🤺 **Quyết Đấu Lôi Đài Kị Sĩ PVP (\`vkl pvp\`)** — Thưởng: 💰 ${formatDong(35000)} | ✨ **+1,000 EXP**`,
-    `👑 **Khiêu Chiến Boss Thế Giới Trung Cổ (\`vkl boss\`)** — Thưởng: 💰 ${formatDong(60000)} | 💎 **5x Hồng Ngọc Khảm Giáp**`,
+    `🏰 **Chinh phục 1 Tầng Ngục Tối bất kỳ (\`vkl d 1\`) trong 3 Giờ** — Thưởng: 💰 **40.000 Vàng** | 🧰 **1x Rương Báu Thượng Cổ**`,
+    `💀 **Tiêu diệt 6 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **35.000 Vàng** | ✨ **+1,000 EXP**`,
+    `🔥 **Tiêu diệt 8 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **50.000 Vàng** | 📜 **1x Sách Xóa Nghề**`,
   ];
 
   const pool3 = [
-    `💥 **Cường Hóa Trang Bị Lên +1 Thành Công (\`vkl refine\`)** — Thưởng: 💰 ${formatDong(40000)} | 🧪 **1x Ma Dược Kích Rèn**`,
-    `💎 **Khảm 1 Hồng Ngọc Vào Lỗ Vũ Khí (\`vkl socket\`)** — Thưởng: 💰 ${formatDong(50000)} | 💎 **1x Hồng Ngọc Khảm Giáp**`,
-    `📜 **Sử Dụng Sách Xóa Nghề Trung Cổ (\`vkl use scroll_reset_job\`)** — Thưởng: 💰 ${formatDong(60000)} | 📜 **1x Sách Xóa Nghề**`,
-    `🧰 **Mở 1 Rương Báu Thần Bí (\`vkl open\`)** — Thưởng: 💰 ${formatDong(30000)} | 🗝️ **2x Chìa Khóa Ngục Tối**`,
-    `👑 **Thực Hiện 1 Lần Chuyển Sinh Căn Cốt (\`vkl rebirth\`)** — Thưởng: 💰 ${formatDong(100000)} | 💎 **10x Hồng Ngọc Thượng Cổ**`,
+    `🤺 **Đả bại 1 Đối Thủ Lôi Đài PVP (\`vkl pvp\`) trong 3 Giờ** — Thưởng: 💰 **35.000 Vàng** | ✨ **+800 EXP**`,
+    `👑 **Khiêu chiến 1 Boss Thế Giới (\`vkl boss\`) trong 3 Giờ** — Thưởng: 💰 **60.000 Vàng** | 🧰 **1x Rương Báu Thượng Cổ**`,
+    `🐲 **Tiêu diệt 10 Quái Vật bất kỳ (\`vkl w\` / \`vkl h\`) trong 3 Giờ** — Thưởng: 💰 **70.000 Vàng** | 🗝️ **2x Chìa Khóa Ngục Tối**`,
   ];
 
   const idx1 = Math.floor(pseudoRandom(1) * pool1.length);
@@ -60,14 +54,14 @@ export async function caoThiCommand(message: Message): Promise<void> {
   const timeRemStr = remHours > 0 ? `${remHours} giờ ${remMinutes} phút` : `${remMinutes} phút`;
 
   const embed = createDongSonEmbed()
-    .setTitle('📜 BẢNG CÁO THỊ NHIỆM VỤ TRUNG CỔ (MEDIEVAL QUESTS)')
+    .setTitle('📜 BẢNG CÁO THỊ SĂN QUÁI TRUNG CỔ (MONSTER HUNT QUESTS)')
     .setDescription(
-      `🏛️ **HOÀNG GIA CÁO THỊ:** Nhiệm vụ tự động đổi mới ngẫu nhiên mỗi **3 Giờ**!\n` +
-        `⏳ **Làm mới nhiệm vụ tiếp theo sau:** \`${timeRemStr}\`\n\n` +
+      `🏛️ **HOÀNG GIA CÁO THỊ SĂN QUÁI:** Nhiệm vụ tiêu diệt quái vật tự động đổi mới ngẫu nhiên mỗi **3 Giờ**!\n` +
+        `⏳ **Thời gian làm mới tiếp theo sau:** \`${timeRemStr}\`\n\n` +
         `1. ${quests[0]}\n\n` +
         `2. ${quests[1]}\n\n` +
         `3. ${quests[2]}\n\n` +
-        `💡 *Nhiệm vụ tự động hoàn thành và cộng thưởng trực tiếp khi bạn thực hiện các thao tác tương ứng!*`
+        `💡 *Chỉ cần gõ \`vkl w\` hoặc \`vkl h\` để đả bại quái vật và hoàn thành Cáo Thị nhận Vàng & EXP dễ dàng!*`
     );
 
   await message.reply({ embeds: [embed] });
