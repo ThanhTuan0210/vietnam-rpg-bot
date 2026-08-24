@@ -8,7 +8,22 @@ async function masterMenuCommand(message) {
     const user = await UserService_1.UserService.getOrCreateUser(message.author.id);
     const validClasses = ['WARRIOR', 'MAGE', 'RANGER', 'ASSASSIN', 'warrior', 'mage', 'ranger', 'assassin'];
     const rawCombat = (user.hePhai || '').toString();
-    const currentCombat = validClasses.includes(rawCombat) ? rawCombat.toUpperCase() : 'CHƯA CHỌN';
+    // 🎯 IF CLASS IS NOT CHOSEN: FORCE STEP 1 ONBOARDING (CHỌN CLASS CHIẾN ĐẤU)
+    if (!validClasses.includes(rawCombat)) {
+        const embed = (0, embedBuilder_1.createDongSonEmbed)()
+            .setTitle('🎭 KHỞI TẠO NHÂN VẬT - BƯỚC 1: CHỌN CLASS CHIẾN ĐẤU')
+            .setDescription(`👋 **Chào mừng ${message.author.username} đến với Thế Giới Medieval Dark Fantasy!**\n\n` +
+            `⚔️ **Hãy chọn 1 trong 4 Class Chiến Đấu của bạn bằng Nút Bấm bên dưới:**\n\n` +
+            `• **⚔️ Warrior (Kị Sĩ):** HP & Giáp siêu trâu, trảm quái bằng Kiếm & Khiên\n` +
+            `• **🔮 Mage (Pháp Sư):** Sát thương Phép & MP dạt dào, xả kĩ năng diện rộng\n` +
+            `• **🏹 Ranger (Cung Thủ):** Tỉ lệ Bạo kích (Crit) & Né tránh dẻo dai\n` +
+            `• **🗡️ Assassin (Sát Thủ):** Xuyên giáp & Hút máu siêu nhanh`);
+        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder().setCustomId('job_combat_warrior').setLabel('⚔️ Warrior (Kị Sĩ)').setStyle(discord_js_1.ButtonStyle.Primary), new discord_js_1.ButtonBuilder().setCustomId('job_combat_mage').setLabel('🔮 Mage (Pháp Sư)').setStyle(discord_js_1.ButtonStyle.Success), new discord_js_1.ButtonBuilder().setCustomId('job_combat_ranger').setLabel('🏹 Ranger (Cung Thủ)').setStyle(discord_js_1.ButtonStyle.Danger), new discord_js_1.ButtonBuilder().setCustomId('job_combat_assassin').setLabel('🗡️ Assassin (Sát Thủ)').setStyle(discord_js_1.ButtonStyle.Secondary));
+        await message.reply({ embeds: [embed], components: [row] });
+        return;
+    }
+    // 🎯 IF CLASS IS ALREADY CHOSEN: SHOW MASTER MENU
+    const currentCombat = rawCombat.toUpperCase();
     const currentProducer = (user.producerJob || 'CHƯA CHỌN').toUpperCase();
     const embed = (0, embedBuilder_1.createDongSonEmbed)()
         .setTitle('🎮 HÀNH TRÌNH TRUNG CỔ - BẢNG ĐIỀU KHIỂN GAMER (PREFIX: vkl)')
@@ -22,7 +37,7 @@ async function masterMenuCommand(message) {
         .setCustomId('master_menu_select')
         .setPlaceholder('👉 Chọn Thao Tác Game Ngay Tại Đây...')
         .addOptions([
-        { label: '🎭 Chọn Song Phái Dual-Class', value: 'menu_job', description: 'Chọn Class Chiến Đấu & Class Sản Xuất', emoji: '⚔️' },
+        { label: '🎭 Chọn / Đổi Song Phái Dual-Class', value: 'menu_job', description: 'Chọn Class Chiến Đấu & Class Sản Xuất', emoji: '⚔️' },
         { label: '📦 Kho Vault Chung Tổ Đội', value: 'menu_vault', description: 'Gửi / Rút tài nguyên Kho Hợp Tác Xã', emoji: '📦' },
         { label: '🛍️ Giao Dịch Trực Tiếp 1-1', value: 'menu_trade', description: 'Trao đổi đồ trực tiếp với bạn bè', emoji: '🤝' },
         { label: '🎓 Đệ Tử Truyền Thừa', value: 'menu_detu', description: 'Quản lý Đệ Tử & Dạy Nghề', emoji: '🎓' },
@@ -30,5 +45,5 @@ async function masterMenuCommand(message) {
         { label: '🎰 Minigames & Board Games', value: 'menu_minigames', description: 'Slots, Dice, Coinflip, Blackjack', emoji: '🎲' },
     ]);
     const row2 = new discord_js_1.ActionRowBuilder().addComponents(selectMenu);
-    await message.reply({ embeds: [embed], components: [row1, row2] });
+    await message.reply({ embeds: [embed], components: [row2, row1] });
 }
