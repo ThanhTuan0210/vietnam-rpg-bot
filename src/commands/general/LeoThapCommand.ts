@@ -241,15 +241,15 @@ export async function leoThapCommandClean(message: Message): Promise<void> {
           resultEmbed.setTitle('💀 TỬ TRẬN TRONG THÁP THÍ LUYỆN (PERMADEATH RUN)');
           resultEmbed.setDescription(
             `Bạn đã gục ngã tại **Tầng ${session.currentFloor}** trước sức mạnh tàn bạo của đối thủ!\n\n` +
-              `📜 **Nhật ký trận đấu:**\n${combat.combatResult.logs.join('\n')}\n\n` +
-              `🪙 **Điểm Thí Luyện quy đổi:** **+${combat.session.trialPointsEarned} Điểm**!`
+              `📜 **Nhật ký giao tranh:**\n${combat.combatResult.logs.join('\n')}\n\n` +
+              `🪙 **Điểm Thí Luyện nhận được:** **+${combat.session.trialPointsEarned} Điểm**!`
           );
-        } else if (combat.combatResult.isVictory) {
+        } else {
           resultEmbed.setTitle(`🎉 ĐẢ BẠI KẺ ĐỊCH TẦNG ${session.currentFloor}!`);
           resultEmbed.setDescription(
-            `📜 **Nhật ký trận đấu:**\n${combat.combatResult.logs.join('\n')}\n\n` +
-              `❤️ Sinh Lực còn lại: \`${combat.session.currentHp}/${combat.session.maxHp}\`\n\n` +
-              `Gõ \`vn leothap\` để tiếp tục tiến vào Tầng tiếp theo!`
+            `📜 **Nhật ký giao tranh:**\n${combat.combatResult.logs.join('\n')}\n\n` +
+              `❤️ **Sinh Lực còn lại:** \`${combat.session.currentHp}/${combat.session.maxHp}\` HP\n\n` +
+              `👉 Gõ \`vn leothap\` để tiếp tục tiến vào Tầng ${combat.session.currentFloor}!`
           );
         }
 
