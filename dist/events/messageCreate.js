@@ -273,6 +273,16 @@ async function onMessageCreate(message) {
             case 'nongtrai':
                 await (0, farm_command_1.farmCommand)(message, args);
                 break;
+            case 'gieo_hat':
+            case 'gieo':
+            case 'plant':
+                await (0, farm_command_1.farmCommand)(message, ['gieo_hat', ...args]);
+                break;
+            case 'thu_hoach':
+            case 'thuhoach':
+            case 'harvest':
+                await (0, farm_command_1.farmCommand)(message, ['thu_hoach', ...args]);
+                break;
             // --- REBIRTH & ADVANCED RPG COMMANDS ---
             case 'rebirth':
             case 'timetravel':

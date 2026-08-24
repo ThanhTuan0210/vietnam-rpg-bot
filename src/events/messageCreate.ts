@@ -332,6 +332,18 @@ export async function onMessageCreate(message: Message): Promise<void> {
         await farmCommand(message, args);
         break;
 
+      case 'gieo_hat':
+      case 'gieo':
+      case 'plant':
+        await farmCommand(message, ['gieo_hat', ...args]);
+        break;
+
+      case 'thu_hoach':
+      case 'thuhoach':
+      case 'harvest':
+        await farmCommand(message, ['thu_hoach', ...args]);
+        break;
+
       // --- REBIRTH & ADVANCED RPG COMMANDS ---
       case 'rebirth':
       case 'timetravel':
