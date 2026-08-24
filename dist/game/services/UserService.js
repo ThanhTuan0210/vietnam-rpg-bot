@@ -130,6 +130,18 @@ class UserService {
         return true;
     }
     /**
+     * Trừ vật phẩm trong túi đồ người dùng
+     */
+    static async removeItemAtomic(userId, itemId, quantity = 1) {
+        const user = await User_model_1.UserModelAdvanced.findOne({ userId });
+        if (!user)
+            return false;
+        const existingSlot = user.tuiDo.find((i) => i.itemId === itemId);
+        if (!existingSlot || existingSlot.soLuong < quantity)
+            return false;
+        return await this.addItemAtomic(userId, itemId, -quantity);
+    }
+    /**
      * Tiêu hao vật phẩm nguyên tố
      */
     static async consumeItemAtomic(userId, itemId, quantity = 1) {

@@ -59,6 +59,19 @@ exports.CROPS_BALANCED = {
         usage: 'Chế Kim Đan Hoàng Cung tăng vĩnh viễn HP',
         rewardItem: 'sen_vang_bup',
     },
+    hat_giong: {
+        id: 'hat_giong',
+        name: 'Hạt Giống Nông Nghiệp',
+        icon: '🌱',
+        seedPrice: 0,
+        growMinutes: 15,
+        yieldQty: 10,
+        sellTotal: 2400,
+        netProfit: 2400,
+        roiPercent: 100,
+        usage: 'Trồng từ túi đồ thu hoạch 10 Hạt Lúa Nước',
+        rewardItem: 'lua_nuoc_hat',
+    },
 };
 async function farmCommand(message, args) {
     const userId = message.author.id;
@@ -78,13 +91,22 @@ async function farmCommand(message, args) {
         const plotNum = parseInt(args[2], 10) || 1;
         const crop = exports.CROPS_BALANCED[cropKey];
         if (!crop) {
-            await message.reply('❌ Hạt giống không hợp lệ! (Có sẵn: `lua_nuoc`, `dau_xanh`, `nep_nuong`, `sen_vang`)');
+            await message.reply('❌ Hạt giống không hợp lệ! (Có sẵn: `hat_giong`, `lua_nuoc`, `dau_xanh`, `nep_nuong`, `sen_vang`)');
             return;
         }
-        const paid = await UserService_1.UserService.deductDongAtomic(userId, crop.seedPrice);
-        if (!paid) {
-            await message.reply(`❌ Bạn không đủ ${(0, formatters_1.formatDong)(crop.seedPrice)} để mua hạt giống **${crop.name}**!`);
-            return;
+        if (cropKey === 'hat_giong') {
+            const removed = await UserService_1.UserService.removeItemAtomic(userId, 'hat_giong', 1);
+            if (!removed) {
+                await message.reply('❌ Bạn không có 🌱 **Hạt Giống Nông Nghiệp** trong túi đồ (`vn inv`)!');
+                return;
+            }
+        }
+        else {
+            const paid = await UserService_1.UserService.deductDongAtomic(userId, crop.seedPrice);
+            if (!paid) {
+                await message.reply(`❌ Bạn không đủ ${(0, formatters_1.formatDong)(crop.seedPrice)} để mua hạt giống **${crop.name}**!`);
+                return;
+            }
         }
         const plotIndex = farm.plots.findIndex((p) => p.oDat === plotNum);
         const newPlot = {

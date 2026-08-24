@@ -154,6 +154,19 @@ export class UserService {
   }
 
   /**
+   * Trừ vật phẩm trong túi đồ người dùng
+   */
+  public static async removeItemAtomic(userId: string, itemId: string, quantity = 1): Promise<boolean> {
+    const user = await UserModelAdvanced.findOne({ userId });
+    if (!user) return false;
+
+    const existingSlot = user.tuiDo.find((i: any) => i.itemId === itemId);
+    if (!existingSlot || existingSlot.soLuong < quantity) return false;
+
+    return await this.addItemAtomic(userId, itemId, -quantity);
+  }
+
+  /**
    * Tiêu hao vật phẩm nguyên tố
    */
   public static async consumeItemAtomic(userId: string, itemId: string, quantity = 1): Promise<boolean> {
